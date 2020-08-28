@@ -1,0 +1,112 @@
+{
+  "_args": [
+    [
+      "react-pivottable@0.10.0",
+      "C:\\Data\\Work\\health-check-hk-react"
+    ]
+  ],
+  "_from": "react-pivottable@0.10.0",
+  "_id": "react-pivottable@0.10.0",
+  "_inBundle": false,
+  "_integrity": "sha512-d2w0YVcR4rrwcrx1Oyei9x3LNR3/9/uLA3gMGHvD/CrozvOp3FtXdOB3mK+d63bd2vEoj4aUu/iNaKVf2eOPoA==",
+  "_location": "/react-pivottable",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "version",
+    "registry": true,
+    "raw": "react-pivottable@0.10.0",
+    "name": "react-pivottable",
+    "escapedName": "react-pivottable",
+    "rawSpec": "0.10.0",
+    "saveSpec": null,
+    "fetchSpec": "0.10.0"
+  },
+  "_requiredBy": [
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/react-pivottable/-/react-pivottable-0.10.0.tgz",
+  "_spec": "0.10.0",
+  "_where": "C:\\Data\\Work\\health-check-hk-react",
+  "author": {
+    "name": "Nicolas Kruchten",
+    "email": "nicolas@kruchten.com"
+  },
+  "bugs": {
+    "url": "https://github.com/plotly/react-pivottable/issues"
+  },
+  "dependencies": {
+    "immutability-helper": "^2.3.1",
+    "prop-types": "^15.5.10",
+    "react-draggable": "^3.0.3",
+    "react-sortablejs": "^1.3.4",
+    "sortablejs": "^1.6.1"
+  },
+  "description": "A React-based pivot table",
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-eslint": "^7.2.3",
+    "babel-loader": "^7.1.2",
+    "babel-plugin-add-module-exports": "^0.2.1",
+    "babel-preset-env": "^1.6.1",
+    "babel-preset-react": "^6.24.1",
+    "css-loader": "^0.28.7",
+    "eslint": "^4.5.0",
+    "eslint-config-prettier": "^2.8.0",
+    "eslint-plugin-import": "^2.7.0",
+    "eslint-plugin-react": "^7.3.0",
+    "jest": "^21.2.1",
+    "papaparse": "^4.3.6",
+    "prettier": "^1.8.2",
+    "react": ">=15.0.0",
+    "react-dom": ">=15.0.0",
+    "react-dropzone": "^4.2.1",
+    "react-hot-loader": "^3.1.1",
+    "react-plotly.js": "^2.0.0",
+    "style-loader": "^0.19.0",
+    "webpack": "^3.8.1",
+    "webpack-dev-server": "^2.9.3"
+  },
+  "files": [
+    "PivotTable.js",
+    "PivotTableUI.js",
+    "PlotlyRenderers.js",
+    "TableRenderers.js",
+    "Utilities.js",
+    "PivotTable.js.map",
+    "PivotTableUI.js.map",
+    "PlotlyRenderers.js.map",
+    "TableRenderers.js.map",
+    "Utilities.js.map",
+    "pivottable.css"
+  ],
+  "homepage": "https://github.com/plotly/react-pivottable#readme",
+  "keywords": [
+    "react",
+    "pivottable"
+  ],
+  "license": "MIT",
+  "main": "PivotTableUI.js",
+  "name": "react-pivottable",
+  "peerDependencies": {
+    "react": ">=15.0.0",
+    "react-dom": ">=15.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/plotly/react-pivottable.git"
+  },
+  "scripts": {
+    "clean": "rm -rf __tests__ PivotTable.js* PivotTableUI.js* PlotlyRenderers.js* TableRenderers.js* Utilities.js* pivottable.css",
+    "deploy": "webpack -p && mv bundle.js examples && cd examples && git init && git add . && git commit -m build && git push --force git@github.com:plotly/react-pivottable.git master:gh-pages && rm -rf .git bundle.js",
+    "doPublish": "npm run clean && cp src/pivottable.css . && babel src --out-dir=. --source-maps --presets=env,react --plugins babel-plugin-add-module-exports && npm publish",
+    "postpublish": "npm run clean",
+    "start": "webpack-dev-server",
+    "test": "npm run test:eslint && npm run test:prettier && npm run test:jest",
+    "test:eslint": "eslint src/*.js* && echo 'eslint: \\033[0;32m'PASS'\\033[0m'",
+    "test:eslint:fix": "eslint src/*.js* --fix",
+    "test:jest": "jest",
+    "test:prettier": "prettier -l \"src/*.js*\" && echo 'prettier: \\033[0;32m'PASS'\\033[0m'",
+    "test:prettier:fix": "prettier  --write \"src/*.js*\""
+  },
+  "version": "0.10.0"
+}
