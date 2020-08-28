@@ -1,15 +1,15 @@
 import Head from "next/head";
 import styles from "../styles/Home.module.css";
 import { ThemeProvider } from "@material-ui/styles";
-import { muiTheme } from "./components/muiTheme";
+import { muiTheme } from "../src/components/muiTheme";
 import CssBaseline from "@material-ui/core/CssBaseline";
-import Header from "./components/Header";
+import Header from "../src/components/Header";
 import React, { useEffect, useState } from "react";
 import { Grid } from "@material-ui/core";
 import track, { useTracking } from "react-tracking";
-import ReactPivotTable from "./components/ReactPivotTable";
-import useDebounce from "./components/useDebounce";
-import { getAirtable } from "./components/getAirtable";
+import ReactPivotTable from "../src/components/ReactPivotTable";
+import useDebounce from "../src/components/useDebounce";
+import { getAirtable } from "../src/components/getAirtable";
 // import MaterialUI from "./components/MaterialUI";
 
 // const fetchMode = "csv";
