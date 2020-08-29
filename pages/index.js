@@ -9,8 +9,12 @@ import { Grid } from "@material-ui/core";
 import track, { useTracking } from "react-tracking";
 import ReactPivotTable from "../src/components/ReactPivotTable";
 import useDebounce from "../src/components/useDebounce";
-import { getAirtable } from "../src/components/getAirtable";
-// import MaterialUI from "./components/MaterialUI";
+import Airtable from "airtable";
+import MaterialUI from "../src/components/MaterialUI";
+import HospitalInfos from "../src/components/HospitalInfos";
+import FeedbackForm from "../src/components/FeedbackForm";
+import Footer from "../src/components/Footer";
+import Snackbar from "@material-ui/core/Snackbar";
 
 // const fetchMode = "csv";
 const fetchMode = "airtable";
@@ -20,20 +24,16 @@ function Alert(props) {
   return <MuiAlert elevation={3} {...props} />;
 }
 
-function App() {
-  const { trackEvent } = useTracking();
-
-  const [dataArray, setDataArray] = useState(null);
-  const [filteredDataArray, setFilteredDataArray] = useState(dataArray);
-  const [hospitalInfo, setHospitalInfo] = useState([]);
+function App({ airtableRecords }) {
+  // const { trackEvent } = useTracking();
 
   const [language, setLanguage] = useState("en");
   const handleLanguage = (event) => {
     if (event.target.checked) {
-      trackEvent({ event: "Language-set", lang: "en" });
+      // trackEvent({ event: "Language-set", lang: "en" });
       setLanguage("en");
     } else {
-      trackEvent({ event: "Language-set", lang: "ch" });
+      // trackEvent({ event: "Language-set", lang: "ch" });
       setLanguage("ch");
     }
   };
@@ -103,7 +103,7 @@ function App() {
   const [prices, setPrice] = useState([0, 30000]);
   const handlePrice = (event, newPrices) => {
     if (newPrices && newPrices.length) {
-      trackEvent({ event: "Filter-price", price: newPrices });
+      // trackEvent({ event: "Filter-price", price: newPrices });
       setPrice(newPrices);
     }
   };
@@ -134,136 +134,104 @@ function App() {
     setTooManyHospitalWarningOpen(false);
   };
 
-  useEffect(() => {
-    // Directly call Papa Parse and setState
-    // const fetchData = async () => {
-    //   Papa.parse("Service.csv", {
-    //     download: true,
-    //     header: true,
-    //     complete: function (results) {
-    //       setdataArray(results.data);
-    //     },
-    //   });
-    // };
+  const processRawAirtableRecords = function () {
+    // filter out rows with empty Service Name
+    const airtableRecordsFiltered = airtableRecords.filter(
+      (row) => row["Service Name"]
+    );
 
-    const loadDataArray = (csv) => {
-      setDataArray(csv);
-    };
+    const rawAirtableRecords = airtableRecordsFiltered.map((record) => {
+      let newRecord = {};
+      for (var key of Object.keys(record)) {
+        const value = record[key];
 
-    const loadAirtableRecords = (airtableRecords) => {
-      // filter out rows with empty Services
-      const airtableRecordsFiltered = airtableRecords.filter(
-        (row) => row["Service Name"]
-      );
-
-      // console.log("airtableRecords");
-      // console.log(airtableRecords);
-      const rawAirtableRecords = airtableRecordsFiltered.map((record) => {
-        let newRecord = {};
-        for (var key of Object.keys(record)) {
-          const value = record[key];
-          // console.log(value);
-          if (Array.isArray(value)) {
-            if (value[0]) {
-              typeof value[0] === "string"
-                ? (newRecord[key] = value[0].trim())
-                : (newRecord[key] = value[0].toString().trim());
-            } else {
-              newRecord[key] = null;
-            }
+        if (Array.isArray(value)) {
+          if (value[0]) {
+            typeof value[0] === "string"
+              ? (newRecord[key] = value[0].trim())
+              : (newRecord[key] = value[0].toString().trim());
           } else {
-            typeof value === "string"
-              ? (newRecord[key] = value.trim())
-              : (newRecord[key] = value.toString().trim());
+            newRecord[key] = null;
           }
-        }
-        // console.log(newRecord);
-        return newRecord;
-      });
-      // console.log("rawAirtableRecords");
-      // console.log(rawAirtableRecords);
-      setDataArray(rawAirtableRecords);
-    };
-
-    fetchMode === "airtable"
-      ? getAirtable(loadAirtableRecords)
-      : getData(csvFileName, loadDataArray);
-  }, []);
-
-  useEffect(() => {
-    const filtered = !dataArray
-      ? null
-      : dataArray.filter(function (l) {
-          return (
-            genders.includes(l["Gender"]) &&
-            hospitals.includes(l["Hospital"]) &&
-            planTypes.includes(l["Plan Type"]) &&
-            l["Price"] >= prices[0] &&
-            l["Price"] <= prices[1]
-          );
-        });
-
-    // Get Hospital Hours for each Hospital
-    if (dataArray) {
-      // console.log("dataArray");
-      // console.log(dataArray);
-      const hospitalInfoTemp = [];
-      const hospitalMap = new Map();
-      for (const item of dataArray) {
-        if (!hospitalMap.has(item["Hospital"])) {
-          hospitalMap.set(item["Hospital"], true); // set any value to Map
-          hospitalInfoTemp.push({
-            hospital: item["Hospital"],
-            hospitalCN: item["醫院"],
-            buttonLabel: item["Button Label"],
-            hospitalHours: item["Hospital Hours"],
-            hospitalHoursCN: item["開放時間"],
-            telephone: item["Telephone"],
-            location: item["Location"],
-            address: item["Address"],
-            addressCN: item["Address CN"],
-            addressLink: item["Address Link"],
-            booking: item["Booking"],
-            bookingCN: item["Booking CN"],
-            website: item["Website"],
-            websiteCN: item["Website CN"],
-          });
+        } else {
+          typeof value === "string"
+            ? (newRecord[key] = value.trim())
+            : (newRecord[key] = value.toString().trim());
         }
       }
-      // Sort by Hospital
-      hospitalInfoTemp.sort((a, b) => {
-        if (a.hospital && b.hospital) {
-          return a.hospital.localeCompare(b.hospital);
-        } else return null;
-      });
-      setHospitalInfo(hospitalInfoTemp);
+      return newRecord;
+    });
+
+    return rawAirtableRecords;
+  };
+  const processedAirtableRecords = processRawAirtableRecords();
+
+  const getHospitalInfo = function () {
+    // console.log("dataArray");
+    // console.log(dataArray);
+    const hospitalInfoTemp = [];
+    const hospitalMap = new Map();
+    for (const item of processedAirtableRecords) {
+      if (!hospitalMap.has(item["Hospital"])) {
+        hospitalMap.set(item["Hospital"], true); // set any value to Map
+        hospitalInfoTemp.push({
+          hospital: item["Hospital"],
+          hospitalCN: item["醫院"],
+          buttonLabel: item["Button Label"],
+          hospitalHours: item["Hospital Hours"],
+          hospitalHoursCN: item["開放時間"],
+          telephone: item["Telephone"],
+          location: item["Location"],
+          address: item["Address"],
+          addressCN: item["Address CN"],
+          addressLink: item["Address Link"],
+          booking: item["Booking"],
+          bookingCN: item["Booking CN"],
+          website: item["Website"],
+          websiteCN: item["Website CN"],
+        });
+      }
     }
-    if (debouncedSearchTerm) {
-      setIsSearching(true);
-      trackEvent({ event: "Filter-search", searchQuery: debouncedSearchTerm });
-      setFilteredDataArray(
-        filterByValue(filtered, debouncedSearchTerm, [
-          "Service Type",
-          "項目類別",
-          "Service Subtype",
-          "項目次類別",
-          "Service Name",
-          "項目名稱",
-        ])
+    // Sort by Hospital
+    hospitalInfoTemp.sort((a, b) => {
+      if (a.hospital && b.hospital) {
+        return a.hospital.localeCompare(b.hospital);
+      } else return null;
+    });
+    // setHospitalInfo(hospitalInfoTemp);
+    return hospitalInfoTemp;
+  };
+  const hospitalInfo = getHospitalInfo();
+
+  const filterAirtableRecords = function () {
+    const filtered = processedAirtableRecords.filter(function (l) {
+      return (
+        genders.includes(l["Gender"]) &&
+        hospitals.includes(l["Hospital"]) &&
+        planTypes.includes(l["Plan Type"]) &&
+        l["Price"] >= prices[0] &&
+        l["Price"] <= prices[1]
       );
-      setIsSearching(false);
+    });
+
+    if (debouncedSearchTerm) {
+      // setIsSearching(true);
+      // trackEvent({ event: "Filter-search", searchQuery: debouncedSearchTerm });
+      const filteredSearchTerm = filterByValue(filtered, debouncedSearchTerm, [
+        "Service Type",
+        "項目類別",
+        "Service Subtype",
+        "項目次類別",
+        "Service Name",
+        "項目名稱",
+      ]);
+      // setIsSearching(false);
+      return filteredSearchTerm;
     } else {
-      setFilteredDataArray(filtered);
+      return filtered;
     }
-  }, [
-    dataArray,
-    genders,
-    hospitals,
-    planTypes,
-    prices,
-    debouncedSearchTerm,
-    trackEvent,
-  ]);
+  };
+  const filteredDataArray = filterAirtableRecords();
 
   return (
     <React.StrictMode>
@@ -271,7 +239,7 @@ function App() {
         <CssBaseline />
         <Header language={language} handleLanguage={handleLanguage} />
         <Grid item xs={12}>
-          {/* <br />
+          <br />
           <MaterialUI
             language={language}
             hospitals={hospitals}
@@ -292,17 +260,17 @@ function App() {
             handleSearch={handleSearch}
             hospitalInfo={hospitalInfo}
           />
-          <br /> */}
+          <br />
         </Grid>
         <ReactPivotTable csv={filteredDataArray} language={language} />
         <br />
         <br />
-        {/* <HospitalInfos hospitalInfo={hospitalInfo} language={language} /> */}
+        <HospitalInfos hospitalInfo={hospitalInfo} language={language} />
         <br />
-        {/* <FeedbackForm hospitalInfo={hospitalInfo} language={language} /> */}
+        <FeedbackForm hospitalInfo={hospitalInfo} language={language} />
         <br />
-        {/* <Footer /> */}
-        {/* <Snackbar
+        <Footer />
+        <Snackbar
           open={tooManyHospitalWarningOpen}
           autoHideDuration={2000}
           onClose={handleAlertClose}
@@ -310,23 +278,67 @@ function App() {
           <Alert onClose={handleAlertClose} severity="warning">
             {language === "en" ? "Choose up to 2 hospitals" : "最多兩間醫院"}
           </Alert>
-        </Snackbar> */}
+        </Snackbar>
       </ThemeProvider>
     </React.StrictMode>
   );
 }
 
-const TrackedApp = track(
-  // app-level tracking data
-  // { app: "my-app" },
+// const TrackedApp = track(
+//   // app-level tracking data
+//   // { app: "my-app" },
 
-  {
-    // custom dispatch to console.log in addition to pushing to dataLayer[]
-    dispatch: (data) => {
-      // console.log(data);
-      (window.dataLayer = window.dataLayer || []).push(data);
+//   {
+//     // custom dispatch to console.log in addition to pushing to dataLayer[]
+//     dispatch: (data) => {
+//       // console.log(data);
+//       (window.dataLayer = window.dataLayer || []).push(data);
+//     },
+//   }
+// )(App);
+
+// export default TrackedApp;
+
+export async function getStaticProps() {
+  Airtable.configure({
+    endpointUrl: "https://api.airtable.com",
+    apiKey: "keyWDj3X2WP9zxW7h",
+  });
+  var base = Airtable.base("appAV9kqsY6WcWOXt");
+  let table = base("Service - Plans");
+  let airtableRecords = [];
+
+  let getRecords = new Promise((resolve, reject) => {
+    table
+      .select({
+        view: "Grid view",
+        maxRecords: 100,
+        pageSize: 100,
+      })
+      .eachPage(
+        function page(records, fetchNextPage) {
+          const pageResult = records.map((record) => record.fields);
+          airtableRecords = airtableRecords.concat(pageResult);
+          fetchNextPage();
+        },
+        function done(err) {
+          if (err) {
+            console.error(err);
+            return null;
+          } else {
+            resolve(airtableRecords);
+          }
+        }
+      );
+  });
+
+  const records = await getRecords;
+
+  return {
+    props: {
+      airtableRecords,
     },
-  }
-)(App);
+  };
+}
 
-export default TrackedApp;
+export default App;
