@@ -15,6 +15,7 @@ import HospitalInfos from "../src/components/HospitalInfos";
 import FeedbackForm from "../src/components/FeedbackForm";
 import Footer from "../src/components/Footer";
 import Snackbar from "@material-ui/core/Snackbar";
+import MuiAlert from "@material-ui/lab/Alert";
 
 // const fetchMode = "csv";
 const fetchMode = "airtable";
