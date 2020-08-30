@@ -97,16 +97,19 @@ function App({ airtableRecords }) {
   };
 
   const [prices, setPrice] = useState([0, 30000]);
+  const debouncedPriceFilter = useDebounce(prices, 800);
   const handlePrice = (event, newPrices) => {
     if (newPrices && newPrices.length) {
-      trackEvent({ event: "Filter-price", price: newPrices });
+      if (debouncedPriceFilter) {
+        trackEvent({ event: "Filter-price", price: newPrices });
+      }
       setPrice(newPrices);
     }
   };
 
   const [searchTerm, setSearchTerm] = useState("");
   const [isSearching, setIsSearching] = useState(false);
-  const debouncedSearchTerm = useDebounce(searchTerm, 500); // delay search by 500ms
+  const debouncedSearchTerm = useDebounce(searchTerm, 800);
   const handleSearch = (event) => {
     setSearchTerm(event.target.value);
   };
