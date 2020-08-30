@@ -15,6 +15,7 @@ import MaterialUI from "../components/MaterialUI";
 import { muiTheme } from "../components/muiTheme";
 import ReactPivotTable from "../components/ReactPivotTable";
 import useDebounce from "../components/useDebounce";
+import useDebouncePrice from "../components/useDebouncePrice";
 
 function Alert(props) {
   return <MuiAlert elevation={3} {...props} />;
@@ -97,7 +98,7 @@ function App({ airtableRecords }) {
   };
 
   const [prices, setPrice] = useState([0, 30000]);
-  const debouncedPriceFilter = useDebounce(prices, 800);
+  const debouncedPriceFilter = useDebouncePrice(prices, 800);
   const handlePrice = (event, newPrices) => {
     if (newPrices && newPrices.length) {
       if (debouncedPriceFilter) {
