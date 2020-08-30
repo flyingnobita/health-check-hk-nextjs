@@ -2,9 +2,7 @@ import { Grid } from "@material-ui/core";
 import Box from "@material-ui/core/Box";
 import LinearProgress from "@material-ui/core/LinearProgress";
 import React from "react";
-import PivotTable from "./react-pivottable/PivotTable";
-// import "./react-pivottable/pivottable.css";
-// import "./ReactPivotTable.css";
+import PivotTable from "../components/react-pivottable/PivotTable";
 
 export default class ReactPivotTable extends React.Component {
   constructor(props) {
