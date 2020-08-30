@@ -101,9 +101,6 @@ function App({ airtableRecords }) {
   const debouncedPriceFilter = useDebouncePrice(prices, 800);
   const handlePrice = (event, newPrices) => {
     if (newPrices && newPrices.length) {
-      if (debouncedPriceFilter) {
-        trackEvent({ event: "Filter-price", price: newPrices });
-      }
       setPrice(newPrices);
     }
   };
@@ -211,6 +208,10 @@ function App({ airtableRecords }) {
       );
     });
 
+    if (debouncedPriceFilter) {
+      trackEvent({ event: "Filter-price", price: debouncedPriceFilter });
+    }
+
     if (debouncedSearchTerm) {
       // setIsSearching(true);
       trackEvent({ event: "Filter-search", searchQuery: debouncedSearchTerm });
@@ -308,7 +309,7 @@ export async function getStaticProps() {
     table
       .select({
         view: "Grid view",
-        maxRecords: 10000,
+        maxRecords: 10,
         pageSize: 100,
       })
       .eachPage(
