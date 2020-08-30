@@ -5,6 +5,7 @@ import MuiAlert from "@material-ui/lab/Alert";
 import { ThemeProvider } from "@material-ui/styles";
 import Airtable from "airtable";
 import React, { useState } from "react";
+import track, { useTracking } from "react-tracking";
 import FeedbackForm from "../components/FeedbackForm";
 import Footer from "../components/Footer";
 import GetHead from "../components/head";
@@ -20,15 +21,15 @@ function Alert(props) {
 }
 
 function App({ airtableRecords }) {
-  // const { trackEvent } = useTracking();
+  const { trackEvent } = useTracking();
 
   const [language, setLanguage] = useState("en");
   const handleLanguage = (event) => {
     if (event.target.checked) {
-      // trackEvent({ event: "Language-set", lang: "en" });
+      trackEvent({ event: "Language-set", lang: "en" });
       setLanguage("en");
     } else {
-      // trackEvent({ event: "Language-set", lang: "ch" });
+      trackEvent({ event: "Language-set", lang: "ch" });
       setLanguage("ch");
     }
   };
@@ -98,7 +99,7 @@ function App({ airtableRecords }) {
   const [prices, setPrice] = useState([0, 30000]);
   const handlePrice = (event, newPrices) => {
     if (newPrices && newPrices.length) {
-      // trackEvent({ event: "Filter-price", price: newPrices });
+      trackEvent({ event: "Filter-price", price: newPrices });
       setPrice(newPrices);
     }
   };
@@ -162,8 +163,6 @@ function App({ airtableRecords }) {
   const processedAirtableRecords = processRawAirtableRecords();
 
   const getHospitalInfo = function () {
-    // console.log("dataArray");
-    // console.log(dataArray);
     const hospitalInfoTemp = [];
     const hospitalMap = new Map();
     for (const item of processedAirtableRecords) {
@@ -193,7 +192,6 @@ function App({ airtableRecords }) {
         return a.hospital.localeCompare(b.hospital);
       } else return null;
     });
-    // setHospitalInfo(hospitalInfoTemp);
     return hospitalInfoTemp;
   };
   const hospitalInfo = getHospitalInfo();
@@ -211,7 +209,7 @@ function App({ airtableRecords }) {
 
     if (debouncedSearchTerm) {
       // setIsSearching(true);
-      // trackEvent({ event: "Filter-search", searchQuery: debouncedSearchTerm });
+      trackEvent({ event: "Filter-search", searchQuery: debouncedSearchTerm });
       const filteredSearchTerm = filterByValue(filtered, debouncedSearchTerm, [
         "Service Type",
         "項目類別",
@@ -280,20 +278,18 @@ function App({ airtableRecords }) {
   );
 }
 
-// const TrackedApp = track(
-//   // app-level tracking data
-//   // { app: "my-app" },
+const TrackedApp = track(
+  // app-level tracking data
+  // { app: "my-app" },
 
-//   {
-//     // custom dispatch to console.log in addition to pushing to dataLayer[]
-//     dispatch: (data) => {
-//       // console.log(data);
-//       (window.dataLayer = window.dataLayer || []).push(data);
-//     },
-//   }
-// )(App);
-
-// export default TrackedApp;
+  {
+    // custom dispatch to console.log in addition to pushing to dataLayer[]
+    dispatch: (data) => {
+      // console.log(data);
+      (window.dataLayer = window.dataLayer || []).push(data);
+    },
+  }
+)(App);
 
 export async function getStaticProps() {
   Airtable.configure({
@@ -308,7 +304,7 @@ export async function getStaticProps() {
     table
       .select({
         view: "Grid view",
-        maxRecords: 10000,
+        maxRecords: 10,
         pageSize: 100,
       })
       .eachPage(
@@ -337,4 +333,5 @@ export async function getStaticProps() {
   };
 }
 
-export default App;
+// export default App;
+export default TrackedApp;
