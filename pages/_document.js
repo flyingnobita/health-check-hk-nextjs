@@ -31,7 +31,7 @@ class MyDocument extends Document {
         </Head>
         <body>
           {/* <!-- Google Tag Manager (noscript) --> */}
-          <script
+          <noscript
             dangerouslySetInnerHTML={{
               __html: `
                 <iframe
