@@ -29,6 +29,6 @@ export default function useDebouncePrice(value, delay) {
     // ... need to be able to change that dynamically.
     [value, delay]
   );
-  console.log(debouncedValue);
+
   return debouncedValue;
 }

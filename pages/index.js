@@ -291,7 +291,9 @@ const TrackedApp = track(
     // custom dispatch to console.log in addition to pushing to dataLayer[]
     dispatch: (data) => {
       // console.log(data);
-      (window.dataLayer = window.dataLayer || []).push(data);
+      if (typeof window !== "undefined") {
+        (window.dataLayer = window.dataLayer || []).push(data);
+      }
     },
   }
 )(App);
