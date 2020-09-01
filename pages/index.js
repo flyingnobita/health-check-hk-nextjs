@@ -341,7 +341,7 @@ export async function getStaticProps() {
     table
       .select({
         view: "Grid view",
-        maxRecords: 1000,
+        maxRecords: 10000,
         pageSize: 100,
       })
       .eachPage(
