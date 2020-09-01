@@ -7,7 +7,6 @@ export default function GenderSelect({
   language,
   planTypes,
 }) {
-  console.log(genders);
   if (planTypes === "General" || planTypes === "Pre-marital") {
     return (
       <Select
