@@ -35,13 +35,13 @@ function App({ airtableRecords }) {
   };
 
   // Plan Types
-  const [planTypes, setPlanTypes] = useState(() => ["General"]);
+  const [planTypes, setPlanTypes] = useState("General");
   const handlePlanType = (event, newPlanTypes) => {
     if (newPlanTypes && newPlanTypes.length) {
       if (newPlanTypes === "General" || newPlanTypes === "Pre-marital") {
-        setGenders(["Male"]);
+        setGenders("Male");
       } else {
-        setGenders(["Both"]);
+        setGenders("Both");
       }
       if (newPlanTypes !== "General") {
         setPrice([0, 30000]);
@@ -58,9 +58,9 @@ function App({ airtableRecords }) {
       event.target.value === "General" ||
       event.target.value === "Pre-marital"
     ) {
-      setGenders(["Male"]);
+      setGenders("Male");
     } else {
-      setGenders(["Both"]);
+      setGenders("Both");
     }
     if (event.target.value !== "General") {
       setPrice([0, 30000]);
@@ -73,7 +73,7 @@ function App({ airtableRecords }) {
   };
 
   // Gender
-  const [genders, setGenders] = useState(() => ["Male"]);
+  const [genders, setGenders] = useState("Male");
   const handleGender = (event, newGenders) => {
     if (newGenders && newGenders.length) {
       setGenders(newGenders);
@@ -341,7 +341,7 @@ export async function getStaticProps() {
     table
       .select({
         view: "Grid view",
-        maxRecords: 10000,
+        maxRecords: 1000,
         pageSize: 100,
       })
       .eachPage(
