@@ -128,10 +128,16 @@ function App({ airtableRecords }) {
   };
 
   // Price
-  const [prices, setPrice] = useState([0, 30000]);
+  const [prices, setPrice] = useState([8000, 11000]);
   const debouncedPriceFilter = useDebounce(prices, 800);
   const handlePrice = (event, newPrices) => {
+    console.log(newPrices);
     if (newPrices && newPrices.length) {
+      if (prices[0] !== newPrices[0]) {
+        newPrices[1] = newPrices[0] + 3000;
+      } else {
+        newPrices[0] = newPrices[1] - 3000;
+      }
       setPrice(newPrices);
     }
   };
