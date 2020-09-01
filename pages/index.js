@@ -11,7 +11,7 @@ import Footer from "../components/Footer";
 import GetHead from "../components/head";
 import Header from "../components/Header";
 import HospitalInfos from "../components/HospitalInfos";
-import MaterialUI from "../components/MaterialUI";
+import FilterUI from "../components/FilterUI";
 import { muiTheme } from "../components/muiTheme";
 import ReactPivotTable from "../components/ReactPivotTable";
 import useDebounce from "../components/useDebounce";
@@ -34,24 +34,56 @@ function App({ airtableRecords }) {
     }
   };
 
-  const [hospitals, setHospitals] = useState(() => ["Adventist - Stubbs"]);
-  const handleHospital = (event, newHospitals) => {
-    if (newHospitals && newHospitals.length) {
-      if (newHospitals.length <= 2) {
-        setHospitals(newHospitals);
+  // Plan Types
+  const [planTypes, setPlanTypes] = useState(() => ["General"]);
+  const handlePlanType = (event, newPlanTypes) => {
+    if (newPlanTypes && newPlanTypes.length) {
+      if (newPlanTypes === "General" || newPlanTypes === "Pre-marital") {
+        setGenders(["Male"]);
       } else {
-        setTooManyHospitalWarningOpen(true);
+        setGenders(["Both"]);
       }
+      if (newPlanTypes !== "General") {
+        setPrice([0, 30000]);
+      }
+      if (newPlanTypes === "Child") {
+        setLocation("hkIsland");
+        setHospitals(["Adventist - Stubbs", "Matilda"]);
+      }
+      setPlanTypes(newPlanTypes);
     }
   };
-  const handleHospitalSelect = (event) => {
-    if (event.target.value.length <= 2) {
-      setHospitals(event.target.value);
+  const handlePlanTypeSelect = (event) => {
+    if (
+      event.target.value === "General" ||
+      event.target.value === "Pre-marital"
+    ) {
+      setGenders(["Male"]);
     } else {
-      setTooManyHospitalWarningOpen(true);
+      setGenders(["Both"]);
     }
+    if (event.target.value !== "General") {
+      setPrice([0, 30000]);
+    }
+    if (event.target.value === "Child") {
+      setLocation("hkIsland");
+      setHospitals(["Adventist - Stubbs"]);
+    }
+    setPlanTypes(event.target.value);
   };
 
+  // Gender
+  const [genders, setGenders] = useState(() => ["Male"]);
+  const handleGender = (event, newGenders) => {
+    if (newGenders && newGenders.length) {
+      setGenders(newGenders);
+    }
+  };
+  const handleGenderSelect = (event) => {
+    setGenders(event.target.value);
+  };
+
+  // Location
   const [locations, setLocation] = useState("hkIsland");
   const handleLocation = (event, newLocation) => {
     if (newLocation) {
@@ -76,26 +108,26 @@ function App({ airtableRecords }) {
     setLocation(event.target.value);
   };
 
-  const [genders, setGenders] = useState(() => ["Male"]);
-  const handleGender = (event, newGenders) => {
-    if (newGenders && newGenders.length) {
-      setGenders(newGenders);
+  // Hospital
+  const [hospitals, setHospitals] = useState(() => ["Adventist - Stubbs"]);
+  const handleHospital = (event, newHospitals) => {
+    if (newHospitals && newHospitals.length) {
+      if (newHospitals.length <= 2) {
+        setHospitals(newHospitals);
+      } else {
+        setTooManyHospitalWarningOpen(true);
+      }
     }
   };
-  const handleGenderSelect = (event) => {
-    setGenders(event.target.value);
-  };
-
-  const [planTypes, setPlanTypes] = useState(() => ["General"]);
-  const handlePlanType = (event, newPlanTypes) => {
-    if (newPlanTypes && newPlanTypes.length) {
-      setPlanTypes(newPlanTypes);
+  const handleHospitalSelect = (event) => {
+    if (event.target.value.length <= 2) {
+      setHospitals(event.target.value);
+    } else {
+      setTooManyHospitalWarningOpen(true);
     }
   };
-  const handlePlanTypeSelect = (event) => {
-    setPlanTypes(event.target.value);
-  };
 
+  // Price
   const [prices, setPrice] = useState([0, 30000]);
   const debouncedPriceFilter = useDebounce(prices, 800);
   const handlePrice = (event, newPrices) => {
@@ -104,6 +136,7 @@ function App({ airtableRecords }) {
     }
   };
 
+  // Search
   const [searchTerm, setSearchTerm] = useState("");
   const [isSearching, setIsSearching] = useState(false);
   const debouncedSearchTerm = useDebounce(searchTerm, 800);
@@ -240,7 +273,7 @@ function App({ airtableRecords }) {
         <Header language={language} handleLanguage={handleLanguage} />
         <Grid item xs={12}>
           <br />
-          <MaterialUI
+          <FilterUI
             language={language}
             hospitals={hospitals}
             handleHospital={handleHospital}

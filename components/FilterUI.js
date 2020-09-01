@@ -1,17 +1,20 @@
-import Box from "@material-ui/core/Box";
 import { Grid } from "@material-ui/core";
-import HospitalButtons from "./hospitalButtons";
+import Box from "@material-ui/core/Box";
 import MenuItem from "@material-ui/core/MenuItem";
-import { PriceSelector } from "./PriceSelector";
-import PropTypes from "prop-types";
-import React from "react";
-import { SearchBar } from "./SearchBar";
 import Select from "@material-ui/core/Select";
+import { makeStyles } from "@material-ui/core/styles";
+import Tooltip from "@material-ui/core/Tooltip";
+import useMediaQuery from "@material-ui/core/useMediaQuery";
 import ToggleButton from "@material-ui/lab/ToggleButton";
 import ToggleButtonGroup from "@material-ui/lab/ToggleButtonGroup";
-import Tooltip from "@material-ui/core/Tooltip";
-import { makeStyles } from "@material-ui/core/styles";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
+import PropTypes from "prop-types";
+import React from "react";
+import GenderSelect from "./GenderSelect";
+import GenderToggleButtonGroup from "./GenderToggleButtonGroup";
+import HospitalButtons from "./hospitalButtons";
+import LocationToggleButtonGroup from "./LocationToggleButtonGroup";
+import { PriceSelector } from "./PriceSelector";
+import { SearchBar } from "./SearchBar";
 
 const marks = [
   {
@@ -66,7 +69,7 @@ const useStyles = makeStyles({
   },
 });
 
-export default function MaterialUI({
+export default function FilterUI({
   language,
   hospitals,
   handleHospital,
@@ -145,68 +148,21 @@ export default function MaterialUI({
               </Grid>
 
               <Grid item className={classes.buttonGroup}>
-                <ToggleButtonGroup
-                  value={genders}
-                  exclusive
-                  onChange={handleGender}
-                  aria-label="genders"
-                >
-                  <ToggleButton
-                    value="Male"
-                    aria-label="male"
-                    className="filter-selection"
-                  >
-                    {language === "en" ? "MALE" : "男"}
-                  </ToggleButton>
-                  <ToggleButton
-                    value="Female"
-                    aria-label="female"
-                    className="filter-selection"
-                  >
-                    {language === "en" ? "FEMALE" : "女"}
-                  </ToggleButton>
-                  <ToggleButton
-                    value="Both"
-                    aria-label="both"
-                    className="filter-selection"
-                  >
-                    {language === "en" ? "BOTH" : "不分"}
-                  </ToggleButton>
-                </ToggleButtonGroup>
+                <GenderToggleButtonGroup
+                  genders={genders}
+                  handleGender={handleGender}
+                  language={language}
+                  planTypes={planTypes}
+                />
               </Grid>
 
               <Grid item className={classes.buttonGroup}>
-                <ToggleButtonGroup
-                  value={locations}
-                  exclusive
-                  onChange={handleLocation}
-                  aria-label="locations"
-                >
-                  <ToggleButton
-                    value="hkIsland"
-                    aria-label="hkIsland"
-                    color="primary"
-                    className="filter-selection"
-                  >
-                    {language === "en" ? "HK ISLAND" : "港島"}
-                  </ToggleButton>
-                  <ToggleButton
-                    value="kowloon"
-                    aria-label="kowloon"
-                    color="primary"
-                    className="filter-selection"
-                  >
-                    {language === "en" ? "KOWLOON" : "九龍"}
-                  </ToggleButton>
-                  <ToggleButton
-                    value="newTerritories"
-                    aria-label="newTerritories"
-                    color="primary"
-                    className="filter-selection"
-                  >
-                    {language === "en" ? "NT" : "新界"}
-                  </ToggleButton>
-                </ToggleButtonGroup>
+                <LocationToggleButtonGroup
+                  locations={locations}
+                  handleLocation={handleLocation}
+                  language={language}
+                  planTypes={planTypes}
+                />
               </Grid>
 
               <HospitalButtons
@@ -218,15 +174,18 @@ export default function MaterialUI({
                 handleHospital={handleHospital}
                 handleHospitalSelect={handleHospitalSelect}
                 hospitalInfo={hospitalInfo}
+                planTypes={planTypes}
               />
 
-              <PriceSelector
-                classes={classes}
-                prices={prices}
-                marks={marks}
-                handlePrice={handlePrice}
-                wideScreen={wideScreen}
-              />
+              <Grid item className={classes.buttonGroup}>
+                <PriceSelector
+                  classes={classes}
+                  prices={prices}
+                  marks={marks}
+                  handlePrice={handlePrice}
+                  planTypes={planTypes}
+                />
+              </Grid>
 
               <SearchBar
                 classes={classes}
@@ -273,22 +232,12 @@ export default function MaterialUI({
             </Grid>
 
             <Grid item>
-              <Select
-                labelId="select-gender-label"
-                id="select-gender"
-                value={genders}
-                onChange={handleGenderSelect}
-              >
-                <MenuItem value={"Male"}>
-                  {language === "en" ? "MALE" : "男"}
-                </MenuItem>
-                <MenuItem value={"Female"}>
-                  {language === "en" ? "FEMALE" : "女"}
-                </MenuItem>
-                <MenuItem value={"Both"}>
-                  {language === "en" ? "BOTH" : "不分"}
-                </MenuItem>
-              </Select>
+              <GenderSelect
+                genders={genders}
+                handleGenderSelect={handleGenderSelect}
+                language={language}
+                planTypes={planTypes}
+              />
             </Grid>
 
             <Grid item>
@@ -321,13 +270,15 @@ export default function MaterialUI({
               hospitalInfo={hospitalInfo}
             />
 
-            <PriceSelector
-              classes={classes}
-              prices={prices}
-              marks={marks}
-              handlePrice={handlePrice}
-              wideScreen={wideScreen}
-            />
+            <Grid item className={classes.buttonGroup} xs={12} align="center">
+              <PriceSelector
+                classes={classes}
+                prices={prices}
+                marks={marks}
+                handlePrice={handlePrice}
+                planTypes={planTypes}
+              />
+            </Grid>
 
             <SearchBar
               classes={classes}
