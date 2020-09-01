@@ -23,6 +23,10 @@ function Alert(props) {
 function App({ airtableRecords }) {
   const { trackEvent } = useTracking();
 
+  const initialPriceRange = [8000, 13000];
+  const maxPriceRange = [0, 30000];
+  const priceRangeDiff = initialPriceRange[1] - initialPriceRange[0];
+
   const [language, setLanguage] = useState("en");
   const handleLanguage = (event) => {
     if (event.target.checked) {
@@ -44,7 +48,9 @@ function App({ airtableRecords }) {
         setGenders("Both");
       }
       if (newPlanTypes !== "General") {
-        setPrice([0, 30000]);
+        setPrice(maxPriceRange);
+      } else {
+        setPrice(initialPriceRange);
       }
       if (newPlanTypes === "Child") {
         setLocation("hkIsland");
@@ -63,7 +69,9 @@ function App({ airtableRecords }) {
       setGenders("Both");
     }
     if (event.target.value !== "General") {
-      setPrice([0, 30000]);
+      setPrice(maxPriceRange);
+    } else {
+      setPrice(initialPriceRange);
     }
     if (event.target.value === "Child") {
       setLocation("hkIsland");
@@ -128,15 +136,14 @@ function App({ airtableRecords }) {
   };
 
   // Price
-  const [prices, setPrice] = useState([8000, 11000]);
+  const [prices, setPrice] = useState(initialPriceRange);
   const debouncedPriceFilter = useDebounce(prices, 800);
   const handlePrice = (event, newPrices) => {
-    console.log(newPrices);
     if (newPrices && newPrices.length) {
       if (prices[0] !== newPrices[0]) {
-        newPrices[1] = newPrices[0] + 3000;
+        newPrices[1] = newPrices[0] + priceRangeDiff;
       } else {
-        newPrices[0] = newPrices[1] - 3000;
+        newPrices[0] = newPrices[1] - priceRangeDiff;
       }
       setPrice(newPrices);
     }
