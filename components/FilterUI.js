@@ -4,7 +4,6 @@ import MenuItem from "@material-ui/core/MenuItem";
 import Select from "@material-ui/core/Select";
 import { makeStyles } from "@material-ui/core/styles";
 import Tooltip from "@material-ui/core/Tooltip";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
 import ToggleButton from "@material-ui/lab/ToggleButton";
 import ToggleButtonGroup from "@material-ui/lab/ToggleButtonGroup";
 import PropTypes from "prop-types";
@@ -64,6 +63,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function FilterUI({
+  wideScreen,
   language,
   hospitals,
   handleHospital,
@@ -85,7 +85,6 @@ export default function FilterUI({
   hospitalLocationMap,
 }) {
   const classes = useStyles();
-  const wideScreen = useMediaQuery("(min-width:600px)");
 
   if (wideScreen) {
     return (

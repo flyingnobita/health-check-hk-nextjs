@@ -2,6 +2,7 @@ import { Grid } from "@material-ui/core";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Snackbar from "@material-ui/core/Snackbar";
 import { makeStyles } from "@material-ui/core/styles";
+import useMediaQuery from "@material-ui/core/useMediaQuery";
 import MuiAlert from "@material-ui/lab/Alert";
 import { ThemeProvider } from "@material-ui/styles";
 import Airtable from "airtable";
@@ -34,6 +35,8 @@ const useStyles = makeStyles((theme) => ({
 
 function App({ airtableRecords }) {
   const classes = useStyles();
+  const wideScreen = useMediaQuery("(min-width:600px)");
+
   const { trackEvent } = useTracking();
 
   const initialPriceRange = [1000, 4000];
@@ -324,9 +327,14 @@ function App({ airtableRecords }) {
       <GetHead />
       <ThemeProvider theme={muiTheme}>
         <CssBaseline />
-        <Header language={language} handleLanguage={handleLanguage} />
+        <Header
+          language={language}
+          handleLanguage={handleLanguage}
+          wideScreen={wideScreen}
+        />
         <Grid item xs={12} className={classes.filterGrid}>
           <FilterUI
+            wideScreen={wideScreen}
             language={language}
             hospitals={hospitals}
             handleHospital={handleHospital}

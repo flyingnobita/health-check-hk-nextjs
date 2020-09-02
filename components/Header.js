@@ -15,11 +15,25 @@ export default function Header(props) {
   }));
   const classes = useStyles();
 
+  const getTitle = function () {
+    if (props.language === "en") {
+      {
+        if (props.wideScreen) {
+          return "Hong Kong Body Checks";
+        } else {
+          return "HK Body Check";
+        }
+      }
+    } else {
+      return "香港健康檢查";
+    }
+  };
+
   return (
     <AppBar elevation={0} position="static">
       <Toolbar>
         <Typography variant="h6" className={classes.appBarTitle}>
-          {props.language === "en" ? "HK Body Checks" : "香港健康檢查"}
+          {getTitle()}
         </Typography>
         <Typography component="div">
           <Grid component="label" container alignItems="center" spacing={0}>
