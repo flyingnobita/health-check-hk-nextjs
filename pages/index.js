@@ -140,7 +140,7 @@ function App({ airtableRecords }) {
   const [hospitals, setHospitals] = useState(() => ["Adventist - Stubbs"]);
   const handleHospital = (event, newHospitals) => {
     if (newHospitals && newHospitals.length) {
-      if (newHospitals.length <= 2) {
+      if (newHospitals.length <= 2 || planTypes !== "General") {
         setHospitals(newHospitals);
       } else {
         setTooManyHospitalWarningOpen(true);
@@ -148,7 +148,7 @@ function App({ airtableRecords }) {
     }
   };
   const handleHospitalSelect = (event) => {
-    if (event.target.value.length <= 2) {
+    if (event.target.value.length <= 2 || planTypes !== "General") {
       setHospitals(event.target.value);
     } else {
       setTooManyHospitalWarningOpen(true);
@@ -404,7 +404,9 @@ function App({ airtableRecords }) {
           onClose={handleAlertClose}
         >
           <Alert onClose={handleAlertClose} severity="warning">
-            {language === "en" ? "Choose up to 2 hospitals" : "最多兩間醫院"}
+            {language === "en"
+              ? "For General plans, choose up to 2 hospitals"
+              : "一般計劃, 最多兩間醫院"}
           </Alert>
         </Snackbar>
       </ThemeProvider>
