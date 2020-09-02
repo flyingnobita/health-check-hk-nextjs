@@ -28,7 +28,7 @@ const useStyles = makeStyles((theme) => ({
     paddingTop: "10px",
   },
   pivotTableGrid: {
-    paddingTop: "10px",
+    paddingTop: "20px",
     paddingBottom: "10px",
   },
 }));
