@@ -51,23 +51,17 @@ ValueLabelComponent.propTypes = {
   value: PropTypes.object.isRequired,
 };
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
   sliderTypography: {
-    width: 200,
+    width: 250,
   },
   buttonGroup: {
     margin: 10,
   },
-  // icon on search
-  search: {
-    color: "#f1faee",
-    // backgroundColor: "white",
+  grid: {
+    background: theme.palette.grey[50],
   },
-  // input text color on search
-  input: {
-    color: "#f1faee",
-  },
-});
+}));
 
 export default function FilterUI({
   language,
@@ -97,7 +91,8 @@ export default function FilterUI({
       <Grid container>
         <Grid item xs={1} />
         <Grid item xs={10}>
-          <Box border={0} borderColor="primary.main" borderRadius={10}>
+          {/* <Box border={0} borderColor="primary.main" borderRadius={10}> */}
+          <Box border={0} borderRadius={10}>
             <Grid container justify="space-around">
               <Grid
                 item

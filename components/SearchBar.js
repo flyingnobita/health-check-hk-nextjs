@@ -29,6 +29,7 @@ export function SearchBar({
               InputProps={{ className: classes.input }}
               value={searchTerm}
               onChange={handleSearch}
+              style={{ maxWidth: 250 }}
             />
           </Grid>
         </Grid>
@@ -54,6 +55,7 @@ export function SearchBar({
               InputProps={{ className: classes.input }}
               value={searchTerm}
               onChange={handleSearch}
+              style={{ maxWidth: 250 }}
             />
           </Grid>
         </Grid>

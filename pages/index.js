@@ -1,17 +1,18 @@
 import { Grid } from "@material-ui/core";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Snackbar from "@material-ui/core/Snackbar";
+import { makeStyles } from "@material-ui/core/styles";
 import MuiAlert from "@material-ui/lab/Alert";
 import { ThemeProvider } from "@material-ui/styles";
 import Airtable from "airtable";
 import React, { useState } from "react";
 import track, { useTracking } from "react-tracking";
 import FeedbackForm from "../components/FeedbackForm";
+import FilterUI from "../components/FilterUI";
 import Footer from "../components/Footer";
 import GetHead from "../components/head";
 import Header from "../components/Header";
 import HospitalInfos from "../components/HospitalInfos";
-import FilterUI from "../components/FilterUI";
 import { muiTheme } from "../components/muiTheme";
 import ReactPivotTable from "../components/ReactPivotTable";
 import useDebounce from "../components/useDebounce";
@@ -20,7 +21,15 @@ function Alert(props) {
   return <MuiAlert elevation={3} {...props} />;
 }
 
+const useStyles = makeStyles((theme) => ({
+  filterGrid: {
+    background: theme.palette.grey[50],
+    paddingTop: "10px",
+  },
+}));
+
 function App({ airtableRecords }) {
+  const classes = useStyles();
   const { trackEvent } = useTracking();
 
   const initialPriceRange = [1000, 4000];
@@ -284,8 +293,7 @@ function App({ airtableRecords }) {
       <ThemeProvider theme={muiTheme}>
         <CssBaseline />
         <Header language={language} handleLanguage={handleLanguage} />
-        <Grid item xs={12}>
-          <br />
+        <Grid item xs={12} className={classes.filterGrid}>
           <FilterUI
             language={language}
             hospitals={hospitals}
@@ -306,15 +314,10 @@ function App({ airtableRecords }) {
             handleSearch={handleSearch}
             hospitalInfo={hospitalInfo}
           />
-          <br />
         </Grid>
         <ReactPivotTable csv={filteredDataArray} language={language} />
-        <br />
-        <br />
         <HospitalInfos hospitalInfo={hospitalInfo} language={language} />
-        <br />
         <FeedbackForm hospitalInfo={hospitalInfo} language={language} />
-        <br />
         <Footer />
         <Snackbar
           open={tooManyHospitalWarningOpen}
@@ -354,7 +357,7 @@ export async function getStaticProps() {
     table
       .select({
         view: "Grid view",
-        maxRecords: 10000,
+        maxRecords: 10,
         pageSize: 100,
       })
       .eachPage(
@@ -383,5 +386,4 @@ export async function getStaticProps() {
   };
 }
 
-// export default App;
 export default TrackedApp;

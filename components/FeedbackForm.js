@@ -31,22 +31,22 @@ const styles = (theme) => ({
     position: "absolute",
     right: theme.spacing(1),
     top: theme.spacing(1),
-    color: theme.palette.grey[500],
+    // color: theme.palette.grey[500],
   },
 });
 
 const useStyles = makeStyles({
   feedBackFromButton: {
-    color: "red",
+    // color: "red",
   },
   fieldTitleLabel: {
-    color: "black",
+    // color: "black",
     fontWeight: "bold",
     marginTop: "5px",
     marginBottom: "5px",
   },
   select: {
-    color: "black",
+    // color: "black",
     marginTop: "5px",
   },
   underline: {
@@ -57,7 +57,11 @@ const useStyles = makeStyles({
     marginBottom: "10px",
   },
   OutlineInputLabel: {
-    color: "black",
+    // color: "black",
+  },
+  grid: {
+    paddingTop: "10px",
+    paddingBottom: "10px",
   },
 });
 
@@ -203,10 +207,10 @@ function FeedbackForm({ hospitalInfo, language }) {
 
   return (
     <Grid container>
-      <Grid item xs={1} />
-      <Grid item xs={10} align="center">
+      <Grid item xs={1} className={classes.grid} />
+      <Grid item xs={10} align="center" className={classes.grid}>
         <Button
-          color="primary"
+          // color="primary"
           onClick={handleDialogOpen}
           className="FeedBackButton"
           classes={
@@ -214,7 +218,7 @@ function FeedbackForm({ hospitalInfo, language }) {
               // text: classes.feedBackFromButton,
             }
           }
-          style={{ color: "red" }}
+          // style={{ color: "red" }}
         >
           {language === "en"
             ? "Spot an error? Let us know!"
@@ -364,8 +368,7 @@ function FeedbackForm({ hospitalInfo, language }) {
                   <br />
                   <br />
                   <Button
-                    variant="contained"
-                    color="primary"
+                    variant="outlined"
                     disabled={isSubmitting}
                     onClick={submitForm}
                   >
@@ -392,7 +395,7 @@ function FeedbackForm({ hospitalInfo, language }) {
           </DialogContent>
         </Dialog>
       </Grid>
-      <Grid item xs={1} />
+      <Grid item xs={1} className={classes.grid} />
     </Grid>
   );
 }

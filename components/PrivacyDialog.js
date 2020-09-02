@@ -17,7 +17,7 @@ const styles = (theme) => ({
     position: "absolute",
     right: theme.spacing(1),
     top: theme.spacing(1),
-    color: theme.palette.grey[500],
+    // color: theme.palette.grey[500],
   },
 });
 
@@ -57,9 +57,8 @@ export default function PrivacyDialog() {
 
   return (
     <div>
-      <Button color="primary" onClick={handleClickOpen}>
-        Privacy
-      </Button>
+      {/* <Button color="primary" onClick={handleClickOpen}> */}
+      <Button onClick={handleClickOpen}>Privacy</Button>
       <Dialog
         fullWidth={true}
         maxWidth="md"

@@ -17,7 +17,7 @@ export default function LocationToggleButtonGroup({
       <ToggleButton
         value="hkIsland"
         aria-label="hkIsland"
-        color="primary"
+        // color="primary"
         className="filter-selection"
       >
         {language === "en" ? "HK ISLAND" : "港島"}
@@ -25,7 +25,7 @@ export default function LocationToggleButtonGroup({
       <ToggleButton
         value="kowloon"
         aria-label="kowloon"
-        color="primary"
+        // color="primary"
         className="filter-selection"
         disabled={planTypes === "Child"}
       >
@@ -34,7 +34,7 @@ export default function LocationToggleButtonGroup({
       <ToggleButton
         value="newTerritories"
         aria-label="newTerritories"
-        color="primary"
+        // color="primary"
         className="filter-selection"
         disabled={planTypes === "Child"}
       >

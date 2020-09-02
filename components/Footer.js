@@ -10,7 +10,7 @@ import TermsDialog from "./TermsDialog";
 export default function Footer() {
   const useStyles = makeStyles(() => ({
     paper: {
-      backgroundColor: "#457b9d",
+      backgroundColor: "#000",
     },
     gridDialogButton: {
       flexGrow: 0,
@@ -33,7 +33,7 @@ export default function Footer() {
         <Container
           textAlign="center"
           lineHeight="1"
-          color="#f1faee"
+          color="#68C5CA"
           fontSize="10pt"
         >
           © Hong Kong Body Checks

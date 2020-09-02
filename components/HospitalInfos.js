@@ -34,7 +34,11 @@ const StyledTableRow = withStyles((theme) => ({
 
 const useStyles = makeStyles({
   table: {
-    // minWidth: 700,
+    minWidth: 700,
+  },
+  hospitalInfoGrid: {
+    paddingTop: "10px",
+    paddingBottom: "5px",
   },
 });
 
@@ -74,8 +78,8 @@ export default function HospitalInfos({ hospitalInfo, language }) {
   if (hospitalInfo.length > 0) {
     return (
       <Grid container>
-        <Grid item xs={1} />
-        <Grid item xs={10}>
+        <Grid item xs={1} className={classes.hospitalInfoGrid} />
+        <Grid item xs={10} className={classes.hospitalInfoGrid}>
           <TableContainer component={Paper}>
             <Table
               className={classes.table}
@@ -173,7 +177,7 @@ export default function HospitalInfos({ hospitalInfo, language }) {
             </Table>
           </TableContainer>
         </Grid>
-        <Grid item xs={1} />
+        <Grid item xs={1} className={classes.hospitalInfoGrid} />
       </Grid>
     );
   } else {
