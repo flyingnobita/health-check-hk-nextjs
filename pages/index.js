@@ -26,6 +26,10 @@ const useStyles = makeStyles((theme) => ({
     background: theme.palette.grey[50],
     paddingTop: "10px",
   },
+  pivotTableGrid: {
+    paddingTop: "10px",
+    paddingBottom: "10px",
+  },
 }));
 
 function App({ airtableRecords }) {
@@ -315,7 +319,9 @@ function App({ airtableRecords }) {
             hospitalInfo={hospitalInfo}
           />
         </Grid>
-        <ReactPivotTable csv={filteredDataArray} language={language} />
+        <Grid item xs={12} className={classes.pivotTableGrid} align="center">
+          <ReactPivotTable csv={filteredDataArray} language={language} />
+        </Grid>
         <HospitalInfos hospitalInfo={hospitalInfo} language={language} />
         <FeedbackForm hospitalInfo={hospitalInfo} language={language} />
         <Footer />
