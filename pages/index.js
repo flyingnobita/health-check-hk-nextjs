@@ -84,10 +84,14 @@ function App({ airtableRecords }) {
       }
       // Set default locations and hospitals
       const locationMap = hospitalLocationMap.get(newPlanTypes);
-      const firstLocation = Object.keys(locationMap)[0];
-      setLocation(firstLocation);
-      setHospitals([locationMap[firstLocation][0]]);
-
+      if (locationMap) {
+        const firstLocation = Object.keys(locationMap)[0];
+        setLocation(firstLocation);
+        setHospitals([locationMap[firstLocation][0]]);
+      } else {
+        setLocation();
+        setHospitals();
+      }
       setPlanTypes(newPlanTypes);
     }
   };
@@ -335,15 +339,20 @@ function App({ airtableRecords }) {
   const hospitalLocationMap = getHospitalLocationMap();
 
   const filterAirtableRecords = function () {
-    const filtered = processedAirtableRecords.filter(function (l) {
-      return (
-        genders.includes(l["Gender"]) &&
-        hospitals.includes(l["Hospital"]) &&
-        planTypes.includes(l["Plan Type"]) &&
-        l["Price"] >= prices[0] &&
-        l["Price"] <= prices[1]
-      );
-    });
+    let filtered;
+    if (genders && hospitals && planTypes && prices) {
+      filtered = processedAirtableRecords.filter(function (l) {
+        return (
+          genders.includes(l["Gender"]) &&
+          hospitals.includes(l["Hospital"]) &&
+          planTypes.includes(l["Plan Type"]) &&
+          l["Price"] >= prices[0] &&
+          l["Price"] <= prices[1]
+        );
+      });
+    } else {
+      filtered = processedAirtableRecords;
+    }
 
     if (debouncedPriceFilter) {
       if (typeof window !== "undefined") {
