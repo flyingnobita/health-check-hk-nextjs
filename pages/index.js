@@ -58,24 +58,29 @@ function App({ airtableRecords }) {
   const [planTypes, setPlanTypes] = useState("General");
   const handlePlanType = (event, newPlanTypes) => {
     if (newPlanTypes && newPlanTypes.length) {
+      // Set default gender
       if (newPlanTypes === "General" || newPlanTypes === "Pre-marital") {
         setGenders("Male");
       } else {
         setGenders("Both");
       }
+      // Set default price range
       if (newPlanTypes !== "General") {
         setPrice(maxPriceRange);
       } else {
         setPrice(initialPriceRange);
       }
-      if (newPlanTypes === "Child") {
-        setLocation("hkIsland");
-        setHospitals(["Adventist - Stubbs", "Matilda"]);
-      }
+      // Set default locations and hospitals
+      const locationMap = hospitalLocationMap.get(newPlanTypes);
+      const firstLocation = Object.keys(locationMap)[0];
+      setLocation(firstLocation);
+      setHospitals([locationMap[firstLocation][0]]);
+
       setPlanTypes(newPlanTypes);
     }
   };
   const handlePlanTypeSelect = (event) => {
+    // Set default gender
     if (
       event.target.value === "General" ||
       event.target.value === "Pre-marital"
@@ -84,15 +89,20 @@ function App({ airtableRecords }) {
     } else {
       setGenders("Both");
     }
+
+    // Set default price range
     if (event.target.value !== "General") {
       setPrice(maxPriceRange);
     } else {
       setPrice(initialPriceRange);
     }
-    if (event.target.value === "Child") {
-      setLocation("hkIsland");
-      setHospitals(["Adventist - Stubbs"]);
-    }
+
+    // Set default locations and hospitals
+    const locationMap = hospitalLocationMap.get(event.target.value);
+    const firstLocation = Object.keys(locationMap)[0];
+    setLocation(firstLocation);
+    setHospitals([locationMap[firstLocation][0]]);
+
     setPlanTypes(event.target.value);
   };
 
@@ -111,24 +121,18 @@ function App({ airtableRecords }) {
   const [locations, setLocation] = useState("hkIsland");
   const handleLocation = (event, newLocation) => {
     if (newLocation) {
-      if (newLocation === "hkIsland") {
-        setHospitals(["Adventist - Stubbs"]);
-      } else if (newLocation === "kowloon") {
-        setHospitals(["Baptist"]);
-      } else {
-        setHospitals(["Adventist - Tsuen Wan"]);
-      }
+      // Set default hospitals
+      const locationMap = hospitalLocationMap.get(planTypes);
+      setHospitals([locationMap[newLocation][0]]);
+
       setLocation(newLocation);
     }
   };
   const handleLocationSelect = (event) => {
-    if (event.target.value === "hkIsland") {
-      setHospitals(["Adventist - Stubbs"]);
-    } else if (event.target.value === "kowloon") {
-      setHospitals(["Baptist"]);
-    } else {
-      setHospitals(["Adventist - Tsuen Wan"]);
-    }
+    // Set default hospitals
+    const locationMap = hospitalLocationMap.get(planTypes);
+    setHospitals([locationMap[event.target.value][0]]);
+
     setLocation(event.target.value);
   };
 
@@ -267,17 +271,49 @@ function App({ airtableRecords }) {
 
   const getHospitalLocationMap = function () {
     const hospitalLocationMapTemp = new Map();
-    for (const hospitalRecord of hospitalInfo) {
-      for (const planTypeRecord of hospitalRecord.planType) {
-        if (!hospitalLocationMapTemp.has(planTypeRecord)) {
-          hospitalLocationMapTemp.set(planTypeRecord, [
-            hospitalRecord.location,
-          ]);
+    for (const hospitalInfoRecord of hospitalInfo) {
+      for (const planTypeHospitalInfoRecord of hospitalInfoRecord.planType) {
+        // check if Plan Type exist
+        if (!hospitalLocationMapTemp.has(planTypeHospitalInfoRecord)) {
+          const locationHospital = {};
+          locationHospital[hospitalInfoRecord.location] = [
+            hospitalInfoRecord.hospital,
+          ];
+          // Plan Type doesn't exist, add Plan Type, Location, Hospital
+          hospitalLocationMapTemp.set(
+            planTypeHospitalInfoRecord,
+            locationHospital
+          );
         } else {
-          let currentLocations = hospitalLocationMapTemp.get(planTypeRecord);
-          if (!currentLocations.includes(hospitalRecord.location)) {
-            currentLocations.push(hospitalRecord.location);
-            hospitalLocationMapTemp.set(planTypeRecord, currentLocations);
+          let currentLocations = hospitalLocationMapTemp.get(
+            planTypeHospitalInfoRecord
+          );
+          // Check if Location exist
+          if (!(hospitalInfoRecord.location in currentLocations)) {
+            currentLocations[hospitalInfoRecord.location] = [
+              hospitalInfoRecord.hospital,
+            ];
+            // Location doesn't exist, add Location & Hospital
+            hospitalLocationMapTemp.set(
+              planTypeHospitalInfoRecord,
+              currentLocations
+            );
+          } else {
+            // Check if hospital exist
+            if (
+              !currentLocations[hospitalInfoRecord.location].includes(
+                hospitalInfoRecord.hospital
+              )
+            ) {
+              currentLocations[hospitalInfoRecord.location].push(
+                hospitalInfoRecord.hospital
+              );
+              // Hospital doesn't exist, add Hospital
+              hospitalLocationMapTemp.set(
+                planTypeHospitalInfoRecord,
+                currentLocations
+              );
+            }
           }
         }
       }

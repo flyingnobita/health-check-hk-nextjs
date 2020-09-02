@@ -3,7 +3,7 @@ import ToggleButtonGroup from "@material-ui/lab/ToggleButtonGroup";
 
 function toDisableLocation(hospitalLocationMap, planType, locations) {
   const locationList = hospitalLocationMap.get(planType);
-  return !locationList.includes(locations);
+  return !(locations in locationList);
 }
 
 export default function LocationToggleButtonGroup({
