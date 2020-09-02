@@ -8,6 +8,11 @@ import ToggleButton from "@material-ui/lab/ToggleButton";
 import ToggleButtonGroup from "@material-ui/lab/ToggleButtonGroup";
 import React from "react";
 
+function toDisableHospital(hospitalInfo, planType, hospital) {
+  const hospitalInInfo = hospitalInfo.find((h) => h.hospital === hospital);
+  return !hospitalInInfo.planType.includes(planType);
+}
+
 export default function HospitalButtons({
   wideScreen,
   classes,
@@ -49,12 +54,11 @@ export default function HospitalButtons({
                       value={hospital.hospital}
                       aria-label={hospital.hospital}
                       className="filter-selection"
-                      disabled={
-                        planTypes === "Child" &&
-                        !["Adventist - Stubbs", "Matilda"].includes(
-                          hospital.hospital
-                        )
-                      }
+                      disabled={toDisableHospital(
+                        hospitalInfo,
+                        planTypes,
+                        hospital.hospital
+                      )}
                     >
                       {language === "en"
                         ? hospital.buttonLabel
@@ -86,6 +90,11 @@ export default function HospitalButtons({
                       value={hospital.hospital}
                       aria-label={hospital.hospital}
                       className="filter-selection"
+                      disabled={toDisableHospital(
+                        hospitalInfo,
+                        planTypes,
+                        hospital.hospital
+                      )}
                     >
                       {language === "en"
                         ? hospital.buttonLabel
@@ -118,6 +127,11 @@ export default function HospitalButtons({
                       value={hospital.hospital}
                       aria-label={hospital.hospital}
                       className="filter-selection"
+                      disabled={toDisableHospital(
+                        hospitalInfo,
+                        planTypes,
+                        hospital.hospital
+                      )}
                     >
                       {language === "en"
                         ? hospital.buttonLabel

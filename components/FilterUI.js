@@ -82,6 +82,7 @@ export default function FilterUI({
   searchTerm,
   handleSearch,
   hospitalInfo,
+  hospitalLocationMap,
 }) {
   const classes = useStyles();
   const wideScreen = useMediaQuery("(min-width:600px)");
@@ -157,6 +158,7 @@ export default function FilterUI({
                   handleLocation={handleLocation}
                   language={language}
                   planTypes={planTypes}
+                  hospitalLocationMap={hospitalLocationMap}
                 />
               </Grid>
 

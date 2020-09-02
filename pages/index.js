@@ -223,26 +223,33 @@ function App({ airtableRecords }) {
 
   const getHospitalInfo = function () {
     const hospitalInfoTemp = [];
-    const hospitalMap = new Map();
-    for (const item of processedAirtableRecords) {
-      if (!hospitalMap.has(item["Hospital"])) {
-        hospitalMap.set(item["Hospital"], true); // set any value to Map
+    const hospitalMap = new Map(); // keep track of hospitals that have been added
+    for (const record of processedAirtableRecords) {
+      if (!hospitalMap.has(record["Hospital"])) {
+        hospitalMap.set(record["Hospital"], true);
         hospitalInfoTemp.push({
-          hospital: item["Hospital"],
-          hospitalCN: item["醫院"],
-          buttonLabel: item["Button Label"],
-          hospitalHours: item["Hospital Hours"],
-          hospitalHoursCN: item["開放時間"],
-          telephone: item["Telephone"],
-          location: item["Location"],
-          address: item["Address"],
-          addressCN: item["Address CN"],
-          addressLink: item["Address Link"],
-          booking: item["Booking"],
-          bookingCN: item["Booking CN"],
-          website: item["Website"],
-          websiteCN: item["Website CN"],
+          hospital: record["Hospital"],
+          hospitalCN: record["醫院"],
+          buttonLabel: record["Button Label"],
+          hospitalHours: record["Hospital Hours"],
+          hospitalHoursCN: record["開放時間"],
+          telephone: record["Telephone"],
+          location: record["Location"],
+          address: record["Address"],
+          addressCN: record["Address CN"],
+          addressLink: record["Address Link"],
+          booking: record["Booking"],
+          bookingCN: record["Booking CN"],
+          website: record["Website"],
+          websiteCN: record["Website CN"],
+          planType: [record["Plan Type"]],
         });
+      }
+      const hospitalInArray = hospitalInfoTemp.find(
+        (hospital) => hospital.hospital === record["Hospital"]
+      );
+      if (!hospitalInArray.planType.includes(record["Plan Type"])) {
+        hospitalInArray.planType.push(record["Plan Type"]);
       }
     }
     // Sort by Hospital
@@ -254,6 +261,27 @@ function App({ airtableRecords }) {
     return hospitalInfoTemp;
   };
   const hospitalInfo = getHospitalInfo();
+
+  const getHospitalLocationMap = function () {
+    const hospitalLocationMapTemp = new Map();
+    for (const hospitalRecord of hospitalInfo) {
+      for (const planTypeRecord of hospitalRecord.planType) {
+        if (!hospitalLocationMapTemp.has(planTypeRecord)) {
+          hospitalLocationMapTemp.set(planTypeRecord, [
+            hospitalRecord.location,
+          ]);
+        } else {
+          let currentLocations = hospitalLocationMapTemp.get(planTypeRecord);
+          if (!currentLocations.includes(hospitalRecord.location)) {
+            currentLocations.push(hospitalRecord.location);
+            hospitalLocationMapTemp.set(planTypeRecord, currentLocations);
+          }
+        }
+      }
+    }
+    return hospitalLocationMapTemp;
+  };
+  const hospitalLocationMap = getHospitalLocationMap();
 
   const filterAirtableRecords = function () {
     const filtered = processedAirtableRecords.filter(function (l) {
@@ -317,6 +345,7 @@ function App({ airtableRecords }) {
             searchTerm={searchTerm}
             handleSearch={handleSearch}
             hospitalInfo={hospitalInfo}
+            hospitalLocationMap={hospitalLocationMap}
           />
         </Grid>
         <Grid item xs={12} className={classes.pivotTableGrid} align="center">
@@ -363,7 +392,7 @@ export async function getStaticProps() {
     table
       .select({
         view: "Grid view",
-        maxRecords: 10000,
+        maxRecords: 30000,
         pageSize: 100,
       })
       .eachPage(
