@@ -37,6 +37,7 @@ export function SearchBar({
           container
           spacing={1}
           alignItems="flex-end"
+          justify="center"
           className={classes.search}
         >
           <GetSearchBar

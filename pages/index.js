@@ -85,9 +85,14 @@ function App({ airtableRecords }) {
       // Set default locations and hospitals
       const locationMap = hospitalLocationMap.get(newPlanTypes);
       if (locationMap) {
-        const firstLocation = Object.keys(locationMap)[0];
-        setLocation(firstLocation);
-        setHospitals([locationMap[firstLocation][0]]);
+        // Check if there's any hospitals of selected location for newPlanTypes
+        if (locations in locationMap) {
+          setHospitals([locationMap[locations][0]]);
+        } else {
+          const firstLocation = Object.keys(locationMap)[0];
+          setLocation(firstLocation);
+          setHospitals([locationMap[firstLocation][0]]);
+        }
       } else {
         setLocation();
         setHospitals();
