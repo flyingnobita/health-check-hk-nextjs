@@ -49,6 +49,7 @@ export const muiTheme = createMuiTheme(
       // plan types, gender, location, hospital
       MuiToggleButton: {
         root: {
+          color: globalTheme.palette.primary.main,
           "&$selected": {
             backgroundColor: globalTheme.palette.primary.main,
             color: "#E5E5E5",
