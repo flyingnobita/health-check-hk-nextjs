@@ -27,18 +27,18 @@ export default class ReactPivotTable extends React.Component {
       this.readCSV();
 
       return (
-        <Box
-          display="inline-block"
-          text-align="center"
-          marginLeft="5vw"
-          marginRight="5vw"
-          overflow="auto"
-          width="100"
-          maxWidth="90vw"
-          minWidth="0"
-          maxHeight="90vh"
-          paddingBottom="5px"
-        >
+        // <Box
+        //   display="inline-block"
+        //   text-align="center"
+        //   marginLeft="5vw"
+        //   marginRight="5vw"
+        //   overflow="auto"
+        //   width="100"
+        //   maxWidth="90vw"
+        //   minWidth="0"
+        //   maxHeight="90vh"
+        //   paddingBottom="5px"
+        // >
           <PivotTable
             data={this.tableData}
             cols={
@@ -55,7 +55,7 @@ export default class ReactPivotTable extends React.Component {
             onChange={(s) => this.setState(s)}
             {...this.state}
           />
-        </Box>
+        // </Box>
       );
     } else {
       return (
