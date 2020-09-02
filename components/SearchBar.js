@@ -38,13 +38,14 @@ export function SearchBar({
           spacing={1}
           alignItems="flex-end"
           className={classes.search}
-        ></Grid>
-        <GetSearchBar
-          classes={classes}
-          language={language}
-          searchTerm={searchTerm}
-          handleSearch={handleSearch}
-        />
+        >
+          <GetSearchBar
+            classes={classes}
+            language={language}
+            searchTerm={searchTerm}
+            handleSearch={handleSearch}
+          />
+        </Grid>
       </Grid>
     );
   } else {
