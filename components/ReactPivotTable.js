@@ -37,6 +37,7 @@ export default class ReactPivotTable extends React.Component {
           maxWidth="90vw"
           minWidth="0"
           maxHeight="90vh"
+          paddingBottom="5px"
         >
           <PivotTable
             data={this.tableData}
