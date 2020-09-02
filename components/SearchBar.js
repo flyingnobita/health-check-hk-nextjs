@@ -20,7 +20,7 @@ export function SearchBar({
           className={classes.search}
         >
           <Grid item>
-            <SearchIcon />
+            <SearchIcon className={classes.searchBarIcon} />
           </Grid>
           <Grid item>
             <TextField

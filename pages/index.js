@@ -56,6 +56,15 @@ function App({ airtableRecords }) {
       setLanguage("ch");
     }
   };
+  const handleLanguageClick = () => {
+    if (language === "en") {
+      trackEvent({ event: "Language-set", lang: "ch" });
+      setLanguage("ch");
+    } else {
+      trackEvent({ event: "Language-set", lang: "en" });
+      setLanguage("en");
+    }
+  };
 
   // Plan Types
   const [planTypes, setPlanTypes] = useState("General");
@@ -369,6 +378,7 @@ function App({ airtableRecords }) {
         <Header
           language={language}
           handleLanguage={handleLanguage}
+          handleLanguageClick={handleLanguageClick}
           wideScreen={wideScreen}
         />
         <Grid item xs={12} className={classes.filterGrid}>

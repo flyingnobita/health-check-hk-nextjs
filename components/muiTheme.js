@@ -29,6 +29,12 @@ export const muiTheme = createMuiTheme(
           backgroundColor: globalTheme.palette.primary.main,
         },
       },
+      MuiToolbar: {
+        gutters: {
+          paddingLeft: "5px",
+          paddingRight: "5px",
+        },
+      },
       // language toggle
       MuiSwitch: {
         colorSecondary: {
@@ -66,12 +72,6 @@ export const muiTheme = createMuiTheme(
       MuiButton: {
         // backgroundColor: "#000",
         label: {
-          color: globalTheme.palette.primary.main,
-        },
-      },
-      // search icon
-      MuiSvgIcon: {
-        root: {
           color: globalTheme.palette.primary.main,
         },
       },

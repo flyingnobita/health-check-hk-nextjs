@@ -60,6 +60,9 @@ const useStyles = makeStyles((theme) => ({
   grid: {
     background: theme.palette.grey[50],
   },
+  searchBarIcon: {
+    color: theme.palette.primary.dark,
+  },
 }));
 
 export default function FilterUI({
