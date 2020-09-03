@@ -16,11 +16,11 @@ import PriceSelector from "./PriceSelector";
 import SearchBar from "./SearchBar";
 
 const useStyles = makeStyles((theme) => ({
-  searchBarIcon: {
-    color: theme.palette.primary.dark,
-  },
   mobileGridContainer: {
     paddingBottom: "16px",
+  },
+  buttonGroup: {
+    margin: 10,
   },
 }));
 
@@ -55,10 +55,7 @@ export default function FilterUI({
         <Grid item xs={10}>
           <Box border={0} borderRadius={10}>
             <Grid container justify="space-around">
-              <Grid
-                item
-                className={`${classes.buttonGroup} filter-button-group`}
-              >
+              <Grid item className={classes.buttonGroup}>
                 <ToggleButtonGroup
                   value={planTypes}
                   exclusive
