@@ -10,7 +10,8 @@ import PropTypes from "prop-types";
 import React from "react";
 import GenderSelect from "./GenderSelect";
 import GenderToggleButtonGroup from "./GenderToggleButtonGroup";
-import HospitalButtons from "./hospitalButtons";
+import HospitalSelect from "./HospitalSelect";
+import HospitalToggleButtonGroup from "./HospitalToggleButtonGroup";
 import LocationSelect from "./LocationSelect";
 import LocationToggleButtonGroup from "./LocationToggleButtonGroup";
 import { PriceSelector } from "./PriceSelector";
@@ -165,14 +166,12 @@ export default function FilterUI({
                 />
               </Grid>
 
-              <HospitalButtons
-                wideScreen={wideScreen}
+              <HospitalToggleButtonGroup
                 classes={classes}
                 language={language}
                 locations={locations}
                 hospitals={hospitals}
                 handleHospital={handleHospital}
-                handleHospitalSelect={handleHospitalSelect}
                 hospitalInfo={hospitalInfo}
                 planTypes={planTypes}
               />
@@ -250,15 +249,15 @@ export default function FilterUI({
               />
             </Grid>
 
-            <HospitalButtons
-              wideScreen={wideScreen}
+            <HospitalSelect
               classes={classes}
               language={language}
               locations={locations}
               hospitals={hospitals}
-              handleHospital={handleHospital}
               handleHospitalSelect={handleHospitalSelect}
               hospitalInfo={hospitalInfo}
+              planTypes={planTypes}
+              hospitalLocationMap={hospitalLocationMap}
             />
 
             <Grid item className={classes.buttonGroup} xs={12} align="center">
