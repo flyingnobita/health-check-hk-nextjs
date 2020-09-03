@@ -28,6 +28,7 @@ export default function GenderSelect({
         id="select-gender"
         value={genders}
         onChange={handleGenderSelect}
+        disabled={true}
       >
         <MenuItem value={"Both"}>
           {language === "en" ? "BOTH" : "不分"}
