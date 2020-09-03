@@ -9,7 +9,7 @@ import React from "react";
 import Emoji from "./Emoji";
 import { onlineBookingLink } from "./HospitalInfos";
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
   cardsContainer: {
     paddingTop: "16px",
   },
@@ -21,6 +21,9 @@ const useStyles = makeStyles({
     display: "flex",
     flexDirection: "column",
     justifyContent: "space-between",
+    "&:hover": {
+      backgroundColor: theme.palette.grey[50],
+    },
   },
   cardContent: {
     paddingTop: 8,
@@ -49,7 +52,7 @@ const useStyles = makeStyles({
     paddingTop: 0,
     paddingBottom: 8,
   },
-});
+}));
 
 export default function HospitalInfosCards({ language, hospitalInfo }) {
   const classes = useStyles();
