@@ -10,6 +10,9 @@ import Emoji from "./Emoji";
 import { onlineBookingLink } from "./HospitalInfos";
 
 const useStyles = makeStyles({
+  cardsContainer: {
+    paddingTop: "16px",
+  },
   card: {
     minWidth: 275,
     maxWidth: 400,
@@ -53,7 +56,7 @@ export default function HospitalInfosCards({ language, hospitalInfo }) {
 
   return (
     // page wide container
-    <Grid container>
+    <Grid container className={classes.cardsContainer}>
       <Grid item xs={1} className={classes.hospitalInfoGrid} />
       <Grid item xs={10} className={classes.hospitalInfoGrid}>
         {/* container for all cards */}
