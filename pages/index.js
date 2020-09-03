@@ -1,4 +1,3 @@
-import { Grid } from "@material-ui/core";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Snackbar from "@material-ui/core/Snackbar";
 import { makeStyles } from "@material-ui/core/styles";
@@ -9,13 +8,12 @@ import Airtable from "airtable";
 import React, { useState } from "react";
 import track, { useTracking } from "react-tracking";
 import FeedbackForm from "../components/FeedbackForm";
-import FilterUI from "../components/FilterUI";
 import Footer from "../components/Footer";
+import { GetReactPivotTable } from "../components/GetReactPivotTable";
 import GetHead from "../components/head";
 import Header from "../components/Header";
 import HospitalInfos from "../components/HospitalInfos";
 import { muiTheme } from "../components/muiTheme";
-import ReactPivotTable from "../components/ReactPivotTable";
 import useDebounce from "../components/useDebounce";
 
 function Alert(props) {
@@ -45,6 +43,17 @@ function App({ airtableRecords }) {
   const initialPriceRange = [1000, 4000];
   const maxPriceRange = [0, 30000];
   const priceRangeDiff = initialPriceRange[1] - initialPriceRange[0];
+
+  const [page, setPage] = useState("table");
+  const handlePage = (event) => {
+    if (page === "table") {
+      trackEvent({ event: "Page-set", lang: "hospitalInfo" });
+      setPage("hospitalInfo");
+    } else {
+      trackEvent({ event: "Language-set", lang: "table" });
+      setPage("table");
+    }
+  };
 
   const [language, setLanguage] = useState("en");
   const handleLanguage = (event) => {
@@ -384,6 +393,42 @@ function App({ airtableRecords }) {
   };
   const filteredDataArray = filterAirtableRecords();
 
+  let mainPanel;
+  if (page === "table") {
+    mainPanel = (
+      <GetReactPivotTable
+        filterGrid={classes.filterGrid}
+        wideScreen={wideScreen}
+        language={language}
+        planTypes={planTypes}
+        handlePlanType={handlePlanType}
+        handlePlanTypeSelect={handlePlanTypeSelect}
+        genders={genders}
+        handleGender={handleGender}
+        handleGenderSelect={handleGenderSelect}
+        locations={locations}
+        handleLocation={handleLocation}
+        handleLocationSelect={handleLocationSelect}
+        hospitals={hospitals}
+        handleHospital={handleHospital}
+        handleHospitalSelect={handleHospitalSelect}
+        prices={prices}
+        handlePrice={handlePrice}
+        searchTerm={searchTerm}
+        handleSearch={handleSearch}
+        hospitalInfo={hospitalInfo}
+        hospitalLocationMap={hospitalLocationMap}
+        pivotTableGrid={classes.pivotTableGrid}
+        language={language}
+        filteredDataArray={filteredDataArray}
+      ></GetReactPivotTable>
+    );
+  } else {
+    mainPanel = (
+      <HospitalInfos hospitalInfo={hospitalInfo} language={language} />
+    );
+  }
+
   return (
     <React.StrictMode>
       <GetHead />
@@ -394,37 +439,10 @@ function App({ airtableRecords }) {
           handleLanguage={handleLanguage}
           handleLanguageClick={handleLanguageClick}
           wideScreen={wideScreen}
+          page={page}
+          handleHospitalInfoClick={handlePage}
         />
-        <Grid item xs={12} className={classes.filterGrid}>
-          <FilterUI
-            wideScreen={wideScreen}
-            language={language}
-            hospitals={hospitals}
-            handleHospital={handleHospital}
-            handleHospitalSelect={handleHospitalSelect}
-            locations={locations}
-            handleLocation={handleLocation}
-            handleLocationSelect={handleLocationSelect}
-            genders={genders}
-            handleGender={handleGender}
-            handleGenderSelect={handleGenderSelect}
-            planTypes={planTypes}
-            handlePlanType={handlePlanType}
-            handlePlanTypeSelect={handlePlanTypeSelect}
-            prices={prices}
-            handlePrice={handlePrice}
-            searchTerm={searchTerm}
-            handleSearch={handleSearch}
-            hospitalInfo={hospitalInfo}
-            hospitalLocationMap={hospitalLocationMap}
-          />
-        </Grid>
-        <Grid item xs={1} />
-        <Grid item xs={10} className={classes.pivotTableGrid}>
-          <ReactPivotTable csv={filteredDataArray} language={language} />
-        </Grid>
-        <Grid item xs={1} />
-        <HospitalInfos hospitalInfo={hospitalInfo} language={language} />
+        {mainPanel}
         <FeedbackForm hospitalInfo={hospitalInfo} language={language} />
         <Footer />
         <Snackbar
@@ -467,7 +485,7 @@ export async function getStaticProps() {
     table
       .select({
         view: "Grid view",
-        maxRecords: 30000,
+        maxRecords: 10000,
         pageSize: 100,
       })
       .eachPage(

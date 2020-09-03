@@ -37,7 +37,7 @@ const useStyles = makeStyles({
     minWidth: 700,
   },
   hospitalInfoGrid: {
-    paddingTop: "10px",
+    paddingTop: "20px",
     paddingBottom: "5px",
   },
 });

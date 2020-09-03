@@ -1,10 +1,12 @@
 import { Grid } from "@material-ui/core";
 import AppBar from "@material-ui/core/AppBar";
 import IconButton from "@material-ui/core/IconButton";
+import HomeIcon from "@material-ui/icons/Home";
 import { makeStyles } from "@material-ui/core/styles";
 import Switch from "@material-ui/core/Switch";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
+import InfoIcon from "@material-ui/icons/Info";
 import TranslateIcon from "@material-ui/icons/Translate";
 import React from "react";
 
@@ -13,7 +15,7 @@ function GetIconButton(props) {
     <IconButton
       aria-label="change_language"
       onClick={props.handleLanguageClick}
-      className={props.classes.languageIcon}
+      className={props.classes.icon}
     >
       <TranslateIcon fontSize="small" />
     </IconButton>
@@ -47,8 +49,8 @@ export default function Header(props) {
       flexGrow: 1,
       textAlign: "center",
     },
-    languageIcon: {
-      color: "#E5E5E5",
+    icon: {
+      color: "#FFFFFF",
     },
   }));
   const classes = useStyles();
@@ -56,6 +58,16 @@ export default function Header(props) {
   return (
     <AppBar elevation={0} position="static">
       <Toolbar>
+        <IconButton
+          aria-label="hospital-info"
+          onClick={props.handleHospitalInfoClick}
+        >
+          {props.page === "table" ? (
+            <InfoIcon fontSize="small" className={classes.icon} />
+          ) : (
+            <HomeIcon fontSize="small" className={classes.icon} />
+          )}
+        </IconButton>
         <Typography variant="h6" className={classes.appBarTitle}>
           {props.language === "en" ? "Hong Kong Body Checks" : "香港健康檢查"}
         </Typography>
