@@ -1,26 +1,24 @@
 import { Grid } from "@material-ui/core";
 import AppBar from "@material-ui/core/AppBar";
 import IconButton from "@material-ui/core/IconButton";
-import HomeIcon from "@material-ui/icons/Home";
 import { makeStyles } from "@material-ui/core/styles";
 import Switch from "@material-ui/core/Switch";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
+import HomeIcon from "@material-ui/icons/Home";
 import InfoIcon from "@material-ui/icons/Info";
 import TranslateIcon from "@material-ui/icons/Translate";
 import React from "react";
 
-function GetIconButton(props) {
-  return (
-    <IconButton
-      aria-label="change_language"
-      onClick={props.handleLanguageClick}
-      className={props.classes.icon}
-    >
-      <TranslateIcon fontSize="small" />
-    </IconButton>
-  );
-}
+const useStyles = makeStyles(() => ({
+  appBarTitle: {
+    flexGrow: 1,
+    textAlign: "center",
+  },
+  icon: {
+    color: "#FFFFFF",
+  },
+}));
 
 function GetLanguageSwitch(props) {
   return (
@@ -44,15 +42,6 @@ function GetLanguageSwitch(props) {
 }
 
 export default function Header(props) {
-  const useStyles = makeStyles(() => ({
-    appBarTitle: {
-      flexGrow: 1,
-      textAlign: "center",
-    },
-    icon: {
-      color: "#FFFFFF",
-    },
-  }));
   const classes = useStyles();
 
   return (
@@ -77,10 +66,13 @@ export default function Header(props) {
             handleLanguage={props.handleLanguage}
           />
         ) : (
-          <GetIconButton
-            handleLanguageClick={props.handleLanguageClick}
-            classes={classes}
-          />
+          <IconButton
+            aria-label="change_language"
+            onClick={props.handleLanguageClick}
+            className={classes.icon}
+          >
+            <TranslateIcon fontSize="small" />
+          </IconButton>
         )}
       </Toolbar>
     </AppBar>
