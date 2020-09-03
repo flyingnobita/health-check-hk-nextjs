@@ -13,8 +13,8 @@ import { GetReactPivotTable } from "../components/GetReactPivotTable";
 import GetHead from "../components/head";
 import Header from "../components/Header";
 import HospitalInfos from "../components/HospitalInfos";
-import { muiTheme } from "../components/muiTheme";
 import useDebounce from "../components/useDebounce";
+import muiTheme from "../styles/muiTheme";
 
 function Alert(props) {
   return <MuiAlert elevation={3} {...props} />;

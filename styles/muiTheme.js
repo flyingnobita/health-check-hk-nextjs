@@ -20,7 +20,7 @@ const globalTheme = createMuiTheme({
   },
 });
 
-export const muiTheme = createMuiTheme(
+const muiTheme = createMuiTheme(
   {
     overrides: {
       MuiAppBar: {
@@ -92,3 +92,5 @@ export const muiTheme = createMuiTheme(
   },
   globalTheme
 );
+
+export default muiTheme;
