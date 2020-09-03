@@ -1,4 +1,5 @@
 import { Grid } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core/styles";
 import Zoom from "@material-ui/core/Zoom";
 import ToggleButton from "@material-ui/lab/ToggleButton";
 import ToggleButtonGroup from "@material-ui/lab/ToggleButtonGroup";
@@ -9,8 +10,13 @@ function toDisableHospital(hospitalInfo, planType, hospital) {
   return !hospitalInInfo.planType.includes(planType);
 }
 
+const useStyles = makeStyles((theme) => ({
+  buttonGroup: {
+    margin: 10,
+  },
+}));
+
 export default function HospitalToggleButtonGroup({
-  classes,
   language,
   locations,
   hospitals,
@@ -18,6 +24,8 @@ export default function HospitalToggleButtonGroup({
   hospitalInfo,
   planTypes,
 }) {
+  const classes = useStyles();
+
   if (hospitalInfo === undefined || hospitalInfo.length === 0) {
     return null;
   } else {

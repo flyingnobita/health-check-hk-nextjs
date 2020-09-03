@@ -1,9 +1,17 @@
 import { Grid } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import SearchIcon from "@material-ui/icons/Search";
 import React from "react";
 
-function GetSearchBar({ classes, language, searchTerm, handleSearch }) {
+const useStyles = makeStyles((theme) => ({
+  searchBarIcon: {
+    color: theme.palette.primary.dark,
+  },
+}));
+
+function GetSearchBar({ language, searchTerm, handleSearch }) {
+  const classes = useStyles();
   return (
     <React.Fragment>
       <Grid item>
@@ -13,7 +21,6 @@ function GetSearchBar({ classes, language, searchTerm, handleSearch }) {
         <TextField
           id="input-with-icon-grid"
           label={language === "en" ? "Search service" : "項目搜索"}
-          InputProps={{ className: classes.input }}
           value={searchTerm}
           onChange={handleSearch}
           style={{ maxWidth: 250 }}
@@ -23,8 +30,7 @@ function GetSearchBar({ classes, language, searchTerm, handleSearch }) {
   );
 }
 
-export function SearchBar({
-  classes,
+export default function SearchBar({
   language,
   searchTerm,
   handleSearch,
@@ -33,15 +39,8 @@ export function SearchBar({
   if (wideScreen) {
     return (
       <Grid item>
-        <Grid
-          container
-          spacing={1}
-          alignItems="flex-end"
-          justify="center"
-          className={classes.search}
-        >
+        <Grid container spacing={1} alignItems="flex-end" justify="center">
           <GetSearchBar
-            classes={classes}
             language={language}
             searchTerm={searchTerm}
             handleSearch={handleSearch}
@@ -52,15 +51,8 @@ export function SearchBar({
   } else {
     return (
       <Grid item xs={12} align="center">
-        <Grid
-          container
-          spacing={1}
-          alignItems="center"
-          justify="center"
-          className={classes.search}
-        >
+        <Grid container spacing={1} alignItems="center" justify="center">
           <GetSearchBar
-            classes={classes}
             language={language}
             searchTerm={searchTerm}
             handleSearch={handleSearch}

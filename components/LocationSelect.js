@@ -22,19 +22,19 @@ export default function LocationSelect({
         .map((location) => {
           if (location === "hkIsland") {
             return (
-              <MenuItem value={location}>
+              <MenuItem key={location} value={location}>
                 {language === "en" ? "HK ISLAND" : "港島"}
               </MenuItem>
             );
           } else if (location === "kowloon") {
             return (
-              <MenuItem value={location}>
+              <MenuItem key={location} value={location}>
                 {language === "en" ? "KOWLOON" : "九龍"}
               </MenuItem>
             );
           } else {
             return (
-              <MenuItem value={location}>
+              <MenuItem key={location} value={location}>
                 {language === "en" ? "NT" : "新界"}
               </MenuItem>
             );

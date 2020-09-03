@@ -6,7 +6,6 @@ import Select from "@material-ui/core/Select";
 import React from "react";
 
 export default function HospitalSelect({
-  classes,
   language,
   locations,
   hospitals,
@@ -30,7 +29,7 @@ export default function HospitalSelect({
           input={<Input id="input-select-hospital" />}
           style={{ paddingTop: "10px" }}
           renderValue={(selected) => (
-            <div className={classes.chips}>
+            <div>
               {selected.map((value) => (
                 <Chip
                   key={value}
@@ -41,7 +40,6 @@ export default function HospitalSelect({
                           (hospital) => hospital.hospital === value
                         ).hospitalCN
                   }
-                  className={classes.chip}
                 />
               ))}
             </div>

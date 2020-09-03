@@ -3,10 +3,8 @@ import Box from "@material-ui/core/Box";
 import MenuItem from "@material-ui/core/MenuItem";
 import Select from "@material-ui/core/Select";
 import { makeStyles } from "@material-ui/core/styles";
-import Tooltip from "@material-ui/core/Tooltip";
 import ToggleButton from "@material-ui/lab/ToggleButton";
 import ToggleButtonGroup from "@material-ui/lab/ToggleButtonGroup";
-import PropTypes from "prop-types";
 import React from "react";
 import GenderSelect from "./GenderSelect";
 import GenderToggleButtonGroup from "./GenderToggleButtonGroup";
@@ -14,56 +12,15 @@ import HospitalSelect from "./HospitalSelect";
 import HospitalToggleButtonGroup from "./HospitalToggleButtonGroup";
 import LocationSelect from "./LocationSelect";
 import LocationToggleButtonGroup from "./LocationToggleButtonGroup";
-import { PriceSelector } from "./PriceSelector";
-import { SearchBar } from "./SearchBar";
-
-const marks = [
-  {
-    value: 0,
-    label: "$0",
-  },
-  {
-    value: 10000,
-    label: "$10k",
-  },
-  {
-    value: 20000,
-    label: "$20k",
-  },
-  {
-    value: 30000,
-    label: "$30k",
-  },
-];
-
-export function ValueLabelComponent(props) {
-  const { children, open, value } = props;
-
-  return (
-    <Tooltip open={open} enterTouchDelay={0} placement="top" title={value}>
-      {children}
-    </Tooltip>
-  );
-}
-
-ValueLabelComponent.propTypes = {
-  children: PropTypes.element.isRequired,
-  open: PropTypes.bool.isRequired,
-  value: PropTypes.object.isRequired,
-};
+import PriceSelector from "./PriceSelector";
+import SearchBar from "./SearchBar";
 
 const useStyles = makeStyles((theme) => ({
-  sliderTypography: {
-    width: 250,
-  },
-  buttonGroup: {
-    margin: 10,
-  },
-  grid: {
-    background: theme.palette.grey[50],
-  },
   searchBarIcon: {
     color: theme.palette.primary.dark,
+  },
+  mobileGridContainer: {
+    paddingBottom: "16px",
   },
 }));
 
@@ -96,7 +53,6 @@ export default function FilterUI({
       <Grid container>
         <Grid item xs={1} />
         <Grid item xs={10}>
-          {/* <Box border={0} borderColor="primary.main" borderRadius={10}> */}
           <Box border={0} borderRadius={10}>
             <Grid container justify="space-around">
               <Grid
@@ -167,7 +123,6 @@ export default function FilterUI({
               </Grid>
 
               <HospitalToggleButtonGroup
-                classes={classes}
                 language={language}
                 locations={locations}
                 hospitals={hospitals}
@@ -178,16 +133,13 @@ export default function FilterUI({
 
               <Grid item className={classes.buttonGroup}>
                 <PriceSelector
-                  classes={classes}
                   prices={prices}
-                  marks={marks}
                   handlePrice={handlePrice}
                   planTypes={planTypes}
                 />
               </Grid>
 
               <SearchBar
-                classes={classes}
                 language={language}
                 searchTerm={searchTerm}
                 handleSearch={handleSearch}
@@ -201,7 +153,7 @@ export default function FilterUI({
     );
   } else {
     return (
-      <Grid container>
+      <Grid container className={classes.mobileGridContainer}>
         <Grid item xs={1} />
         <Grid item xs={10}>
           <Grid container justify="space-around" alignItems="center">
@@ -250,7 +202,6 @@ export default function FilterUI({
             </Grid>
 
             <HospitalSelect
-              classes={classes}
               language={language}
               locations={locations}
               hospitals={hospitals}
@@ -262,16 +213,13 @@ export default function FilterUI({
 
             <Grid item className={classes.buttonGroup} xs={12} align="center">
               <PriceSelector
-                classes={classes}
                 prices={prices}
-                marks={marks}
                 handlePrice={handlePrice}
                 planTypes={planTypes}
               />
             </Grid>
 
             <SearchBar
-              classes={classes}
               language={language}
               searchTerm={searchTerm}
               handleSearch={handleSearch}
