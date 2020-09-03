@@ -11,6 +11,7 @@ import React from "react";
 import GenderSelect from "./GenderSelect";
 import GenderToggleButtonGroup from "./GenderToggleButtonGroup";
 import HospitalButtons from "./hospitalButtons";
+import LocationSelect from "./LocationSelect";
 import LocationToggleButtonGroup from "./LocationToggleButtonGroup";
 import { PriceSelector } from "./PriceSelector";
 import { SearchBar } from "./SearchBar";
@@ -240,22 +241,13 @@ export default function FilterUI({
             </Grid>
 
             <Grid item>
-              <Select
-                labelId="select-location-label"
-                id="select-location"
-                value={locations}
-                onChange={handleLocationSelect}
-              >
-                <MenuItem value={"hkIsland"}>
-                  {language === "en" ? "HK ISLAND" : "港島"}
-                </MenuItem>
-                <MenuItem value={"kowloon"}>
-                  {language === "en" ? "KOWLOON" : "九龍"}
-                </MenuItem>
-                <MenuItem value={"newTerritories"}>
-                  {language === "en" ? "NT" : "新界"}
-                </MenuItem>
-              </Select>
+              <LocationSelect
+                locations={locations}
+                handleLocationSelect={handleLocationSelect}
+                language={language}
+                planTypes={planTypes}
+                hospitalLocationMap={hospitalLocationMap}
+              />
             </Grid>
 
             <HospitalButtons

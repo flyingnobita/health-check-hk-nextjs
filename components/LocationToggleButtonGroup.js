@@ -1,8 +1,8 @@
 import ToggleButton from "@material-ui/lab/ToggleButton";
 import ToggleButtonGroup from "@material-ui/lab/ToggleButtonGroup";
 
-function toDisableLocation(hospitalLocationMap, planType, locations) {
-  const locationList = hospitalLocationMap.get(planType);
+function toDisableLocation(hospitalLocationMap, planTypes, locations) {
+  const locationList = hospitalLocationMap.get(planTypes);
   if (locationList) {
     return !(locations in locationList);
   } else return true;
@@ -25,7 +25,6 @@ export default function LocationToggleButtonGroup({
       <ToggleButton
         value="hkIsland"
         aria-label="hkIsland"
-        // color="primary"
         className="filter-selection"
         disabled={toDisableLocation(hospitalLocationMap, planTypes, "hkIsland")}
       >
@@ -34,7 +33,6 @@ export default function LocationToggleButtonGroup({
       <ToggleButton
         value="kowloon"
         aria-label="kowloon"
-        // color="primary"
         className="filter-selection"
         disabled={toDisableLocation(hospitalLocationMap, planTypes, "kowloon")}
       >
@@ -43,7 +41,6 @@ export default function LocationToggleButtonGroup({
       <ToggleButton
         value="newTerritories"
         aria-label="newTerritories"
-        // color="primary"
         className="filter-selection"
         disabled={toDisableLocation(
           hospitalLocationMap,
