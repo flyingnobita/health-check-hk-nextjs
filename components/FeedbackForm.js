@@ -209,17 +209,7 @@ function FeedbackForm({ hospitalInfo, language }) {
     <Grid container>
       <Grid item xs={1} className={classes.grid} />
       <Grid item xs={10} align="center" className={classes.grid}>
-        <Button
-          // color="primary"
-          onClick={handleDialogOpen}
-          className="FeedBackButton"
-          classes={
-            {
-              // text: classes.feedBackFromButton,
-            }
-          }
-          // style={{ color: "red" }}
-        >
+        <Button onClick={handleDialogOpen}>
           {language === "en"
             ? "Spot an error? Let us know!"
             : "有錯處? 請話我知!"}
