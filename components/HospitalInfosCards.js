@@ -63,7 +63,7 @@ export default function HospitalInfosCards({ language, hospitalInfo }) {
       <Grid item xs={1} className={classes.hospitalInfoGrid} />
       <Grid item xs={10} className={classes.hospitalInfoGrid}>
         {/* container for all cards */}
-        <Grid container spacing={3}>
+        <Grid container spacing={3} justify="center">
           {hospitalInfo.map((row) => (
             <Grid item key={row.hospital}>
               <Card className={classes.card}>
