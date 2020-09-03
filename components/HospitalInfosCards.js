@@ -50,7 +50,7 @@ const useStyles = makeStyles((theme) => ({
   },
   cardActions: {
     paddingTop: 0,
-    paddingBottom: 8,
+    paddingBottom: 12,
   },
 }));
 
