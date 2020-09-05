@@ -61,7 +61,7 @@ export default function PriceSelector({ prices, handlePrice, planTypes }) {
         valueLabelDisplay="auto"
         valueLabelFormat={(value) => <div>${value / 1000}k</div>}
         aria-labelledby="range-slider"
-        disabled={planTypes !== "General"}
+        // disabled={planTypes !== "General"}
       />
     </div>
   );

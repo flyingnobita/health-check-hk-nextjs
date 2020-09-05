@@ -40,7 +40,7 @@ function App({ airtableRecords }) {
 
   const { trackEvent } = useTracking();
 
-  const initialPriceRange = [7000, 10000];
+  const initialPriceRange = [0, 30000];
   const maxPriceRange = [0, 30000];
   const priceRangeDiff = initialPriceRange[1] - initialPriceRange[0];
 
@@ -209,11 +209,11 @@ function App({ airtableRecords }) {
   const debouncedPriceFilter = useDebounce(prices, 800);
   const handlePrice = (event, newPrices) => {
     if (newPrices && newPrices.length) {
-      if (prices[0] !== newPrices[0]) {
-        newPrices[1] = newPrices[0] + priceRangeDiff;
-      } else {
-        newPrices[0] = newPrices[1] - priceRangeDiff;
-      }
+      // if (prices[0] !== newPrices[0]) {
+      //   newPrices[1] = newPrices[0] + priceRangeDiff;
+      // } else {
+      //   newPrices[0] = newPrices[1] - priceRangeDiff;
+      // }
       setPrice(newPrices);
     }
   };
