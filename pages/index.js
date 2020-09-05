@@ -40,7 +40,7 @@ function App({ airtableRecords }) {
 
   const { trackEvent } = useTracking();
 
-  const initialPriceRange = [1000, 4000];
+  const initialPriceRange = [7000, 10000];
   const maxPriceRange = [0, 30000];
   const priceRangeDiff = initialPriceRange[1] - initialPriceRange[0];
 
