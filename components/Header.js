@@ -9,6 +9,7 @@ import HomeIcon from "@material-ui/icons/Home";
 import InfoIcon from "@material-ui/icons/Info";
 import TranslateIcon from "@material-ui/icons/Translate";
 import React from "react";
+import ShareButton from "./ShareButton";
 
 const useStyles = makeStyles(() => ({
   appBarTitle: {
@@ -52,14 +53,15 @@ export default function Header(props) {
           onClick={props.handleHospitalInfoClick}
         >
           {props.page === "table" ? (
-            <InfoIcon fontSize="small" className={classes.icon} />
+            <InfoIcon className={classes.icon} />
           ) : (
-            <HomeIcon fontSize="small" className={classes.icon} />
+            <HomeIcon className={classes.icon} />
           )}
         </IconButton>
         <Typography variant="h6" className={classes.appBarTitle}>
           {props.language === "en" ? "Hong Kong Body Checks" : "香港健康檢查"}
         </Typography>
+        <ShareButton language={props.language} />
         {props.wideScreen ? (
           <GetLanguageSwitch
             language={props.language}
