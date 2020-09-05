@@ -55,7 +55,7 @@ function App({ airtableRecords }) {
     }
   };
 
-  const [language, setLanguage] = useState("en");
+  const [language, setLanguage] = useState("ch");
   const handleLanguage = (event) => {
     if (event.target.checked) {
       trackEvent({ event: "Language-set", lang: "en" });
