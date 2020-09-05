@@ -4,7 +4,6 @@ import Link from "@material-ui/core/Link";
 import React from "react";
 import Emoji from "./Emoji";
 import HospitalInfosCards from "./HospitalInfosCards";
-import HospitalInfosTable from "./HospitalInfosTable";
 
 export const onlineBookingLink = function (language, row) {
   if (row.booking) {
