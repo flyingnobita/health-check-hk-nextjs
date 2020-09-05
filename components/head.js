@@ -1,17 +1,16 @@
 import Head from "next/head";
+import { HEAD_DESCRIPTION, HEAD_TITLE } from "../components/settings";
 
 function GetHead() {
   return (
     <div>
       <Head>
         <meta charSet="utf-8" />
-        <link rel="icon" href="/favicon/favicon.ico" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="theme-color" content="#000000" />
-        <meta
-          name="description"
-          content="Comparison of Hong Kong Body Check Plans Packages"
-        />
+        <meta name="description" content={HEAD_DESCRIPTION} />
+        <title>{HEAD_TITLE}</title>
+        <link rel="icon" href="/favicon/favicon.ico" />
         <link
           rel="apple-touch-icon"
           sizes="57x57"
@@ -81,8 +80,6 @@ function GetHead() {
           sizes="16x16"
           href="/favicon/favicon-16x16.png"
         />
-
-        <title>HK Body Checks</title>
       </Head>
     </div>
   );
