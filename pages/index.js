@@ -47,10 +47,10 @@ function App({ airtableRecords }) {
   const [page, setPage] = useState("table");
   const handlePage = (event) => {
     if (page === "table") {
-      trackEvent({ event: "Page-set", lang: "hospitalInfo" });
+      trackEvent({ event: "Page-set", page: "hospitalInfo" });
       setPage("hospitalInfo");
     } else {
-      trackEvent({ event: "Language-set", lang: "table" });
+      trackEvent({ event: "Page-set", page: "table" });
       setPage("table");
     }
   };

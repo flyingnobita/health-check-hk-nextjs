@@ -16,8 +16,8 @@ import {
   WhatsappIcon,
   WhatsappShareButton,
 } from "react-share";
+import { useTracking } from "react-tracking";
 import { APP_URL } from "./settings";
-import track, { useTracking } from "react-tracking";
 
 const SHARE_MESSAGE_EN =
   "Don't know which body check plan is right for you? Compare plans from all hospitals here!";
