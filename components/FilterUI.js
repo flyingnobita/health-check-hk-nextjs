@@ -70,6 +70,20 @@ export default function FilterUI({
                     {language === "en" ? "GENERAL" : "一般"}
                   </ToggleButton>
                   <ToggleButton
+                    value="Cancer"
+                    aria-label="cancer"
+                    className="filter-selection"
+                  >
+                    {language === "en" ? "CANCER" : "癌症"}
+                  </ToggleButton>
+                  <ToggleButton
+                    value="Cardiac"
+                    aria-label="cardiac"
+                    className="filter-selection"
+                  >
+                    {language === "en" ? "CARDIAC" : " 心臟"}
+                  </ToggleButton>
+                  <ToggleButton
                     value="Child"
                     aria-label="child"
                     className="filter-selection"
@@ -82,6 +96,13 @@ export default function FilterUI({
                     className="filter-selection"
                   >
                     {language === "en" ? "DOMESTIC HELPER" : "家庭傭工"}
+                  </ToggleButton>
+                  <ToggleButton
+                    value="Gender Specific"
+                    aria-label="gender specific"
+                    className="filter-selection"
+                  >
+                    {language === "en" ? "GENDER SPECIFIC" : "性別特定"}
                   </ToggleButton>
                   <ToggleButton
                     value="Pre-employment"
@@ -164,11 +185,20 @@ export default function FilterUI({
                 <MenuItem value={"General"}>
                   {language === "en" ? "GENERAL" : "一般"}
                 </MenuItem>
+                <MenuItem value={"Cancer"}>
+                  {language === "en" ? "CANCER" : "癌症"}
+                </MenuItem>
+                <MenuItem value={"Cardiac"}>
+                  {language === "en" ? "CARDIAC" : "心臟"}
+                </MenuItem>
                 <MenuItem value={"Child"}>
                   {language === "en" ? "CHILD" : "兒童"}
                 </MenuItem>
                 <MenuItem value={"Domestic Helper"}>
                   {language === "en" ? "DOMESTIC HELPER" : "家庭傭工"}
+                </MenuItem>
+                <MenuItem value={"Gender Specific"}>
+                  {language === "en" ? "GENDER SPECIFIC" : "性別特定"}
                 </MenuItem>
                 <MenuItem value={"Pre-employment"}>
                   {language === "en" ? "PRE-EMPLOYMENT" : "入職前"}

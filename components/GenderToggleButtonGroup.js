@@ -18,7 +18,15 @@ export default function GenderToggleButtonGroup({
         value="Male"
         aria-label="male"
         className="filter-selection"
-        disabled={!(planTypes === "General" || planTypes === "Pre-marital")}
+        disabled={
+          ![
+            "General",
+            "Gender Specific",
+            "Cancer",
+            "Cardiac",
+            "Pre-marital",
+          ].includes(planTypes)
+        }
       >
         {language === "en" ? "MALE" : "男"}
       </ToggleButton>
@@ -26,7 +34,15 @@ export default function GenderToggleButtonGroup({
         value="Female"
         aria-label="female"
         className="filter-selection"
-        disabled={!(planTypes === "General" || planTypes === "Pre-marital")}
+        disabled={
+          ![
+            "General",
+            "Gender Specific",
+            "Cancer",
+            "Cardiac",
+            "Pre-marital",
+          ].includes(planTypes)
+        }
       >
         {language === "en" ? "FEMALE" : "女"}
       </ToggleButton>

@@ -80,7 +80,15 @@ function App({ airtableRecords }) {
   const handlePlanType = (event, newPlanTypes) => {
     if (newPlanTypes && newPlanTypes.length) {
       // Set default gender
-      if (newPlanTypes === "General" || newPlanTypes === "Pre-marital") {
+      if (
+        [
+          "General",
+          "Gender Specific",
+          "Cancer",
+          "Cardiac",
+          "Pre-marital",
+        ].includes(newPlanTypes)
+      ) {
         setGenders("Male");
       } else {
         setGenders("Both");
@@ -112,8 +120,13 @@ function App({ airtableRecords }) {
   const handlePlanTypeSelect = (event) => {
     // Set default gender
     if (
-      event.target.value === "General" ||
-      event.target.value === "Pre-marital"
+      [
+        "General",
+        "Gender Specific",
+        "Cancer",
+        "Cardiac",
+        "Pre-marital",
+      ].includes(event.target.value)
     ) {
       setGenders("Male");
     } else {
