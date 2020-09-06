@@ -13,6 +13,11 @@ import { GetReactPivotTable } from "../components/GetReactPivotTable";
 import GetHead from "../components/head";
 import Header from "../components/Header";
 import HospitalInfos from "../components/HospitalInfos";
+import {
+  filterHospitals, getHospitalInfo,
+
+  processRawAirtableRecords
+} from "../components/indexHelper";
 import useDebounce from "../components/useDebounce";
 import muiTheme from "../styles/muiTheme";
 
@@ -34,7 +39,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function App({ airtableRecords }) {
+function App({ servicePlansRecords, plansRecords }) {
   const classes = useStyles();
   const wideScreen = useMediaQuery("(min-width:600px)");
 
@@ -44,8 +49,19 @@ function App({ airtableRecords }) {
   const maxPriceRange = [0, 30000];
   const priceRangeDiff = initialPriceRange[1] - initialPriceRange[0];
 
+  const processedServicePlansRecords = processRawAirtableRecords(
+    servicePlansRecords
+  );
+  const processedPlansRecords = processRawAirtableRecords(plansRecords);
+  // const [processedPlansRecords, setProcessedPlansRecords] = useState();
+  // setProcessedPlansRecords(processRawAirtableRecords(plansRecords));
+  console.log("plansRecords");
+  console.log(plansRecords);
+  console.log("processedPlansRecords");
+  console.log(processedPlansRecords);
+
   const [page, setPage] = useState("table");
-  const handlePage = (event) => {
+  const handlePage = () => {
     if (page === "table") {
       trackEvent({ event: "Page-set", page: "hospitalInfo" });
       setPage("hospitalInfo");
@@ -170,11 +186,12 @@ function App({ airtableRecords }) {
   const [locations, setLocation] = useState("hkIsland");
   const handleLocation = (event, newLocation) => {
     if (newLocation) {
-      // Set default hospitals
-      const locationMap = hospitalLocationMap.get(planTypes);
-      setHospitals([locationMap[newLocation][0]]);
-
       setLocation(newLocation);
+
+      // Set default hospitals
+      // const locationMap = hospitalLocationMap.get(planTypes);
+      // setHospitals([locationMap[newLocation][0]]);
+      filterHospitals(processedPlansRecords, planTypes, genders, newLocation);
     }
   };
   const handleLocationSelect = (event) => {
@@ -245,78 +262,8 @@ function App({ airtableRecords }) {
     setTooManyHospitalWarningOpen(false);
   };
 
-  const processRawAirtableRecords = function () {
-    // filter out rows with empty Service Name
-    const airtableRecordsFiltered = airtableRecords.filter(
-      (row) => row["Service Name"]
-    );
-
-    const rawAirtableRecords = airtableRecordsFiltered.map((record) => {
-      let newRecord = {};
-      for (var key of Object.keys(record)) {
-        const value = record[key];
-
-        if (Array.isArray(value)) {
-          if (value[0]) {
-            typeof value[0] === "string"
-              ? (newRecord[key] = value[0].trim())
-              : (newRecord[key] = value[0].toString().trim());
-          } else {
-            newRecord[key] = null;
-          }
-        } else {
-          typeof value === "string"
-            ? (newRecord[key] = value.trim())
-            : (newRecord[key] = value.toString().trim());
-        }
-      }
-      return newRecord;
-    });
-
-    return rawAirtableRecords;
-  };
-  const processedAirtableRecords = processRawAirtableRecords();
-
-  const getHospitalInfo = function () {
-    const hospitalInfoTemp = [];
-    const hospitalMap = new Map(); // keep track of hospitals that have been added
-    for (const record of processedAirtableRecords) {
-      if (!hospitalMap.has(record["Hospital"])) {
-        hospitalMap.set(record["Hospital"], true);
-        hospitalInfoTemp.push({
-          hospital: record["Hospital"],
-          hospitalCN: record["醫院"],
-          buttonLabel: record["Button Label"],
-          hospitalHours: record["Hospital Hours"],
-          hospitalHoursCN: record["開放時間"],
-          telephone: record["Telephone"],
-          location: record["Location"],
-          address: record["Address"],
-          addressCN: record["Address CN"],
-          addressLink: record["Address Link"],
-          booking: record["Booking"],
-          bookingCN: record["Booking CN"],
-          website: record["Website"],
-          websiteCN: record["Website CN"],
-          planType: [record["Plan Type"]],
-        });
-      }
-      const hospitalInArray = hospitalInfoTemp.find(
-        (hospital) => hospital.hospital === record["Hospital"]
-      );
-      if (!hospitalInArray.planType.includes(record["Plan Type"])) {
-        hospitalInArray.planType.push(record["Plan Type"]);
-      }
-    }
-    // Sort by Hospital
-    hospitalInfoTemp.sort((a, b) => {
-      if (a.hospital && b.hospital) {
-        return a.hospital.localeCompare(b.hospital);
-      } else return null;
-    });
-    return hospitalInfoTemp;
-  };
-  const hospitalInfo = getHospitalInfo();
+  const hospitalInfo = getHospitalInfo(processedServicePlansRecords);
+  // console.log(hospitalInfo);
 
   const getHospitalLocationMap = function () {
     const hospitalLocationMapTemp = new Map();
@@ -370,11 +317,20 @@ function App({ airtableRecords }) {
     return hospitalLocationMapTemp;
   };
   const hospitalLocationMap = getHospitalLocationMap();
+  // console.log(hospitalLocationMap);
 
-  const filterAirtableRecords = function () {
+  const filterAirtableRecords = function (
+    processedServicePlansRecords,
+    genders,
+    hospitals,
+    planTypes,
+    prices,
+    debouncedPriceFilter,
+    debouncedSearchTerm
+  ) {
     let filtered;
     if (genders && hospitals && planTypes && prices) {
-      filtered = processedAirtableRecords.filter(function (l) {
+      filtered = processedServicePlansRecords.filter(function (l) {
         return (
           genders.includes(l["Gender"]) &&
           hospitals.includes(l["Hospital"]) &&
@@ -384,7 +340,7 @@ function App({ airtableRecords }) {
         );
       });
     } else {
-      filtered = processedAirtableRecords;
+      filtered = processedServicePlansRecords;
     }
 
     if (debouncedPriceFilter) {
@@ -410,7 +366,15 @@ function App({ airtableRecords }) {
       return filtered;
     }
   };
-  const filteredDataArray = filterAirtableRecords();
+  const filteredDataArray = filterAirtableRecords(
+    processedServicePlansRecords,
+    genders,
+    hospitals,
+    planTypes,
+    prices,
+    debouncedPriceFilter,
+    debouncedSearchTerm
+  );
 
   let mainPanel;
   if (page === "table") {
@@ -440,6 +404,7 @@ function App({ airtableRecords }) {
         pivotTableGrid={classes.pivotTableGrid}
         language={language}
         filteredDataArray={filteredDataArray}
+        processedPlansRecords={processedPlansRecords}
       ></GetReactPivotTable>
     );
   } else {
@@ -497,38 +462,45 @@ export async function getStaticProps() {
     apiKey: "keyWDj3X2WP9zxW7h",
   });
   var base = Airtable.base("appAV9kqsY6WcWOXt");
-  let table = base("Service - Plans");
-  let airtableRecords = [];
+  let servicePlansTable = base("Service - Plans");
+  let plansTable = base("Plans");
 
-  let getRecords = new Promise((resolve, reject) => {
-    table
-      .select({
-        view: "Grid view",
-        maxRecords: 10000,
-        pageSize: 100,
-      })
-      .eachPage(
-        function page(records, fetchNextPage) {
-          const pageResult = records.map((record) => record.fields);
-          airtableRecords = airtableRecords.concat(pageResult);
-          fetchNextPage();
-        },
-        function done(err) {
-          if (err) {
-            console.error(err);
-            return null;
-          } else {
-            resolve(airtableRecords);
+  function retrieveAllRecords(base) {
+    return (resolve, reject) => {
+      let airtableRecords = [];
+      base
+        .select({
+          view: "Grid view",
+          maxRecords: 10000,
+          pageSize: 100,
+        })
+        .eachPage(
+          function page(records, fetchNextPage) {
+            const pageResult = records.map((record) => record.fields);
+            airtableRecords = airtableRecords.concat(pageResult);
+            fetchNextPage();
+          },
+          function done(err) {
+            if (err) {
+              console.error(err);
+              return null;
+            } else {
+              resolve(airtableRecords);
+            }
           }
-        }
-      );
-  });
+        );
+    };
+  }
 
-  const records = await getRecords;
+  const servicePlansRecords = await new Promise(
+    retrieveAllRecords(servicePlansTable)
+  );
+  const plansRecords = await new Promise(retrieveAllRecords(plansTable));
 
   return {
     props: {
-      airtableRecords,
+      servicePlansRecords,
+      plansRecords,
     },
   };
 }
