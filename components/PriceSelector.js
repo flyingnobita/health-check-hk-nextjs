@@ -60,7 +60,7 @@ export default function PriceSelector({ prices, handlePrice, planTypes }) {
         onChange={handlePrice}
         valueLabelDisplay="auto"
         valueLabelFormat={(value) => <div>${value / 1000}k</div>}
-        aria-labelledby="range-slider"
+        aria-label="Price Selector"
         // disabled={planTypes !== "General"}
       />
     </div>
