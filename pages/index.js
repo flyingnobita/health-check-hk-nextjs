@@ -12,7 +12,7 @@ import Footer from "../components/Footer";
 import { GetReactPivotTable } from "../components/GetReactPivotTable";
 import GetHead from "../components/head";
 import Header from "../components/Header";
-import HospitalInfos from "../components/HospitalInfos";
+// import HospitalInfos from "../components/HospitalInfos";
 import {
   filterHospitals,
   getHospitalInfo,
@@ -24,6 +24,9 @@ import {
 } from "../components/settings";
 import useDebounce from "../components/useDebounce";
 import muiTheme from "../styles/muiTheme";
+import dynamic from "next/dynamic";
+
+const HospitalInfos = dynamic(() => import("../components/HospitalInfos"));
 
 function Alert(props) {
   return <MuiAlert elevation={3} {...props} />;
