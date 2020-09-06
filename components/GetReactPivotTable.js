@@ -27,7 +27,6 @@ export const GetReactPivotTable = (props) => {
           searchTerm={props.searchTerm}
           handleSearch={props.handleSearch}
           hospitalInfo={props.hospitalInfo}
-          hospitalLocationMap={props.hospitalLocationMap}
           processedPlansRecords={props.processedPlansRecords}
         />
       </Grid>

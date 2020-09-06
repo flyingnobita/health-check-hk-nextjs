@@ -17,20 +17,17 @@ import {
   WhatsappShareButton,
 } from "react-share";
 import { useTracking } from "react-tracking";
-import { APP_URL } from "./settings";
-
-const SHARE_MESSAGE_EN =
-  "Don't know which body check plan is right for you? Compare plans from all hospitals here!";
-const SHARE_MESSAGE_CH =
-  "唔知邊個驗身計劃至啱？嚟呢到比較晒全香港嘅計劃，一頁睇晒！";
-const FACEBOOK_HASHTAG = "#hkbodycheck";
-const TWITTER_HASHTAGS = ["hkbodycheck", "hkhealth"];
-const EMAIL_SUBJECT_EN = "${APP_URL} Compare plans from all hospitals here!";
-const EMAIL_SUBJECT_CH = "${APP_URL} 嚟呢到比較晒全香港嘅計劃，一頁睇晒！";
-const EMAIL_BODY_EN =
-  "Don't know which body check plans is right for you? Compare plans from all hospitals here! ${APP_URL}";
-const EMAIL_BODY_CH =
-  "唔知邊個驗身計劃至啱？嚟呢到比較晒全香港嘅計劃，一頁睇晒！${APP_URL}";
+import {
+  APP_URL,
+  SHARE_MESSAGE_EN,
+  SHARE_MESSAGE_CH,
+  FACEBOOK_HASHTAG,
+  TWITTER_HASHTAGS,
+  EMAIL_SUBJECT_EN,
+  EMAIL_SUBJECT_CH,
+  EMAIL_BODY_EN,
+  EMAIL_BODY_CH,
+} from "./settings";
 
 const SHARE_ICON_SIZE = 32;
 const SHARE_ICON_BORDER_RADIUS = 10;

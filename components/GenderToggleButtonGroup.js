@@ -1,5 +1,6 @@
 import ToggleButton from "@material-ui/lab/ToggleButton";
 import ToggleButtonGroup from "@material-ui/lab/ToggleButtonGroup";
+import { GENDER_SPECIFIC_PLAN_TYPES } from "./settings";
 
 export default function GenderToggleButtonGroup({
   genders,
@@ -18,15 +19,7 @@ export default function GenderToggleButtonGroup({
         value="Male"
         aria-label="male"
         className="filter-selection"
-        disabled={
-          ![
-            "General",
-            "Gender Specific",
-            "Cancer",
-            "Cardiac",
-            "Pre-marital",
-          ].includes(planTypes)
-        }
+        disabled={!GENDER_SPECIFIC_PLAN_TYPES.includes(planTypes)}
       >
         {language === "en" ? "MALE" : "男"}
       </ToggleButton>
@@ -34,15 +27,7 @@ export default function GenderToggleButtonGroup({
         value="Female"
         aria-label="female"
         className="filter-selection"
-        disabled={
-          ![
-            "General",
-            "Gender Specific",
-            "Cancer",
-            "Cardiac",
-            "Pre-marital",
-          ].includes(planTypes)
-        }
+        disabled={!GENDER_SPECIFIC_PLAN_TYPES.includes(planTypes)}
       >
         {language === "en" ? "FEMALE" : "女"}
       </ToggleButton>

@@ -27,34 +27,22 @@ export default class ReactPivotTable extends React.Component {
       this.readCSV();
 
       return (
-        // <Box
-        //   display="inline-block"
-        //   text-align="center"
-        //   marginLeft="5vw"
-        //   marginRight="5vw"
-        //   overflow="auto"
-        //   width="100"
-        //   maxWidth="90vw"
-        //   minWidth="0"
-        //   maxHeight="90vh"
-        //   paddingBottom="5px"
-        // >
-          <PivotTable
-            data={this.tableData}
-            cols={
-              this.props.language === "en"
-                ? ["Plan Type", "Gender", "Hospital", "Price", "Plan Name"]
-                : ["計劃類別", "性別", "醫院", "價錢", "計劃名稱"]
-            }
-            rows={
-              this.props.language === "en"
-                ? ["Service Type", "Service Subtype", "Service Name"]
-                : ["項目類別", "項目次類別", "項目名稱"]
-            }
-            aggregatorName="CountA"
-            onChange={(s) => this.setState(s)}
-            {...this.state}
-          />
+        <PivotTable
+          data={this.tableData}
+          cols={
+            this.props.language === "en"
+              ? ["Plan Type", "Gender", "Hospital", "Price", "Plan Name"]
+              : ["計劃類別", "性別", "醫院", "價錢", "計劃名稱"]
+          }
+          rows={
+            this.props.language === "en"
+              ? ["Service Type", "Service Subtype", "Service Name"]
+              : ["項目類別", "項目次類別", "項目名稱"]
+          }
+          aggregatorName="CountA"
+          onChange={(s) => this.setState(s)}
+          {...this.state}
+        />
         // </Box>
       );
     } else {

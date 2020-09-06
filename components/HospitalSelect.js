@@ -4,20 +4,40 @@ import Input from "@material-ui/core/Input";
 import MenuItem from "@material-ui/core/MenuItem";
 import Select from "@material-ui/core/Select";
 import React from "react";
+import { filterHospitals } from "./indexHelper";
+
+function getHospitalList(filtered) {
+  let filteredHospitalsList = [];
+  if (filtered.length > 0) {
+    filteredHospitalsList = [
+      ...new Set(filtered.map((item) => item["Hospital"])),
+    ];
+  } else {
+    filteredHospitalsList = [];
+  }
+  return filteredHospitalsList;
+}
 
 export default function HospitalSelect({
   language,
   locations,
   hospitals,
   handleHospitalSelect,
-  hospitalInfo,
   planTypes,
-  hospitalLocationMap,
+  genders,
+  processedPlansRecords,
 }) {
-  if (hospitalInfo === undefined || hospitalInfo.length === 0) {
+  if (processedPlansRecords === undefined || processedPlansRecords.length === 0) {
     return null;
   } else {
-    const locationList = hospitalLocationMap.get(planTypes);
+    let filtered = filterHospitals(
+      processedPlansRecords,
+      planTypes,
+      genders,
+      locations
+    );
+    let filteredHospitalsList = getHospitalList(filtered);
+
     return (
       <Grid item xs={12} align="center">
         <Select
@@ -36,23 +56,24 @@ export default function HospitalSelect({
                   label={
                     language === "en"
                       ? value
-                      : hospitalInfo.find(
-                          (hospital) => hospital.hospital === value
-                        ).hospitalCN
+                      : filtered.find(
+                          (hospital) => hospital["Hospital"] === value
+                        )["Hospital CN"]
                   }
                 />
               ))}
             </div>
           )}
         >
-          {locationList[locations].map((hospital) => {
+          {filteredHospitalsList.map((hospital) => {
             return (
               <MenuItem key={hospital} value={hospital}>
                 {language === "en"
                   ? hospital
-                  : hospitalInfo.find(
-                      (hospitalInInfo) => hospitalInInfo.hospital === hospital
-                    ).hospitalCN}
+                  : filtered.find(
+                      (filteredHospital) =>
+                        filteredHospital["Hospital"] === hospital
+                    )["Hospital CN"]}
               </MenuItem>
             );
           })}

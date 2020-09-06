@@ -211,8 +211,8 @@ function FeedbackForm({ hospitalInfo, language }) {
       <Grid item xs={10} align="center" className={classes.grid}>
         <Button onClick={handleDialogOpen}>
           {language === "en"
-            ? "Spot an error? Let us know!"
-            : "有錯處? 請話我知!"}
+            ? "Spot an error? Have comments? Let us know!"
+            : "有錯處? 有意見? 請話我知!"}
         </Button>
         <Dialog
           fullWidth={true}
@@ -222,8 +222,8 @@ function FeedbackForm({ hospitalInfo, language }) {
         >
           <DialogTitle id="feedback-dialog-title" onClose={handleDialogClose}>
             {language === "en"
-              ? "Spot an error? Let us know!"
-              : "有錯處? 請話我知!"}
+              ? "Spot an error? Have comments? Let us know!"
+              : "有錯處? 有意見? 請話我知!"}
           </DialogTitle>
           <DialogContent dividers>
             <Formik

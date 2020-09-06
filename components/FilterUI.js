@@ -44,7 +44,6 @@ export default function FilterUI({
   searchTerm,
   handleSearch,
   hospitalInfo,
-  hospitalLocationMap,
   processedPlansRecords,
 }) {
   const classes = useStyles();
@@ -137,7 +136,7 @@ export default function FilterUI({
                   handleLocation={handleLocation}
                   language={language}
                   planTypes={planTypes}
-                  hospitalLocationMap={hospitalLocationMap}
+                  processedPlansRecords={processedPlansRecords}
                 />
               </Grid>
 
@@ -227,7 +226,8 @@ export default function FilterUI({
                 handleLocationSelect={handleLocationSelect}
                 language={language}
                 planTypes={planTypes}
-                hospitalLocationMap={hospitalLocationMap}
+                genders={genders}
+                processedPlansRecords={processedPlansRecords}
               />
             </Grid>
 
@@ -236,9 +236,9 @@ export default function FilterUI({
               locations={locations}
               hospitals={hospitals}
               handleHospitalSelect={handleHospitalSelect}
-              hospitalInfo={hospitalInfo}
               planTypes={planTypes}
-              hospitalLocationMap={hospitalLocationMap}
+              genders={genders}
+              processedPlansRecords={processedPlansRecords}
             />
 
             <Grid item className={classes.buttonGroup} xs={12} align="center">

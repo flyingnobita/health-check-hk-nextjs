@@ -1,11 +1,24 @@
 import ToggleButton from "@material-ui/lab/ToggleButton";
 import ToggleButtonGroup from "@material-ui/lab/ToggleButtonGroup";
+import { filterHospitals } from "./indexHelper";
 
-function toDisableLocation(hospitalLocationMap, planTypes, locations) {
-  const locationList = hospitalLocationMap.get(planTypes);
-  if (locationList) {
-    return !(locations in locationList);
-  } else return true;
+function toDisableLocation(processedPlansRecords, planTypes, locations) {
+  let filtered = filterHospitals(
+    processedPlansRecords,
+    planTypes,
+    [],
+    locations
+  );
+
+  filtered = filtered.filter(function (record) {
+    return [locations].includes(record["Location"]);
+  });
+
+  if (filtered.length === 0) {
+    return true;
+  } else {
+    return false;
+  }
 }
 
 export default function LocationToggleButtonGroup({
@@ -13,7 +26,7 @@ export default function LocationToggleButtonGroup({
   handleLocation,
   language,
   planTypes,
-  hospitalLocationMap,
+  processedPlansRecords,
 }) {
   return (
     <ToggleButtonGroup
@@ -26,7 +39,11 @@ export default function LocationToggleButtonGroup({
         value="hkIsland"
         aria-label="hkIsland"
         className="filter-selection"
-        disabled={toDisableLocation(hospitalLocationMap, planTypes, "hkIsland")}
+        disabled={toDisableLocation(
+          processedPlansRecords,
+          planTypes,
+          "hkIsland"
+        )}
       >
         {language === "en" ? "HK ISLAND" : "港島"}
       </ToggleButton>
@@ -34,7 +51,11 @@ export default function LocationToggleButtonGroup({
         value="kowloon"
         aria-label="kowloon"
         className="filter-selection"
-        disabled={toDisableLocation(hospitalLocationMap, planTypes, "kowloon")}
+        disabled={toDisableLocation(
+          processedPlansRecords,
+          planTypes,
+          "kowloon"
+        )}
       >
         {language === "en" ? "KOWLOON" : "九龍"}
       </ToggleButton>
@@ -43,7 +64,7 @@ export default function LocationToggleButtonGroup({
         aria-label="newTerritories"
         className="filter-selection"
         disabled={toDisableLocation(
-          hospitalLocationMap,
+          processedPlansRecords,
           planTypes,
           "newTerritories"
         )}

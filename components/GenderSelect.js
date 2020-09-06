@@ -1,5 +1,6 @@
 import MenuItem from "@material-ui/core/MenuItem";
 import Select from "@material-ui/core/Select";
+import { GENDER_SPECIFIC_PLAN_TYPES } from "./settings";
 
 export default function GenderSelect({
   genders,
@@ -7,7 +8,7 @@ export default function GenderSelect({
   language,
   planTypes,
 }) {
-  if (planTypes === "General" || planTypes === "Pre-marital") {
+  if (GENDER_SPECIFIC_PLAN_TYPES.includes(planTypes)) {
     return (
       <Select
         labelId="select-gender-label"
