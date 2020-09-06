@@ -1,5 +1,6 @@
 import ToggleButton from "@material-ui/lab/ToggleButton";
 import ToggleButtonGroup from "@material-ui/lab/ToggleButtonGroup";
+import React from "react";
 import { filterHospitals } from "./indexHelper";
 
 function toDisableLocation(processedPlansRecords, planTypes, locations) {

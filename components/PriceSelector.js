@@ -20,13 +20,13 @@ ValueLabelComponent.propTypes = {
   value: PropTypes.object.isRequired,
 };
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   sliderTypography: {
     width: 250,
   },
 }));
 
-export default function PriceSelector({ prices, handlePrice, planTypes }) {
+export default function PriceSelector({ prices, handlePrice }) {
   const classes = useStyles();
 
   const marks = [
@@ -61,7 +61,6 @@ export default function PriceSelector({ prices, handlePrice, planTypes }) {
         valueLabelDisplay="auto"
         valueLabelFormat={(value) => <div>${value / 1000}k</div>}
         aria-label="Price Selector"
-        // disabled={planTypes !== "General"}
       />
     </div>
   );

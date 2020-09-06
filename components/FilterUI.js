@@ -15,7 +15,7 @@ import LocationToggleButtonGroup from "./LocationToggleButtonGroup";
 import PriceSelector from "./PriceSelector";
 import SearchBar from "./SearchBar";
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   mobileGridContainer: {
     paddingBottom: "16px",
   },

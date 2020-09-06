@@ -1,5 +1,6 @@
 import MenuItem from "@material-ui/core/MenuItem";
 import Select from "@material-ui/core/Select";
+import React from "react";
 import { filterHospitals } from "./indexHelper";
 
 function getLocationList(filtered) {

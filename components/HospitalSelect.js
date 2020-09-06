@@ -27,7 +27,10 @@ export default function HospitalSelect({
   genders,
   processedPlansRecords,
 }) {
-  if (processedPlansRecords === undefined || processedPlansRecords.length === 0) {
+  if (
+    processedPlansRecords === undefined ||
+    processedPlansRecords.length === 0
+  ) {
     return null;
   } else {
     let filtered = filterHospitals(

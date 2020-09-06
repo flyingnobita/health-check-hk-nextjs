@@ -1,4 +1,5 @@
 import Head from "next/head";
+import React from "react";
 import { HEAD_DESCRIPTION, HEAD_TITLE } from "../components/settings";
 
 function GetHead() {

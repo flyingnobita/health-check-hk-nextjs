@@ -3,7 +3,7 @@ import {
   FormControlLabel,
   Grid,
   LinearProgress,
-  Radio,
+  Radio
 } from "@material-ui/core";
 import Dialog from "@material-ui/core/Dialog";
 import MuiDialogContent from "@material-ui/core/DialogContent";
@@ -20,6 +20,7 @@ import CloseIcon from "@material-ui/icons/Close";
 import MuiAlert from "@material-ui/lab/Alert";
 import { Field, Form, Formik } from "formik";
 import { RadioGroup, Select, TextField } from "formik-material-ui";
+import PropTypes from "prop-types";
 import React, { useState } from "react";
 
 const styles = (theme) => ({
@@ -389,5 +390,10 @@ function FeedbackForm({ hospitalInfo, language }) {
     </Grid>
   );
 }
+
+FeedbackForm.propTypes = {
+  hospitalInfo: PropTypes.array,
+  language: PropTypes.string,
+};
 
 export default withStyles(styles)(FeedbackForm);

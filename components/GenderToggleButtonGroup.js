@@ -1,5 +1,7 @@
 import ToggleButton from "@material-ui/lab/ToggleButton";
 import ToggleButtonGroup from "@material-ui/lab/ToggleButtonGroup";
+import PropTypes from "prop-types";
+import React from "react";
 import { GENDER_SPECIFIC_PLAN_TYPES } from "./settings";
 
 export default function GenderToggleButtonGroup({
@@ -34,3 +36,10 @@ export default function GenderToggleButtonGroup({
     </ToggleButtonGroup>
   );
 }
+
+GenderToggleButtonGroup.propTypes = {
+  genders: PropTypes.string,
+  handleGender: PropTypes.func,
+  language: PropTypes.string,
+  planTypes: PropTypes.string,
+};

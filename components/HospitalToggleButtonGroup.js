@@ -31,7 +31,7 @@ function toDisableHospital(
   }
 }
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   buttonGroup: {
     margin: 10,
   },

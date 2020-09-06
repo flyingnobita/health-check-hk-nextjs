@@ -1,3 +1,4 @@
+import PropTypes from "prop-types";
 import React from "react";
 
 const Emoji = (props) => (
@@ -10,5 +11,10 @@ const Emoji = (props) => (
     {props.symbol}
   </span>
 );
+
+Emoji.propTypes = {
+  label: PropTypes.string,
+  symbol: PropTypes.string,
+};
 
 export default Emoji;

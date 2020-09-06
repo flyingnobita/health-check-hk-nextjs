@@ -5,6 +5,8 @@ import useMediaQuery from "@material-ui/core/useMediaQuery";
 import MuiAlert from "@material-ui/lab/Alert";
 import { ThemeProvider } from "@material-ui/styles";
 import Airtable from "airtable";
+import dynamic from "next/dynamic";
+import PropTypes from "prop-types";
 import React, { useState } from "react";
 import track, { useTracking } from "react-tracking";
 import FeedbackForm from "../components/FeedbackForm";
@@ -12,19 +14,17 @@ import Footer from "../components/Footer";
 import { GetReactPivotTable } from "../components/GetReactPivotTable";
 import GetHead from "../components/head";
 import Header from "../components/Header";
-// import HospitalInfos from "../components/HospitalInfos";
 import {
   filterHospitals,
   getHospitalInfo,
-  processRawAirtableRecords,
+  processRawAirtableRecords
 } from "../components/indexHelper";
 import {
   GENDER_SPECIFIC_PLAN_TYPES,
-  MAX_AIRTABLE_RECORDS,
+  MAX_AIRTABLE_RECORDS
 } from "../components/settings";
 import useDebounce from "../components/useDebounce";
 import muiTheme from "../styles/muiTheme";
-import dynamic from "next/dynamic";
 
 const HospitalInfos = dynamic(() => import("../components/HospitalInfos"));
 
@@ -47,6 +47,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function App({ servicePlansRecords, plansRecords }) {
+
   const classes = useStyles();
   const wideScreen = useMediaQuery("(min-width:600px)");
 
@@ -54,7 +55,7 @@ function App({ servicePlansRecords, plansRecords }) {
 
   const initialPriceRange = [0, 30000];
   const maxPriceRange = [0, 30000];
-  const priceRangeDiff = initialPriceRange[1] - initialPriceRange[0];
+  // const priceRangeDiff = initialPriceRange[1] - initialPriceRange[0];
 
   const processedServicePlansRecords = processRawAirtableRecords(
     servicePlansRecords
@@ -282,7 +283,7 @@ function App({ servicePlansRecords, plansRecords }) {
 
   // Search
   const [searchTerm, setSearchTerm] = useState("");
-  const [isSearching, setIsSearching] = useState(false);
+  // const [isSearching, setIsSearching] = useState(false);
   const debouncedSearchTerm = useDebounce(searchTerm, 800);
   const handleSearch = (event) => {
     setSearchTerm(event.target.value);
@@ -391,7 +392,6 @@ function App({ servicePlansRecords, plansRecords }) {
         handleSearch={handleSearch}
         hospitalInfo={hospitalInfo}
         pivotTableGrid={classes.pivotTableGrid}
-        language={language}
         filteredDataArray={filteredDataArray}
         processedPlansRecords={processedPlansRecords}
       ></GetReactPivotTable>
@@ -455,7 +455,7 @@ export async function getStaticProps() {
   let plansTable = base("Plans");
 
   function retrieveAllRecords(base) {
-    return (resolve, reject) => {
+    return (resolve) => {
       let airtableRecords = [];
       base
         .select({
@@ -493,5 +493,10 @@ export async function getStaticProps() {
     },
   };
 }
+
+App.propTypes = {
+  servicePlansRecords: PropTypes.array,
+  plansRecords: PropTypes.array,
+};
 
 export default TrackedApp;

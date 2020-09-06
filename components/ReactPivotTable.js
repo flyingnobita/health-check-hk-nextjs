@@ -1,5 +1,4 @@
 import { Grid } from "@material-ui/core";
-import Box from "@material-ui/core/Box";
 import LinearProgress from "@material-ui/core/LinearProgress";
 import React from "react";
 import PivotTable from "../components/react-pivottable/PivotTable";
@@ -11,7 +10,7 @@ export default class ReactPivotTable extends React.Component {
     this.tableData = [];
   }
 
-  readCSV = () => {
+  readCSV() {
     if (
       typeof this.props.csv === "object" ||
       this.props.csv instanceof Object
@@ -20,7 +19,7 @@ export default class ReactPivotTable extends React.Component {
       pros_csv = this.props.csv;
       this.tableData = pros_csv;
     }
-  };
+  }
 
   render() {
     if (this.props.csv) {

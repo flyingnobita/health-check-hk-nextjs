@@ -16,8 +16,8 @@ export const SHARE_MESSAGE_EN =
   "Don't know which body check plan is right for you? Compare plans from all hospitals here!";
 export const SHARE_MESSAGE_CH =
   "唔知邊個驗身計劃至啱？嚟呢到比較晒全香港嘅計劃，一頁睇晒！";
-export const FACEBOOK_HASHTAG = "#hkbodycheck";
-export const TWITTER_HASHTAGS = ["hkbodycheck", "hkhealth"];
+export const FACEBOOK_HASHTAG = "#HKBodyCheck";
+export const TWITTER_HASHTAGS = ["HKBodyCheck", "HKHealth"];
 export const EMAIL_SUBJECT_EN =
   "${APP_URL} Compare plans from all hospitals here!";
 export const EMAIL_SUBJECT_CH =
