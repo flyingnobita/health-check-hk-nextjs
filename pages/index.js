@@ -423,7 +423,7 @@ function App({ servicePlansRecords, plansRecords }) {
           <Alert onClose={handleAlertClose} severity="warning">
             {language === "en"
               ? "For General plans, choose up to 2 hospitals"
-              : "一般計劃, 最多兩間醫院"}
+              : "一般計劃, 最多可選兩間醫院"}
           </Alert>
         </Snackbar>
       </ThemeProvider>
