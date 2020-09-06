@@ -5,6 +5,7 @@
   src: local("Noto Sans HK"),
     url(./fonts/NotoSansHK-Regular.otf) format("opentype");
   unicode-range: U+4E00-9FFF, U+F900-FAFF, U+2F800-2FA1F;
+  font-display: swap;
 }
 
 body {
