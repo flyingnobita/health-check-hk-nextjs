@@ -25,5 +25,9 @@
     "react-sortablejs": "^2.0.11",
     "react-tracking": "^8.0.0",
     "sortablejs": "^1.10.2"
+  },
+  "devDependencies": {
+    "eslint": "^7.8.1",
+    "eslint-plugin-react": "^7.20.6"
   }
 }
