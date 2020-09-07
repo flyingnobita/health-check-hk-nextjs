@@ -3,6 +3,7 @@ import Paper from "@material-ui/core/Paper";
 import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import React from "react";
+import { HEAD_TITLE_EN } from "../components/settings";
 import PrivacyDialog from "./PrivacyDialog";
 import TermsDialog from "./TermsDialog";
 
@@ -37,7 +38,7 @@ export default function Footer() {
         </Grid>
       </Grid>
       <Typography component="div" className={classes.copyright}>
-        © Hong Kong Body Checks
+        © {HEAD_TITLE_EN}
       </Typography>
     </Paper>
   );

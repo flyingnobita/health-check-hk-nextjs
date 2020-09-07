@@ -9,6 +9,7 @@ import HomeIcon from "@material-ui/icons/Home";
 import InfoIcon from "@material-ui/icons/Info";
 import TranslateIcon from "@material-ui/icons/Translate";
 import React from "react";
+import { HEAD_TITLE_CN, HEAD_TITLE_EN } from "../components/settings";
 import ShareButton from "./ShareButton";
 
 const useStyles = makeStyles(() => ({
@@ -59,7 +60,7 @@ export default function Header(props) {
           )}
         </IconButton>
         <Typography variant="h6" className={classes.appBarTitle}>
-          {props.language === "en" ? "Hong Kong Body Checks" : "香港健康檢查"}
+          {props.language === "en" ? HEAD_TITLE_EN : HEAD_TITLE_CN}
         </Typography>
         <ShareButton language={props.language} />
         {props.wideScreen ? (

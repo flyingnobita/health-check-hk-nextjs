@@ -1,7 +1,8 @@
-export const HEAD_TITLE = "Hong Kong Body Checks";
-export const HEAD_DESCRIPTION =
+export const HEAD_TITLE_EN = "Hong Kong Body Check";
+export const HEAD_TITLE_CN = "香港健康檢查";
+export const HEAD_DESCRIPTION_EN =
   "Comparison of Hong Kong Body Check Plans Packages";
-export const APP_URL = "https://bodycheck.vercel.app/";
+export const APP_URL = "https://hkbodycheck.info";
 
 export const GENDER_SPECIFIC_PLAN_TYPES = [
   "General",

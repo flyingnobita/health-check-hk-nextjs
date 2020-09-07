@@ -7,6 +7,7 @@ import { withStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import CloseIcon from "@material-ui/icons/Close";
 import React from "react";
+import { APP_URL, HEAD_TITLE_EN } from "../components/settings";
 
 const styles = (theme) => ({
   root: {
@@ -74,15 +75,15 @@ export default function PrivacyDialog() {
             1 What This Privacy Policy Covers
           </Typography>
           <Typography gutterBottom>
-            1.1 This policy covers how bodycheck.flyingnobita.com (the
-            "Website") treats personal information that the Website collects and
-            receives, including information related to your past use of our
-            products and services. Personal information is information about you
-            that is personally identifiable like your name, address, email
-            address, or phone number, and that is not otherwise publicly
-            available. This Privacy Policy does not apply to the practices of
-            companies that the Website does not own or control, or to people
-            that the Website does not employ or manage.
+            1.1 This policy covers how {APP_URL} (the "Website") treats personal
+            information that the Website collects and receives, including
+            information related to your past use of our products and services.
+            Personal information is information about you that is personally
+            identifiable like your name, address, email address, or phone
+            number, and that is not otherwise publicly available. This Privacy
+            Policy does not apply to the practices of companies that the Website
+            does not own or control, or to people that the Website does not
+            employ or manage.
           </Typography>
           <Typography gutterBottom variant="h6">
             2 Information Collection and Use
@@ -127,8 +128,8 @@ export default function PrivacyDialog() {
             3.1.3 We believe it is necessary to share information in order to
             investigate, prevent, or take action regarding illegal activities,
             suspected fraud, situations involving potential threats to the
-            physical safety of any person, violations of Price’s terms of use,
-            or as otherwise required by law.
+            physical safety of any person, violations of {HEAD_TITLE_EN}’s terms
+            of use, or as otherwise required by law.
           </Typography>
           <Typography gutterBottom>
             3.1.4 In response to a court order under HKSAR Law (Ordinance V,
