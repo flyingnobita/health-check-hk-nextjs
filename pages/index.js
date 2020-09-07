@@ -17,11 +17,11 @@ import Header from "../components/Header";
 import {
   filterHospitals,
   getHospitalInfo,
-  processRawAirtableRecords
+  processRawAirtableRecords,
 } from "../components/indexHelper";
 import {
   GENDER_SPECIFIC_PLAN_TYPES,
-  MAX_AIRTABLE_RECORDS
+  MAX_AIRTABLE_RECORDS,
 } from "../components/settings";
 import useDebounce from "../components/useDebounce";
 import muiTheme from "../styles/muiTheme";
@@ -47,9 +47,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function App({ servicePlansRecords, plansRecords }) {
-
   const classes = useStyles();
-  const wideScreen = useMediaQuery("(min-width:600px)");
+  const wideScreen = useMediaQuery("(min-width:568px)");
 
   const { trackEvent } = useTracking();
 
