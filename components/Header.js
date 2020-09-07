@@ -24,12 +24,6 @@ const useStyles = makeStyles((theme) => ({
   icon: {
     color: "white",
   },
-  alertBanner: {
-    width: "100%",
-    "& > * + *": {
-      marginTop: theme.spacing(2),
-    },
-  },
   screenRotationIcon: {
     marginRight: "10px",
   },
@@ -64,53 +58,43 @@ export default function Header(props) {
   const classes = useStyles();
   const [open, setOpen] = React.useState(true);
 
-  let screenRotationAlert;
+  let screenRotationAlert = null;
   if (!props.wideScreen) {
-    if (typeof window !== "undefined") {
-      if (window.innerHeight > window.innerWidth) {
-        screenRotationAlert = (
-          <div className={classes.alertBanner}>
-            <Collapse in={open}>
-              <Alert
-                icon={false}
-                severity="info"
-                className={classes.alert}
-                action={
-                  <IconButton
-                    aria-label="close"
-                    color="inherit"
-                    size="small"
-                    onClick={() => {
-                      setOpen(false);
-                    }}
-                  >
-                    <CloseIcon fontSize="inherit" />
-                  </IconButton>
-                }
+    screenRotationAlert = (
+      <React.Fragment>
+        <Collapse in={open}>
+          <Alert
+            icon={false}
+            severity="info"
+            className={classes.alert}
+            action={
+              <IconButton
+                aria-label="close"
+                color="inherit"
+                size="small"
+                onClick={() => {
+                  setOpen(false);
+                }}
               >
-                <Grid
-                  container
-                  direction="row"
-                  justify="center"
-                  alignItems="center"
-                >
-                  <Grid item>
-                    <ScreenRotationIcon
-                      className={classes.screenRotationIcon}
-                    />
-                  </Grid>
-                  <Grid item>
-                    {props.language === "en"
-                      ? "Please rotate your screen for best view"
-                      : "請旋轉您的手機，網頁會更易睇"}
-                  </Grid>
-                </Grid>
-              </Alert>
-            </Collapse>
-          </div>
-        );
-      }
-    }
+                <CloseIcon fontSize="inherit" />
+              </IconButton>
+            }
+          >
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+              }}
+            >
+              <ScreenRotationIcon className={classes.screenRotationIcon} />
+              {props.language === "en"
+                ? "Please rotate your screen for best view"
+                : "請旋轉您的手機，網頁會更易睇"}
+            </div>
+          </Alert>
+        </Collapse>
+      </React.Fragment>
+    );
   }
 
   return (
@@ -147,7 +131,7 @@ export default function Header(props) {
           )}
         </Toolbar>
       </AppBar>
-      {/* {screenRotationAlert} */}
+      {screenRotationAlert}
     </React.Fragment>
   );
 }
