@@ -155,7 +155,7 @@ export default function FilterUI({
                 <PriceSelector
                   prices={prices}
                   handlePrice={handlePrice}
-                  planTypes={planTypes}
+                  language={language}
                 />
               </Grid>
 
@@ -245,7 +245,7 @@ export default function FilterUI({
               <PriceSelector
                 prices={prices}
                 handlePrice={handlePrice}
-                planTypes={planTypes}
+                language={language}
               />
             </Grid>
 
