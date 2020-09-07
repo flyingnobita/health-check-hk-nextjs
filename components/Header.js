@@ -147,7 +147,7 @@ export default function Header(props) {
           )}
         </Toolbar>
       </AppBar>
-      {screenRotationAlert}
+      {/* {screenRotationAlert} */}
     </React.Fragment>
   );
 }
