@@ -66,46 +66,50 @@ export default function Header(props) {
 
   let screenRotationAlert;
   if (!props.wideScreen) {
-    if (window.innerHeight > window.innerWidth) {
-      screenRotationAlert = (
-        <div className={classes.alertBanner}>
-          <Collapse in={open}>
-            <Alert
-              icon={false}
-              severity="info"
-              className={classes.alert}
-              action={
-                <IconButton
-                  aria-label="close"
-                  color="inherit"
-                  size="small"
-                  onClick={() => {
-                    setOpen(false);
-                  }}
-                >
-                  <CloseIcon fontSize="inherit" />
-                </IconButton>
-              }
-            >
-              <Grid
-                container
-                direction="row"
-                justify="center"
-                alignItems="center"
+    if (typeof window !== "undefined") {
+      if (window.innerHeight > window.innerWidth) {
+        screenRotationAlert = (
+          <div className={classes.alertBanner}>
+            <Collapse in={open}>
+              <Alert
+                icon={false}
+                severity="info"
+                className={classes.alert}
+                action={
+                  <IconButton
+                    aria-label="close"
+                    color="inherit"
+                    size="small"
+                    onClick={() => {
+                      setOpen(false);
+                    }}
+                  >
+                    <CloseIcon fontSize="inherit" />
+                  </IconButton>
+                }
               >
-                <Grid item>
-                  <ScreenRotationIcon className={classes.screenRotationIcon} />
+                <Grid
+                  container
+                  direction="row"
+                  justify="center"
+                  alignItems="center"
+                >
+                  <Grid item>
+                    <ScreenRotationIcon
+                      className={classes.screenRotationIcon}
+                    />
+                  </Grid>
+                  <Grid item>
+                    {props.language === "en"
+                      ? "Please rotate your screen for best view"
+                      : "請旋轉您的手機，網頁會更易睇"}
+                  </Grid>
                 </Grid>
-                <Grid item>
-                  {props.language === "en"
-                    ? "Please rotate your screen for best view"
-                    : "請旋轉您的手機，網頁會更易睇"}
-                </Grid>
-              </Grid>
-            </Alert>
-          </Collapse>
-        </div>
-      );
+              </Alert>
+            </Collapse>
+          </div>
+        );
+      }
     }
   }
 
