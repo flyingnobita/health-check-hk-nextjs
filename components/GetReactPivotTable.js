@@ -9,6 +9,7 @@ export const GetReactPivotTable = (props) => {
       <Grid item xs={12} className={props.filterGrid}>
         <FilterUI
           wideScreen={props.wideScreen}
+          superWideScreen={props.superWideScreen}
           language={props.language}
           hospitals={props.hospitals}
           handleHospital={props.handleHospital}

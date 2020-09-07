@@ -46,6 +46,7 @@ export default function HospitalToggleButtonGroup({
   planTypes,
   genders,
   processedPlansRecords,
+  superWideScreen,
 }) {
   const classes = useStyles();
 
@@ -60,7 +61,6 @@ export default function HospitalToggleButtonGroup({
             mountOnEnter
             unmountOnExit
             in={locations === "hkIsland"}
-            // timeout={{ appear: 1000, enter: 1000, exit: 400 }}
             style={{
               transitionDelay: locations === "hkIsland" ? "500ms" : "0ms",
             }}
@@ -69,6 +69,7 @@ export default function HospitalToggleButtonGroup({
               value={hospitals}
               onChange={handleHospital}
               aria-label="hospitals"
+              size={superWideScreen ? "medium" : "small"}
             >
               {hospitalInfo
                 .filter((hospital) => hospital.location === "hkIsland")

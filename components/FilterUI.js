@@ -26,6 +26,7 @@ const useStyles = makeStyles(() => ({
 
 export default function FilterUI({
   wideScreen,
+  superWideScreen,
   language,
   hospitals,
   handleHospital,
@@ -61,6 +62,7 @@ export default function FilterUI({
                   exclusive
                   onChange={handlePlanType}
                   aria-label="planTypes"
+                  size={superWideScreen ? "medium" : "small"}
                 >
                   <ToggleButton
                     value="General"
@@ -127,6 +129,7 @@ export default function FilterUI({
                   handleGender={handleGender}
                   language={language}
                   planTypes={planTypes}
+                  superWideScreen={superWideScreen}
                 />
               </Grid>
 
@@ -137,6 +140,7 @@ export default function FilterUI({
                   language={language}
                   planTypes={planTypes}
                   processedPlansRecords={processedPlansRecords}
+                  superWideScreen={superWideScreen}
                 />
               </Grid>
 
@@ -149,6 +153,7 @@ export default function FilterUI({
                 planTypes={planTypes}
                 genders={genders}
                 processedPlansRecords={processedPlansRecords}
+                superWideScreen={superWideScreen}
               />
 
               <Grid item className={classes.buttonGroup}>

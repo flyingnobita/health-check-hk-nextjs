@@ -28,6 +28,7 @@ export default function LocationToggleButtonGroup({
   language,
   planTypes,
   processedPlansRecords,
+  superWideScreen,
 }) {
   return (
     <ToggleButtonGroup
@@ -35,6 +36,7 @@ export default function LocationToggleButtonGroup({
       exclusive
       onChange={handleLocation}
       aria-label="locations"
+      size={superWideScreen ? "medium" : "small"}
     >
       <ToggleButton
         value="hkIsland"
