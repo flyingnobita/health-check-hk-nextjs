@@ -3,7 +3,7 @@ export const HEAD_TITLE_CN = "香港健康檢查";
 export const HEAD_DESCRIPTION_EN =
   "Comparison of Hong Kong Body Check Plans Packages";
 export const HEAD_DESCRIPTION_CN = "全港驗身計劃比較";
-export const APP_URL = "https://hkbodycheck.info";
+export const APP_URL = "https://HKBodyCheck.info";
 
 export const GENDER_SPECIFIC_PLAN_TYPES = [
   "General",
