@@ -9,6 +9,7 @@ export default function GenderToggleButtonGroup({
   handleGender,
   language,
   planTypes,
+  superWideScreen,
 }) {
   return (
     <ToggleButtonGroup
@@ -16,6 +17,7 @@ export default function GenderToggleButtonGroup({
       exclusive
       onChange={handleGender}
       aria-label="genders"
+      size={superWideScreen ? "medium" : "small"}
     >
       <ToggleButton
         value="Male"
@@ -42,4 +44,5 @@ GenderToggleButtonGroup.propTypes = {
   handleGender: PropTypes.func,
   language: PropTypes.string,
   planTypes: PropTypes.string,
+  superWideScreen: PropTypes.bool,
 };

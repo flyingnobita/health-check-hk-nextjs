@@ -49,6 +49,7 @@ const useStyles = makeStyles((theme) => ({
 function App({ servicePlansRecords, plansRecords }) {
   const classes = useStyles();
   const wideScreen = useMediaQuery("(min-width:568px)");
+  const superWideScreen = useMediaQuery("(min-width:725px)");
 
   const { trackEvent } = useTracking();
 
@@ -372,6 +373,7 @@ function App({ servicePlansRecords, plansRecords }) {
       <GetReactPivotTable
         filterGrid={classes.filterGrid}
         wideScreen={wideScreen}
+        superWideScreen={superWideScreen}
         language={language}
         planTypes={planTypes}
         handlePlanType={handlePlanType}

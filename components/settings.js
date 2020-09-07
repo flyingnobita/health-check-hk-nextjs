@@ -5,6 +5,8 @@ export const HEAD_DESCRIPTION_EN =
 export const HEAD_DESCRIPTION_CN = "全港驗身計劃比較";
 export const APP_URL = "https://HKBodyCheck.info";
 
+export const MAX_AIRTABLE_RECORDS = 10000;
+
 export const GENDER_SPECIFIC_PLAN_TYPES = [
   "General",
   "Gender Specific",
@@ -12,7 +14,6 @@ export const GENDER_SPECIFIC_PLAN_TYPES = [
   "Cardiac",
   "Pre-marital",
 ];
-export const MAX_AIRTABLE_RECORDS = 10000;
 
 export const SHARE_MESSAGE_EN =
   "Don't know which body check plan is right for you? Compare plans from all hospitals here!";
