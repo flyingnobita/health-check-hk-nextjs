@@ -199,7 +199,7 @@ function App({ servicePlansRecords, plansRecords }) {
   // Hospital
   const [hospitals, setHospitals] = useState(() => ["Adventist - Stubbs"]);
   const handleHospital = (event, newHospitals) => {
-    if (newHospitals && newHospitals.length) {
+    if (newHospitals) {
       if (newHospitals.length <= 2 || planTypes !== "General") {
         setHospitals(newHospitals);
       } else {
