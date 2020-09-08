@@ -1,9 +1,9 @@
 import Slider from "@material-ui/core/Slider";
 import { makeStyles } from "@material-ui/core/styles";
 import Tooltip from "@material-ui/core/Tooltip";
+import Typography from "@material-ui/core/Typography";
 import PropTypes from "prop-types";
 import React from "react";
-
 export function ValueLabelComponent(props) {
   const { children, open, value } = props;
 
@@ -24,9 +24,12 @@ const useStyles = makeStyles((theme) => ({
   sliderTypography: {
     width: 250,
   },
+  priceLabel: {
+    color: theme.palette.text.secondary,
+  },
 }));
 
-export default function PriceSelector({ prices, handlePrice, planTypes }) {
+export default function PriceSelector({ prices, handlePrice, language }) {
   const classes = useStyles();
 
   const marks = [
@@ -50,6 +53,13 @@ export default function PriceSelector({ prices, handlePrice, planTypes }) {
 
   return (
     <div className={classes.sliderTypography}>
+      <Typography
+        variant="body2"
+        id="price-selector"
+        className={classes.priceLabel}
+      >
+        {language === "en" ? "Price" : "價錢"}
+      </Typography>
       <Slider
         ValueLabelComponent={ValueLabelComponent}
         value={prices}
@@ -60,8 +70,7 @@ export default function PriceSelector({ prices, handlePrice, planTypes }) {
         onChange={handlePrice}
         valueLabelDisplay="auto"
         valueLabelFormat={(value) => <div>${value / 1000}k</div>}
-        aria-labelledby="range-slider"
-        // disabled={planTypes !== "General"}
+        aria-labelledby="price-selector"
       />
     </div>
   );

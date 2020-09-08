@@ -15,7 +15,7 @@ import LocationToggleButtonGroup from "./LocationToggleButtonGroup";
 import PriceSelector from "./PriceSelector";
 import SearchBar from "./SearchBar";
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   mobileGridContainer: {
     paddingBottom: "16px",
   },
@@ -26,6 +26,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function FilterUI({
   wideScreen,
+  superWideScreen,
   language,
   hospitals,
   handleHospital,
@@ -44,7 +45,6 @@ export default function FilterUI({
   searchTerm,
   handleSearch,
   hospitalInfo,
-  hospitalLocationMap,
   processedPlansRecords,
 }) {
   const classes = useStyles();
@@ -62,6 +62,7 @@ export default function FilterUI({
                   exclusive
                   onChange={handlePlanType}
                   aria-label="planTypes"
+                  size={superWideScreen ? "medium" : "small"}
                 >
                   <ToggleButton
                     value="General"
@@ -128,6 +129,7 @@ export default function FilterUI({
                   handleGender={handleGender}
                   language={language}
                   planTypes={planTypes}
+                  superWideScreen={superWideScreen}
                 />
               </Grid>
 
@@ -137,7 +139,8 @@ export default function FilterUI({
                   handleLocation={handleLocation}
                   language={language}
                   planTypes={planTypes}
-                  hospitalLocationMap={hospitalLocationMap}
+                  processedPlansRecords={processedPlansRecords}
+                  superWideScreen={superWideScreen}
                 />
               </Grid>
 
@@ -150,13 +153,14 @@ export default function FilterUI({
                 planTypes={planTypes}
                 genders={genders}
                 processedPlansRecords={processedPlansRecords}
+                superWideScreen={superWideScreen}
               />
 
               <Grid item className={classes.buttonGroup}>
                 <PriceSelector
                   prices={prices}
                   handlePrice={handlePrice}
-                  planTypes={planTypes}
+                  language={language}
                 />
               </Grid>
 
@@ -227,7 +231,8 @@ export default function FilterUI({
                 handleLocationSelect={handleLocationSelect}
                 language={language}
                 planTypes={planTypes}
-                hospitalLocationMap={hospitalLocationMap}
+                genders={genders}
+                processedPlansRecords={processedPlansRecords}
               />
             </Grid>
 
@@ -236,16 +241,16 @@ export default function FilterUI({
               locations={locations}
               hospitals={hospitals}
               handleHospitalSelect={handleHospitalSelect}
-              hospitalInfo={hospitalInfo}
               planTypes={planTypes}
-              hospitalLocationMap={hospitalLocationMap}
+              genders={genders}
+              processedPlansRecords={processedPlansRecords}
             />
 
             <Grid item className={classes.buttonGroup} xs={12} align="center">
               <PriceSelector
                 prices={prices}
                 handlePrice={handlePrice}
-                planTypes={planTypes}
+                language={language}
               />
             </Grid>
 

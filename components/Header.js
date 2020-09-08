@@ -1,23 +1,35 @@
 import { Grid } from "@material-ui/core";
 import AppBar from "@material-ui/core/AppBar";
+import Collapse from "@material-ui/core/Collapse";
 import IconButton from "@material-ui/core/IconButton";
 import { makeStyles } from "@material-ui/core/styles";
 import Switch from "@material-ui/core/Switch";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
+import CloseIcon from "@material-ui/icons/Close";
 import HomeIcon from "@material-ui/icons/Home";
 import InfoIcon from "@material-ui/icons/Info";
+import ScreenRotationIcon from "@material-ui/icons/ScreenRotation";
 import TranslateIcon from "@material-ui/icons/Translate";
+import Alert from "@material-ui/lab/Alert";
 import React from "react";
+import { HEAD_TITLE_CN, HEAD_TITLE_EN } from "../components/settings";
 import ShareButton from "./ShareButton";
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme) => ({
   appBarTitle: {
     flexGrow: 1,
     textAlign: "center",
   },
   icon: {
-    color: "#FFFFFF",
+    color: "white",
+  },
+  screenRotationIcon: {
+    marginRight: "10px",
+  },
+  alert: {
+    backgroundColor: "white",
+    color: theme.palette.primary.main,
   },
 }));
 
@@ -44,39 +56,82 @@ function GetLanguageSwitch(props) {
 
 export default function Header(props) {
   const classes = useStyles();
+  const [open, setOpen] = React.useState(true);
+
+  let screenRotationAlert = null;
+  if (!props.wideScreen) {
+    screenRotationAlert = (
+      <React.Fragment>
+        <Collapse in={open}>
+          <Alert
+            icon={false}
+            severity="info"
+            className={classes.alert}
+            action={
+              <IconButton
+                aria-label="close"
+                color="inherit"
+                size="small"
+                onClick={() => {
+                  setOpen(false);
+                }}
+              >
+                <CloseIcon fontSize="inherit" />
+              </IconButton>
+            }
+          >
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+              }}
+            >
+              <ScreenRotationIcon className={classes.screenRotationIcon} />
+              {props.language === "en"
+                ? "Please rotate your screen for best view"
+                : "請旋轉您的手機，網頁會更易睇"}
+            </div>
+          </Alert>
+        </Collapse>
+      </React.Fragment>
+    );
+  }
 
   return (
-    <AppBar elevation={0} position="static">
-      <Toolbar>
-        <IconButton
-          aria-label="hospital-info"
-          onClick={props.handleHospitalInfoClick}
-        >
-          {props.page === "table" ? (
-            <InfoIcon className={classes.icon} />
-          ) : (
-            <HomeIcon className={classes.icon} />
-          )}
-        </IconButton>
-        <Typography variant="h6" className={classes.appBarTitle}>
-          {props.language === "en" ? "Hong Kong Body Checks" : "香港健康檢查"}
-        </Typography>
-        <ShareButton language={props.language} />
-        {props.wideScreen ? (
-          <GetLanguageSwitch
-            language={props.language}
-            handleLanguage={props.handleLanguage}
-          />
-        ) : (
+    <React.Fragment>
+      <AppBar elevation={0} position="static">
+        <Toolbar>
           <IconButton
-            aria-label="change_language"
-            onClick={props.handleLanguageClick}
-            className={classes.icon}
+            aria-label="hospital-info"
+            onClick={props.handleHospitalInfoClick}
           >
-            <TranslateIcon fontSize="small" />
+            {props.page === "table" ? (
+              <InfoIcon className={classes.icon} />
+            ) : (
+              <HomeIcon className={classes.icon} />
+            )}
           </IconButton>
-        )}
-      </Toolbar>
-    </AppBar>
+          <Typography variant="h6" className={classes.appBarTitle}>
+            {props.language === "en" ? HEAD_TITLE_EN : HEAD_TITLE_CN}
+          </Typography>
+          <ShareButton language={props.language} />
+          {props.wideScreen ? (
+            <GetLanguageSwitch
+              language={props.language}
+              handleLanguage={props.handleLanguage}
+            />
+          ) : (
+            <IconButton
+              aria-label="change_language"
+              onClick={props.handleLanguageClick}
+              className={classes.icon}
+            >
+              <TranslateIcon fontSize="small" />
+            </IconButton>
+          )}
+        </Toolbar>
+      </AppBar>
+      {screenRotationAlert}
+    </React.Fragment>
   );
 }

@@ -1,3 +1,5 @@
+import { GENDER_SPECIFIC_PLAN_TYPES } from "./settings";
+
 export function processRawAirtableRecords(rawAirtableRecords) {
   // filter out rows with empty Plan Type
   const airtableRecordsFiltered = rawAirtableRecords.filter(
@@ -29,44 +31,53 @@ export function processRawAirtableRecords(rawAirtableRecords) {
   return processedAirtableRecords;
 }
 
-export function filterHospitals({
+export function filterHospitals(
   processedPlansRecords,
   planTypes,
   genders,
-  locations,
-}) {
-  // console.log("processedPlansRecords");
-  // console.log(processedPlansRecords);
+  locations
+) {
+  if (!processedPlansRecords) return null;
 
-  const planTypesChecked = [];
-  if (!Array.isArray(planTypes)) planTypesChecked.push(planTypes);
-  else planTypesChecked = planTypes;
+  let planTypesArray = [];
+  if (!Array.isArray(planTypes)) planTypesArray.push(planTypes);
+  else planTypesArray = planTypes;
 
-  const gendersChecked = [];
-  if (!Array.isArray(genders)) gendersChecked.push(genders);
-  else gendersChecked = genders;
+  let gendersArray = [];
+  if (!Array.isArray(genders)) gendersArray.push(genders);
+  else gendersArray = genders;
 
-  const locationsChecked = [];
-  if (!Array.isArray(locations)) locationsChecked.push(locations);
-  else locationsChecked = locations;
+  let locationsArray = [];
+  if (!Array.isArray(locations)) locationsArray.push(locations);
+  else locationsArray = locations;
 
-  const filtered = processedPlansRecords.filter(function (record) {
-    return (
-      planTypesChecked.includes(record["Plan Type"]) &&
-      gendersChecked.includes(record["Gender"]) &&
-      locationsChecked.includes(record["Location"])
-    );
+  let filtered = processedPlansRecords.filter(function (record) {
+    return planTypesArray.includes(record["Plan Type"]);
   });
-  // console.log("planTypesChecked");
-  // console.log(planTypesChecked);
-  // console.log("gendersChecked");
-  // console.log(gendersChecked);
-  // console.log("hospitalsChecked");
-  // console.log(hospitalsChecked);
 
-  // console.log("filtered");
-  // console.log(filtered);
+  if (GENDER_SPECIFIC_PLAN_TYPES.includes(planTypes)) {
+    if (gendersArray[0] === "Both") {
+      gendersArray = ["Male"];
+    }
+  } else {
+    if (gendersArray[0] !== "Both") gendersArray = ["Both"];
+  }
 
+  if (gendersArray.length > 0)
+    filtered = filtered.filter(function (record) {
+      return gendersArray.includes(record["Gender"]);
+    });
+
+  if (locationsArray.length > 0)
+    filtered = filtered.filter(function (record) {
+      return locationsArray.includes(record["Location"]);
+    });
+
+  filtered.sort((a, b) => {
+    if (a["Hospital"] && b["Hospital"]) {
+      return a["Hospital"].localeCompare(b["Hospital"]);
+    } else return null;
+  });
   return filtered;
 }
 

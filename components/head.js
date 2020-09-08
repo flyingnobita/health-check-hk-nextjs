@@ -1,5 +1,11 @@
 import Head from "next/head";
-import { HEAD_DESCRIPTION, HEAD_TITLE } from "../components/settings";
+import React from "react";
+import {
+  HEAD_DESCRIPTION_CN,
+  HEAD_DESCRIPTION_EN,
+  HEAD_TITLE_CN,
+  HEAD_TITLE_EN,
+} from "../components/settings";
 
 function GetHead() {
   return (
@@ -8,8 +14,13 @@ function GetHead() {
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="theme-color" content="#000000" />
-        <meta name="description" content={HEAD_DESCRIPTION} />
-        <title>{HEAD_TITLE}</title>
+        <meta
+          name="description"
+          content={HEAD_DESCRIPTION_CN + " " + HEAD_DESCRIPTION_EN}
+        />
+        <title>
+          {HEAD_TITLE_CN} {HEAD_TITLE_EN}
+        </title>
         <link rel="icon" href="/favicon/favicon.ico" />
         <link
           rel="apple-touch-icon"

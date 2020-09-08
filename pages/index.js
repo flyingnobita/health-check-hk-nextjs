@@ -5,6 +5,8 @@ import useMediaQuery from "@material-ui/core/useMediaQuery";
 import MuiAlert from "@material-ui/lab/Alert";
 import { ThemeProvider } from "@material-ui/styles";
 import Airtable from "airtable";
+import dynamic from "next/dynamic";
+import PropTypes from "prop-types";
 import React, { useState } from "react";
 import track, { useTracking } from "react-tracking";
 import FeedbackForm from "../components/FeedbackForm";
@@ -12,14 +14,19 @@ import Footer from "../components/Footer";
 import { GetReactPivotTable } from "../components/GetReactPivotTable";
 import GetHead from "../components/head";
 import Header from "../components/Header";
-import HospitalInfos from "../components/HospitalInfos";
 import {
   filterHospitals,
   getHospitalInfo,
   processRawAirtableRecords,
 } from "../components/indexHelper";
+import {
+  GENDER_SPECIFIC_PLAN_TYPES,
+  MAX_AIRTABLE_RECORDS,
+} from "../components/settings";
 import useDebounce from "../components/useDebounce";
 import muiTheme from "../styles/muiTheme";
+
+const HospitalInfos = dynamic(() => import("../components/HospitalInfos"));
 
 function Alert(props) {
   return <MuiAlert elevation={3} {...props} />;
@@ -41,13 +48,14 @@ const useStyles = makeStyles((theme) => ({
 
 function App({ servicePlansRecords, plansRecords }) {
   const classes = useStyles();
-  const wideScreen = useMediaQuery("(min-width:600px)");
+  const wideScreen = useMediaQuery("(min-width:568px)");
+  const superWideScreen = useMediaQuery("(min-width:725px)");
 
   const { trackEvent } = useTracking();
 
   const initialPriceRange = [0, 30000];
   const maxPriceRange = [0, 30000];
-  const priceRangeDiff = initialPriceRange[1] - initialPriceRange[0];
+  // const priceRangeDiff = initialPriceRange[1] - initialPriceRange[0];
 
   const processedServicePlansRecords = processRawAirtableRecords(
     servicePlansRecords
@@ -89,56 +97,54 @@ function App({ servicePlansRecords, plansRecords }) {
   const [planTypes, setPlanTypes] = useState("General");
   const handlePlanType = (event, newPlanTypes) => {
     if (newPlanTypes && newPlanTypes.length) {
+      setPlanTypes(newPlanTypes);
+
       // Set default gender
-      if (
-        [
-          "General",
-          "Gender Specific",
-          "Cancer",
-          "Cardiac",
-          "Pre-marital",
-        ].includes(newPlanTypes)
-      ) {
-        setGenders("Male");
+      if (GENDER_SPECIFIC_PLAN_TYPES.includes(newPlanTypes)) {
+        if (genders === "Both") {
+          setGenders("Male");
+        }
       } else {
         setGenders("Both");
       }
+
       // Set default price range
       if (newPlanTypes !== "General") {
         setPrice(maxPriceRange);
       } else {
         setPrice(initialPriceRange);
       }
+
       // Set default locations and hospitals
-      const locationMap = hospitalLocationMap.get(newPlanTypes);
-      if (locationMap) {
-        // Check if there's any hospitals of selected location for newPlanTypes
-        if (locations in locationMap) {
-          setHospitals([locationMap[locations][0]]);
-        } else {
-          const firstLocation = Object.keys(locationMap)[0];
-          setLocation(firstLocation);
-          setHospitals([locationMap[firstLocation][0]]);
-        }
+      let filteredHospitals = filterHospitals(
+        processedPlansRecords,
+        newPlanTypes,
+        genders,
+        locations
+      );
+      if (filteredHospitals.length === 0) {
+        filteredHospitals = filterHospitals(
+          processedPlansRecords,
+          newPlanTypes,
+          genders,
+          []
+        );
+        setHospitals([filteredHospitals[0]["Hospital"]]);
+        setLocation(filteredHospitals[0]["Location"]);
       } else {
-        setLocation();
-        setHospitals();
+        setHospitals([filteredHospitals[0]["Hospital"]]);
+        setLocation(filteredHospitals[0]["Location"]);
       }
-      setPlanTypes(newPlanTypes);
     }
   };
   const handlePlanTypeSelect = (event) => {
+    setPlanTypes(event.target.value);
+
     // Set default gender
-    if (
-      [
-        "General",
-        "Gender Specific",
-        "Cancer",
-        "Cardiac",
-        "Pre-marital",
-      ].includes(event.target.value)
-    ) {
-      setGenders("Male");
+    if (GENDER_SPECIFIC_PLAN_TYPES.includes(event.target.value)) {
+      if (genders === "Both") {
+        setGenders("Male");
+      }
     } else {
       setGenders("Both");
     }
@@ -151,18 +157,25 @@ function App({ servicePlansRecords, plansRecords }) {
     }
 
     // Set default locations and hospitals
-    const locationMap = hospitalLocationMap.get(event.target.value);
-    if (locationMap) {
-      // Check if there's any hospitals of selected location for newPlanTypes
-      if (locations in locationMap) {
-        setHospitals([locationMap[locations][0]]);
-      } else {
-        const firstLocation = Object.keys(locationMap)[0];
-        setLocation(firstLocation);
-        setHospitals([locationMap[firstLocation][0]]);
-      }
+    let filteredHospitals = filterHospitals(
+      processedPlansRecords,
+      event.target.value,
+      genders,
+      locations
+    );
+    if (filteredHospitals.length === 0) {
+      filteredHospitals = filterHospitals(
+        processedPlansRecords,
+        event.target.value,
+        genders,
+        []
+      );
+      setHospitals([filteredHospitals[0]["Hospital"]]);
+      setLocation(filteredHospitals[0]["Location"]);
+    } else {
+      setHospitals([filteredHospitals[0]["Hospital"]]);
+      setLocation(filteredHospitals[0]["Location"]);
     }
-    setPlanTypes(event.target.value);
   };
 
   // Gender
@@ -170,10 +183,34 @@ function App({ servicePlansRecords, plansRecords }) {
   const handleGender = (event, newGenders) => {
     if (newGenders && newGenders.length) {
       setGenders(newGenders);
+
+      // Set default hospitals
+      const filteredHospitals = filterHospitals(
+        processedPlansRecords,
+        planTypes,
+        newGenders,
+        locations
+      );
+      if (filteredHospitals.length === 0) setHospitals([]);
+      else {
+        setHospitals([filteredHospitals[0]["Hospital"]]);
+      }
     }
   };
   const handleGenderSelect = (event) => {
     setGenders(event.target.value);
+
+    // Set default hospitals
+    const filteredHospitals = filterHospitals(
+      processedPlansRecords,
+      planTypes,
+      event.target.value,
+      locations
+    );
+    if (filteredHospitals.length === 0) setHospitals([]);
+    else {
+      setHospitals([filteredHospitals[0]["Hospital"]]);
+    }
   };
 
   // Location
@@ -183,17 +220,32 @@ function App({ servicePlansRecords, plansRecords }) {
       setLocation(newLocation);
 
       // Set default hospitals
-      // const locationMap = hospitalLocationMap.get(planTypes);
-      // setHospitals([locationMap[newLocation][0]]);
-      filterHospitals(processedPlansRecords, planTypes, genders, newLocation);
+      const filteredHospitals = filterHospitals(
+        processedPlansRecords,
+        planTypes,
+        genders,
+        newLocation
+      );
+      if (filteredHospitals.length === 0) setHospitals([]);
+      else {
+        setHospitals([filteredHospitals[0]["Hospital"]]);
+      }
     }
   };
   const handleLocationSelect = (event) => {
-    // Set default hospitals
-    const locationMap = hospitalLocationMap.get(planTypes);
-    setHospitals([locationMap[event.target.value][0]]);
-
     setLocation(event.target.value);
+
+    // Set default hospitals
+    const filteredHospitals = filterHospitals(
+      processedPlansRecords,
+      planTypes,
+      genders,
+      event.target.value
+    );
+    if (filteredHospitals.length === 0) setHospitals([]);
+    else {
+      setHospitals([filteredHospitals[0]["Hospital"]]);
+    }
   };
 
   // Hospital
@@ -231,7 +283,7 @@ function App({ servicePlansRecords, plansRecords }) {
 
   // Search
   const [searchTerm, setSearchTerm] = useState("");
-  const [isSearching, setIsSearching] = useState(false);
+  // const [isSearching, setIsSearching] = useState(false);
   const debouncedSearchTerm = useDebounce(searchTerm, 800);
   const handleSearch = (event) => {
     setSearchTerm(event.target.value);
@@ -257,61 +309,6 @@ function App({ servicePlansRecords, plansRecords }) {
   };
 
   const hospitalInfo = getHospitalInfo(processedServicePlansRecords);
-  // console.log(hospitalInfo);
-
-  const getHospitalLocationMap = function () {
-    const hospitalLocationMapTemp = new Map();
-    for (const hospitalInfoRecord of hospitalInfo) {
-      for (const planTypeHospitalInfoRecord of hospitalInfoRecord.planType) {
-        // check if Plan Type exist
-        if (!hospitalLocationMapTemp.has(planTypeHospitalInfoRecord)) {
-          const locationHospital = {};
-          locationHospital[hospitalInfoRecord.location] = [
-            hospitalInfoRecord.hospital,
-          ];
-          // Plan Type doesn't exist, add Plan Type, Location, Hospital
-          hospitalLocationMapTemp.set(
-            planTypeHospitalInfoRecord,
-            locationHospital
-          );
-        } else {
-          let currentLocations = hospitalLocationMapTemp.get(
-            planTypeHospitalInfoRecord
-          );
-          // Check if Location exist
-          if (!(hospitalInfoRecord.location in currentLocations)) {
-            currentLocations[hospitalInfoRecord.location] = [
-              hospitalInfoRecord.hospital,
-            ];
-            // Location doesn't exist, add Location & Hospital
-            hospitalLocationMapTemp.set(
-              planTypeHospitalInfoRecord,
-              currentLocations
-            );
-          } else {
-            // Check if hospital exist
-            if (
-              !currentLocations[hospitalInfoRecord.location].includes(
-                hospitalInfoRecord.hospital
-              )
-            ) {
-              currentLocations[hospitalInfoRecord.location].push(
-                hospitalInfoRecord.hospital
-              );
-              // Hospital doesn't exist, add Hospital
-              hospitalLocationMapTemp.set(
-                planTypeHospitalInfoRecord,
-                currentLocations
-              );
-            }
-          }
-        }
-      }
-    }
-    return hospitalLocationMapTemp;
-  };
-  const hospitalLocationMap = getHospitalLocationMap();
-  // console.log(hospitalLocationMap);
 
   const filterAirtableRecords = function (
     processedServicePlansRecords,
@@ -376,6 +373,7 @@ function App({ servicePlansRecords, plansRecords }) {
       <GetReactPivotTable
         filterGrid={classes.filterGrid}
         wideScreen={wideScreen}
+        superWideScreen={superWideScreen}
         language={language}
         planTypes={planTypes}
         handlePlanType={handlePlanType}
@@ -394,9 +392,7 @@ function App({ servicePlansRecords, plansRecords }) {
         searchTerm={searchTerm}
         handleSearch={handleSearch}
         hospitalInfo={hospitalInfo}
-        hospitalLocationMap={hospitalLocationMap}
         pivotTableGrid={classes.pivotTableGrid}
-        language={language}
         filteredDataArray={filteredDataArray}
         processedPlansRecords={processedPlansRecords}
       ></GetReactPivotTable>
@@ -431,7 +427,7 @@ function App({ servicePlansRecords, plansRecords }) {
           <Alert onClose={handleAlertClose} severity="warning">
             {language === "en"
               ? "For General plans, choose up to 2 hospitals"
-              : "一般計劃, 最多兩間醫院"}
+              : "一般計劃, 最多可選兩間醫院"}
           </Alert>
         </Snackbar>
       </ThemeProvider>
@@ -460,12 +456,12 @@ export async function getStaticProps() {
   let plansTable = base("Plans");
 
   function retrieveAllRecords(base) {
-    return (resolve, reject) => {
+    return (resolve) => {
       let airtableRecords = [];
       base
         .select({
           view: "Grid view",
-          maxRecords: 10000,
+          maxRecords: MAX_AIRTABLE_RECORDS,
           pageSize: 100,
         })
         .eachPage(
@@ -498,5 +494,10 @@ export async function getStaticProps() {
     },
   };
 }
+
+App.propTypes = {
+  servicePlansRecords: PropTypes.array,
+  plansRecords: PropTypes.array,
+};
 
 export default TrackedApp;

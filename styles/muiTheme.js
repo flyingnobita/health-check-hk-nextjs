@@ -58,7 +58,7 @@ const muiTheme = createMuiTheme(
           color: globalTheme.palette.primary.main,
           "&$selected": {
             backgroundColor: globalTheme.palette.primary.main,
-            color: "#E5E5E5",
+            color: "white",
             "&:hover": {
               backgroundColor: globalTheme.palette.primary.dark,
             },

@@ -1,5 +1,4 @@
 import { Grid } from "@material-ui/core";
-import Box from "@material-ui/core/Box";
 import LinearProgress from "@material-ui/core/LinearProgress";
 import React from "react";
 import PivotTable from "../components/react-pivottable/PivotTable";
@@ -11,7 +10,7 @@ export default class ReactPivotTable extends React.Component {
     this.tableData = [];
   }
 
-  readCSV = () => {
+  readCSV() {
     if (
       typeof this.props.csv === "object" ||
       this.props.csv instanceof Object
@@ -20,41 +19,29 @@ export default class ReactPivotTable extends React.Component {
       pros_csv = this.props.csv;
       this.tableData = pros_csv;
     }
-  };
+  }
 
   render() {
     if (this.props.csv) {
       this.readCSV();
 
       return (
-        // <Box
-        //   display="inline-block"
-        //   text-align="center"
-        //   marginLeft="5vw"
-        //   marginRight="5vw"
-        //   overflow="auto"
-        //   width="100"
-        //   maxWidth="90vw"
-        //   minWidth="0"
-        //   maxHeight="90vh"
-        //   paddingBottom="5px"
-        // >
-          <PivotTable
-            data={this.tableData}
-            cols={
-              this.props.language === "en"
-                ? ["Plan Type", "Gender", "Hospital", "Price", "Plan Name"]
-                : ["計劃類別", "性別", "醫院", "價錢", "計劃名稱"]
-            }
-            rows={
-              this.props.language === "en"
-                ? ["Service Type", "Service Subtype", "Service Name"]
-                : ["項目類別", "項目次類別", "項目名稱"]
-            }
-            aggregatorName="CountA"
-            onChange={(s) => this.setState(s)}
-            {...this.state}
-          />
+        <PivotTable
+          data={this.tableData}
+          cols={
+            this.props.language === "en"
+              ? ["Plan Type", "Gender", "Hospital", "Price", "Plan Name"]
+              : ["計劃類別", "性別", "醫院", "價錢", "計劃名稱"]
+          }
+          rows={
+            this.props.language === "en"
+              ? ["Service Type", "Service Subtype", "Service Name"]
+              : ["項目類別", "項目次類別", "項目名稱"]
+          }
+          aggregatorName="CountA"
+          onChange={(s) => this.setState(s)}
+          {...this.state}
+        />
         // </Box>
       );
     } else {

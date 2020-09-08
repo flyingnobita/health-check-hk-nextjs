@@ -1,10 +1,9 @@
-// import "../styles/globals.css";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import { ThemeProvider } from "@material-ui/core/styles";
 import Head from "next/head";
 import PropTypes from "prop-types";
 import React from "react";
-import { HEAD_TITLE } from "../components/settings";
+import { HEAD_TITLE_CN, HEAD_TITLE_EN } from "../components/settings";
 import "../styles/App.css";
 import "../styles/index.css";
 import muiTheme from "../styles/muiTheme";
@@ -25,7 +24,9 @@ export default function MyApp(props) {
   return (
     <React.Fragment>
       <Head>
-        <title>{HEAD_TITLE}</title>
+        <title>
+          {HEAD_TITLE_CN} {HEAD_TITLE_EN}
+        </title>
         <meta
           name="viewport"
           content="minimum-scale=1, initial-scale=1, width=device-width"

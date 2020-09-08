@@ -4,55 +4,34 @@ import Zoom from "@material-ui/core/Zoom";
 import ToggleButton from "@material-ui/lab/ToggleButton";
 import ToggleButtonGroup from "@material-ui/lab/ToggleButtonGroup";
 import React from "react";
+import { filterHospitals } from "./indexHelper";
 
 function toDisableHospital(
   processedPlansRecords,
   planTypes,
   genders,
-  hospitals
+  locations,
+  hospital
 ) {
-  // console.log("processedPlansRecords");
-  // console.log(processedPlansRecords);
+  let filtered = filterHospitals(
+    processedPlansRecords,
+    planTypes,
+    genders,
+    locations
+  );
 
-  const planTypesChecked = [];
-  if (!Array.isArray(planTypes)) planTypesChecked.push(planTypes);
-  else planTypesChecked = planTypes;
-
-  const gendersChecked = [];
-  if (!Array.isArray(genders)) gendersChecked.push(genders);
-  else gendersChecked = genders;
-
-  // const locationsChecked = [];
-  // if (!Array.isArray(locations)) locationsChecked.push(locations);
-  // else locationsChecked = locations;
-
-  const hospitalsChecked = [];
-  if (!Array.isArray(hospitals)) hospitalsChecked.push(hospitals);
-  else hospitalsChecked = hospitals;
-
-  const filtered = processedPlansRecords.filter(function (record) {
-    return (
-      planTypesChecked.includes(record["Plan Type"]) &&
-      gendersChecked.includes(record["Gender"]) &&
-      // locationsChecked.includes(record["Location"]) &&
-      hospitalsChecked.includes(record["Hospital"])
-    );
+  filtered = filtered.filter(function (record) {
+    return [hospital].includes(record["Hospital"]);
   });
-  // console.log("planTypesChecked");
-  // console.log(planTypesChecked);
-  // console.log("gendersChecked");
-  // console.log(gendersChecked);
-  // console.log("hospitalsChecked");
-  // console.log(hospitalsChecked);
 
-  // console.log("filtered");
-  // console.log(filtered);
-
-  if (filtered.length === 0) return true;
-  else return false;
+  if (filtered.length === 0) {
+    return true;
+  } else {
+    return false;
+  }
 }
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   buttonGroup: {
     margin: 10,
   },
@@ -67,6 +46,7 @@ export default function HospitalToggleButtonGroup({
   planTypes,
   genders,
   processedPlansRecords,
+  superWideScreen,
 }) {
   const classes = useStyles();
 
@@ -81,7 +61,6 @@ export default function HospitalToggleButtonGroup({
             mountOnEnter
             unmountOnExit
             in={locations === "hkIsland"}
-            // timeout={{ appear: 1000, enter: 1000, exit: 400 }}
             style={{
               transitionDelay: locations === "hkIsland" ? "500ms" : "0ms",
             }}
@@ -90,6 +69,7 @@ export default function HospitalToggleButtonGroup({
               value={hospitals}
               onChange={handleHospital}
               aria-label="hospitals"
+              size={superWideScreen ? "medium" : "small"}
             >
               {hospitalInfo
                 .filter((hospital) => hospital.location === "hkIsland")
@@ -103,6 +83,7 @@ export default function HospitalToggleButtonGroup({
                       processedPlansRecords,
                       planTypes,
                       genders,
+                      locations,
                       hospital.hospital
                     )}
                   >
@@ -140,6 +121,7 @@ export default function HospitalToggleButtonGroup({
                       processedPlansRecords,
                       planTypes,
                       genders,
+                      locations,
                       hospital.hospital
                     )}
                   >
@@ -177,6 +159,7 @@ export default function HospitalToggleButtonGroup({
                       processedPlansRecords,
                       planTypes,
                       genders,
+                      locations,
                       hospital.hospital
                     )}
                   >

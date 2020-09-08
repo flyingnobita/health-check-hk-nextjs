@@ -7,6 +7,7 @@ import { withStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import CloseIcon from "@material-ui/icons/Close";
 import React from "react";
+import { APP_URL, HEAD_TITLE_EN } from "../components/settings";
 
 const styles = (theme) => ({
   root: {
@@ -71,19 +72,18 @@ export default function TermsDialog() {
         </DialogTitle>
         <DialogContent dividers>
           <Typography gutterBottom>
-            Use of HK Body Checks' websites including but not limited to
-            bodycheck.flyingnobita.com (the "Website") and all electronic mail
-            or communication services provided by HK Body Checks ("HKBC"),
-            including but not limited to any online group discussions,
-            electronic newsletters is subject to the terms and conditions set
-            forth below ("Terms of Use & Disclaimer"). Please read the Terms of
-            Use & Disclaimer on the Website before using the Services. However
-            by continuing to use the Services each subscriber, user and/or
-            recipient of the Services irrevocably and unconditionally accepts
-            and agrees to be bound by the Terms of Use & Disclaimer as the same
-            may be amended from time to time and any amendment to the Terms of
-            Use & Disclaimer shall be effective immediately upon posting on the
-            Website.
+            Use of {HEAD_TITLE_EN}'s websites including but not limited to
+            {APP_URL} (the "Website") and all electronic mail or communication
+            services provided by {HEAD_TITLE_EN} ("HKBC"), including but not
+            limited to any online group discussions, electronic newsletters is
+            subject to the terms and conditions set forth below ("Terms of Use &
+            Disclaimer"). Please read the Terms of Use & Disclaimer on the
+            Website before using the Services. However by continuing to use the
+            Services each subscriber, user and/or recipient of the Services
+            irrevocably and unconditionally accepts and agrees to be bound by
+            the Terms of Use & Disclaimer as the same may be amended from time
+            to time and any amendment to the Terms of Use & Disclaimer shall be
+            effective immediately upon posting on the Website.
           </Typography>
           <Typography gutterBottom variant="h6">
             1 General Rules
@@ -190,9 +190,9 @@ export default function TermsDialog() {
           </Typography>
           <Typography>
             5.1.b You may link only to the homepage of the Website, i.e.
-            bodycheck.flyingnobita.com, but not to any sub-pages or any texts,
-            graphics, videos, audio clips, drawings, diagrams, photographs,
-            compilation of data, or any other materials on the Website.
+            {APP_URL}, but not to any sub-pages or any texts, graphics, videos,
+            audio clips, drawings, diagrams, photographs, compilation of data,
+            or any other materials on the Website.
           </Typography>
           <Typography>5.1.c. No framing is permitted.</Typography>
           <Typography>
@@ -240,8 +240,8 @@ export default function TermsDialog() {
             7.1 You must agree and abide by the terms and conditions of the
             Privacy Policy in order to use the Website. The Privacy Policy is to
             protect the personal information of yours and other users. For more
-            information, please refer to Price's Privacy Policy Statement found
-            on the Website.
+            information, please refer to {HEAD_TITLE_EN}'s Privacy Policy
+            Statement found on the Website.
           </Typography>
         </DialogContent>
       </Dialog>
