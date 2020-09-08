@@ -14,9 +14,9 @@ import GetHead from "../components/head";
 import Header from "../components/Header";
 import HospitalInfos from "../components/HospitalInfos";
 import {
-  filterHospitals, getHospitalInfo,
-
-  processRawAirtableRecords
+  filterHospitals,
+  getHospitalInfo,
+  processRawAirtableRecords,
 } from "../components/indexHelper";
 import useDebounce from "../components/useDebounce";
 import muiTheme from "../styles/muiTheme";
@@ -53,12 +53,6 @@ function App({ servicePlansRecords, plansRecords }) {
     servicePlansRecords
   );
   const processedPlansRecords = processRawAirtableRecords(plansRecords);
-  // const [processedPlansRecords, setProcessedPlansRecords] = useState();
-  // setProcessedPlansRecords(processRawAirtableRecords(plansRecords));
-  console.log("plansRecords");
-  console.log(plansRecords);
-  console.log("processedPlansRecords");
-  console.log(processedPlansRecords);
 
   const [page, setPage] = useState("table");
   const handlePage = () => {
