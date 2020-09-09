@@ -1,9 +1,9 @@
 import Slider from "@material-ui/core/Slider";
 import { makeStyles } from "@material-ui/core/styles";
 import Tooltip from "@material-ui/core/Tooltip";
-import Typography from "@material-ui/core/Typography";
 import PropTypes from "prop-types";
 import React from "react";
+
 export function ValueLabelComponent(props) {
   const { children, open, value } = props;
 
@@ -22,10 +22,15 @@ ValueLabelComponent.propTypes = {
 
 const useStyles = makeStyles((theme) => ({
   sliderTypography: {
-    width: 250,
+    width: 150,
   },
   priceLabel: {
     color: theme.palette.text.secondary,
+  },
+  slider: {
+    "&$markLabel": {
+      fontSize: "0.5rem",
+    },
   },
 }));
 
@@ -53,13 +58,6 @@ export default function PriceSelector({ prices, handlePrice, language }) {
 
   return (
     <div className={classes.sliderTypography}>
-      <Typography
-        variant="body2"
-        id="price-selector"
-        className={classes.priceLabel}
-      >
-        {language === "en" ? "Price" : "價錢"}
-      </Typography>
       <Slider
         ValueLabelComponent={ValueLabelComponent}
         value={prices}
@@ -71,6 +69,7 @@ export default function PriceSelector({ prices, handlePrice, language }) {
         valueLabelDisplay="auto"
         valueLabelFormat={(value) => <div>${value / 1000}k</div>}
         aria-labelledby="price-selector"
+        className={classes.slider}
       />
     </div>
   );

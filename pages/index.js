@@ -280,6 +280,22 @@ function App({ servicePlansRecords, plansRecords }) {
       setPrice(newPrices);
     }
   };
+  const [priceToggleValues, setPriceToggleValues] = useState(() => ["Mid"]);
+  const handlePriceToggle = (event, newPricesToggleValues) => {
+    setPriceToggleValues(newPricesToggleValues);
+
+    if (newPricesToggleValues) {
+      if (newPricesToggleValues.includes("Low")) {
+        setPrice([0, 4999]);
+      }
+      if (newPricesToggleValues.includes("Mid")) {
+        setPrice([5000, 10000]);
+      }
+      if (newPricesToggleValues.includes("High")) {
+        setPrice([10000, 30000]);
+      }
+    }
+  };
 
   // Search
   const [searchTerm, setSearchTerm] = useState("");
@@ -388,7 +404,9 @@ function App({ servicePlansRecords, plansRecords }) {
         handleHospital={handleHospital}
         handleHospitalSelect={handleHospitalSelect}
         prices={prices}
+        priceToggleValues={priceToggleValues}
         handlePrice={handlePrice}
+        handlePriceToggle={handlePriceToggle}
         searchTerm={searchTerm}
         handleSearch={handleSearch}
         hospitalInfo={hospitalInfo}

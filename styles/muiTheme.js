@@ -80,6 +80,11 @@ const muiTheme = createMuiTheme(
           color: globalTheme.palette.primary.dark,
         },
       },
+      MuiSlider: {
+        markLabel: {
+          fontSize: "0.75rem",
+        },
+      },
     },
     props: {
       MuiToggleButton: {
