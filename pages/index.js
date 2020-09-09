@@ -252,18 +252,12 @@ function App({ servicePlansRecords, plansRecords }) {
   const [hospitals, setHospitals] = useState(() => ["Adventist - Stubbs"]);
   const handleHospital = (event, newHospitals) => {
     if (newHospitals) {
-      if (newHospitals.length <= 2 || planTypes !== "General") {
-        setHospitals(newHospitals);
-      } else {
-        setTooManyHospitalWarningOpen(true);
-      }
+      setHospitals(newHospitals);
     }
   };
   const handleHospitalSelect = (event) => {
-    if (event.target.value.length <= 2 || planTypes !== "General") {
-      setHospitals(event.target.value);
-    } else {
-      setTooManyHospitalWarningOpen(true);
+    setHospitals(event.target.value);
+  };
     }
   };
 
