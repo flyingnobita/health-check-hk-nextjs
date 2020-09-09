@@ -1,12 +1,30 @@
 import { Grid } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core/styles";
 import React from "react";
 import FilterUI from "./FilterUI";
 import ReactPivotTable from "./ReactPivotTable";
 
+const useStyles = makeStyles((theme) => ({
+  filterGrid: {
+    background: theme.palette.grey[50],
+    paddingTop: "10px",
+  },
+  pivotTableGrid: {
+    marginLeft: "auto",
+    marginRight: "auto",
+    paddingTop: "20px",
+    paddingBottom: "10px",
+    overflow: "auto",
+    height: "95vh",
+  },
+}));
+
 export const GetReactPivotTable = (props) => {
+  const classes = useStyles();
+
   return (
     <React.Fragment>
-      <Grid item xs={12} className={props.filterGrid}>
+      <Grid item xs={12} className={classes.filterGrid}>
         <FilterUI
           wideScreen={props.wideScreen}
           superWideScreen={props.superWideScreen}

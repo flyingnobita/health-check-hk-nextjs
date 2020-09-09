@@ -1,6 +1,5 @@
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Snackbar from "@material-ui/core/Snackbar";
-import { makeStyles } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import MuiAlert from "@material-ui/lab/Alert";
 import { ThemeProvider } from "@material-ui/styles";
@@ -34,22 +33,7 @@ function Alert(props) {
   return <MuiAlert elevation={3} {...props} />;
 }
 
-const useStyles = makeStyles((theme) => ({
-  filterGrid: {
-    background: theme.palette.grey[50],
-    paddingTop: "10px",
-  },
-  pivotTableGrid: {
-    marginLeft: "auto",
-    marginRight: "auto",
-    paddingTop: "20px",
-    paddingBottom: "10px",
-    overflow: "auto",
-  },
-}));
-
 function App({ servicePlansRecords, plansRecords }) {
-  const classes = useStyles();
   const wideScreen = useMediaQuery("(min-width:630px)");
   const superWideScreen = useMediaQuery("(min-width:725px)");
 
@@ -381,7 +365,6 @@ function App({ servicePlansRecords, plansRecords }) {
   if (page === "table") {
     mainPanel = (
       <GetReactPivotTable
-        filterGrid={classes.filterGrid}
         wideScreen={wideScreen}
         superWideScreen={superWideScreen}
         language={language}
@@ -405,7 +388,6 @@ function App({ servicePlansRecords, plansRecords }) {
         searchTerm={searchTerm}
         handleSearch={handleSearch}
         hospitalInfo={hospitalInfo}
-        pivotTableGrid={classes.pivotTableGrid}
         filteredDataArray={filteredDataArray}
         processedPlansRecords={processedPlansRecords}
       ></GetReactPivotTable>
