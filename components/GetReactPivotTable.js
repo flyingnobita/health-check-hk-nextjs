@@ -15,7 +15,6 @@ const useStyles = makeStyles((theme) => ({
     paddingTop: "20px",
     paddingBottom: "10px",
     overflow: "auto",
-    height: "95vh",
   },
 }));
 
