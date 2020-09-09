@@ -28,7 +28,7 @@ const useStyles = makeStyles((theme) => ({
     marginRight: "10px",
   },
   alert: {
-    backgroundColor: "white",
+    backgroundColor: "black",
     color: theme.palette.primary.main,
   },
 }));
