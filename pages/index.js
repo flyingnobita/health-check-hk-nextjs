@@ -21,7 +21,9 @@ import {
 } from "../components/indexHelper";
 import {
   GENDER_SPECIFIC_PLAN_TYPES,
+  INITIAL_PRICE_RANGE,
   MAX_AIRTABLE_RECORDS,
+  MAX_PRICE_RANGE,
 } from "../components/settings";
 import useDebounce from "../components/useDebounce";
 import muiTheme from "../styles/muiTheme";
@@ -52,10 +54,6 @@ function App({ servicePlansRecords, plansRecords }) {
   const superWideScreen = useMediaQuery("(min-width:725px)");
 
   const { trackEvent } = useTracking();
-
-  const initialPriceRange = [0, 30000];
-  const maxPriceRange = [0, 30000];
-  // const priceRangeDiff = initialPriceRange[1] - initialPriceRange[0];
 
   const processedServicePlansRecords = processRawAirtableRecords(
     servicePlansRecords
@@ -110,9 +108,9 @@ function App({ servicePlansRecords, plansRecords }) {
 
       // Set default price range
       if (newPlanTypes !== "General") {
-        setPrice(maxPriceRange);
+        setPrice(MAX_PRICE_RANGE);
       } else {
-        setPrice(initialPriceRange);
+        setPrice(INITIAL_PRICE_RANGE);
       }
 
       // Set default locations and hospitals
@@ -151,9 +149,9 @@ function App({ servicePlansRecords, plansRecords }) {
 
     // Set default price range
     if (event.target.value !== "General") {
-      setPrice(maxPriceRange);
+      setPrice(MAX_PRICE_RANGE);
     } else {
-      setPrice(initialPriceRange);
+      setPrice(INITIAL_PRICE_RANGE);
     }
 
     // Set default locations and hospitals
@@ -270,7 +268,7 @@ function App({ servicePlansRecords, plansRecords }) {
   };
 
   // Price
-  const [prices, setPrice] = useState(initialPriceRange);
+  const [prices, setPrice] = useState(INITIAL_PRICE_RANGE);
   const debouncedPriceFilter = useDebounce(prices, 800);
   const handlePrice = (event, newPrices) => {
     if (newPrices && newPrices.length) {
