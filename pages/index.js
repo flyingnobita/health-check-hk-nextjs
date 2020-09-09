@@ -266,16 +266,16 @@ function App({ servicePlansRecords, plansRecords }) {
       setPrice(newPrices);
     }
   };
-  const [priceToggleValues, setPriceToggleValues] = useState(() => ["Mid"]);
+  const [priceToggleValues, setPriceToggleValues] = useState("Mid");
   const handlePriceToggle = (event, newPricesToggleValues) => {
     if (newPricesToggleValues) {
-      if (newPricesToggleValues.includes("Low")) {
+      if (newPricesToggleValues === "Low") {
         setPrice([0, 4999]);
       }
-      if (newPricesToggleValues.includes("Mid")) {
+      if (newPricesToggleValues === "Mid") {
         setPrice([5000, 10000]);
       }
-      if (newPricesToggleValues.includes("High")) {
+      if (newPricesToggleValues === "High") {
         setPrice([10000, 30000]);
       }
       setPriceToggleValues(newPricesToggleValues);
