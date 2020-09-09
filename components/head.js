@@ -1,10 +1,12 @@
 import Head from "next/head";
 import React from "react";
 import {
+  APP_URL,
   HEAD_DESCRIPTION_CN,
   HEAD_DESCRIPTION_EN,
   HEAD_TITLE_CN,
   HEAD_TITLE_EN,
+  META_IMAGE,
 } from "../components/settings";
 
 function GetHead() {
@@ -14,10 +16,39 @@ function GetHead() {
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="theme-color" content="#000000" />
+
+        {/* Primary Meta Tags */}
+        <meta name="title" content={HEAD_TITLE_CN + " " + HEAD_TITLE_EN} />
         <meta
           name="description"
           content={HEAD_DESCRIPTION_CN + " " + HEAD_DESCRIPTION_EN}
         />
+
+        {/* Open Graph / Facebook */}
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content={APP_URL} />
+        <meta
+          property="og:title"
+          content={HEAD_TITLE_CN + " " + HEAD_TITLE_EN}
+        />
+        <meta
+          property="og:description"
+          content={HEAD_DESCRIPTION_CN + " " + HEAD_DESCRIPTION_EN}
+        />
+        <meta property="og:image" content={META_IMAGE} />
+
+        {/* Twitter */}
+        <meta property="twitter:card" content="summary_large_image" />
+        <meta property="twitter:url" content={APP_URL} />
+        <meta
+          property="twitter:title"
+          content={HEAD_TITLE_CN + " " + HEAD_TITLE_EN}
+        />
+        <meta
+          property="twitter:description"
+          content={HEAD_DESCRIPTION_CN + " " + HEAD_DESCRIPTION_EN}
+        />
+        <meta property="twitter:image" content={META_IMAGE} />
         <title>
           {HEAD_TITLE_CN} {HEAD_TITLE_EN}
         </title>

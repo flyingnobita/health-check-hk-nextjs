@@ -4,6 +4,7 @@ export const HEAD_DESCRIPTION_EN =
   "Comparison of Hong Kong Body Check Plans Packages";
 export const HEAD_DESCRIPTION_CN = "全港驗身計劃比較";
 export const APP_URL = "https://HKBodyCheck.info";
+export const META_IMAGE = "/meta_image.jpg";
 
 export const MAX_AIRTABLE_RECORDS = 10000;
 
