@@ -279,8 +279,6 @@ function App({ servicePlansRecords, plansRecords }) {
   };
   const [priceToggleValues, setPriceToggleValues] = useState(() => ["Mid"]);
   const handlePriceToggle = (event, newPricesToggleValues) => {
-    setPriceToggleValues(newPricesToggleValues);
-
     if (newPricesToggleValues) {
       if (newPricesToggleValues.includes("Low")) {
         setPrice([0, 4999]);
@@ -291,6 +289,7 @@ function App({ servicePlansRecords, plansRecords }) {
       if (newPricesToggleValues.includes("High")) {
         setPrice([10000, 30000]);
       }
+      setPriceToggleValues(newPricesToggleValues);
     }
   };
 
