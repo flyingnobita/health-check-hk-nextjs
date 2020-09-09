@@ -289,7 +289,7 @@ export default function FilterUI({
             />
 
             <Grid item>
-              <Grid container>
+              <Grid container justify="center">
                 <Grid item className={classes.priceButtonGroup}>
                   <PriceToggleButtonGroup
                     priceToggleValues={priceToggleValues}
