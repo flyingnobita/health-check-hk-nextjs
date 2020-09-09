@@ -54,6 +54,13 @@ function App({ servicePlansRecords, plansRecords }) {
       setPage("table");
     }
   };
+  const handleInformationSource = () => {
+    trackEvent({
+      event: "Page-set",
+      page: "hospitalInfo (information source)",
+    });
+    setPage("hospitalInfo");
+  };
 
   const [language, setLanguage] = useState("ch");
   const handleLanguage = (event) => {
@@ -413,7 +420,10 @@ function App({ servicePlansRecords, plansRecords }) {
         />
         {mainPanel}
         <FeedbackForm hospitalInfo={hospitalInfo} language={language} />
-        <Footer />
+        <Footer
+          language={language}
+          handleInformationSource={handleInformationSource}
+        />
         <Snackbar
           open={tooManyHospitalWarningOpen}
           autoHideDuration={2000}

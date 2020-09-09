@@ -17,6 +17,8 @@ export const GENDER_SPECIFIC_PLAN_TYPES = [
   "Pre-marital",
 ];
 
+export const LAST_UPDATED = "2020-09-10"
+
 export const SHARE_MESSAGE_EN =
   "Don't know which body check plan is right for you? Compare plans from all hospitals here!";
 export const SHARE_MESSAGE_CH =
