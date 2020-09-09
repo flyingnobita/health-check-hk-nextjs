@@ -52,7 +52,7 @@ export const GetReactPivotTable = (props) => {
         />
       </Grid>
       <Grid item xs={1} />
-      <Grid item xs={10} className={props.pivotTableGrid}>
+      <Grid item xs={10} className={classes.pivotTableGrid}>
         <ReactPivotTable
           csv={props.filteredDataArray}
           language={props.language}
