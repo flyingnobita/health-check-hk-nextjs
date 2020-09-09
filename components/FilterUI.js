@@ -56,6 +56,7 @@ export default function FilterUI({
   hospitals,
   handleHospital,
   handleHospitalSelect,
+  handleDeleteHospitalSelect,
   locations,
   handleLocation,
   handleLocationSelect,
@@ -281,6 +282,7 @@ export default function FilterUI({
               locations={locations}
               hospitals={hospitals}
               handleHospitalSelect={handleHospitalSelect}
+              handleDeleteHospitalSelect={handleDeleteHospitalSelect}
               planTypes={planTypes}
               genders={genders}
               processedPlansRecords={processedPlansRecords}

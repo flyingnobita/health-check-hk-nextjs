@@ -258,6 +258,14 @@ function App({ servicePlansRecords, plansRecords }) {
   const handleHospitalSelect = (event) => {
     setHospitals(event.target.value);
   };
+  const handleDeleteHospitalSelect = (value) => {
+    if (value) {
+      let newHospitals = hospitals.slice();
+      const index = hospitals.indexOf(value);
+      if (index > -1) {
+        newHospitals.splice(index, 1);
+        setHospitals(newHospitals);
+      }
     }
   };
 
@@ -266,11 +274,6 @@ function App({ servicePlansRecords, plansRecords }) {
   const debouncedPriceFilter = useDebounce(prices, 800);
   const handlePrice = (event, newPrices) => {
     if (newPrices && newPrices.length) {
-      // if (prices[0] !== newPrices[0]) {
-      //   newPrices[1] = newPrices[0] + priceRangeDiff;
-      // } else {
-      //   newPrices[0] = newPrices[1] - priceRangeDiff;
-      // }
       setPrice(newPrices);
     }
   };
@@ -397,6 +400,7 @@ function App({ servicePlansRecords, plansRecords }) {
         hospitals={hospitals}
         handleHospital={handleHospital}
         handleHospitalSelect={handleHospitalSelect}
+        handleDeleteHospitalSelect={handleDeleteHospitalSelect}
         prices={prices}
         priceToggleValues={priceToggleValues}
         handlePrice={handlePrice}

@@ -14,6 +14,7 @@ export const GetReactPivotTable = (props) => {
           hospitals={props.hospitals}
           handleHospital={props.handleHospital}
           handleHospitalSelect={props.handleHospitalSelect}
+          handleDeleteHospitalSelect={props.handleDeleteHospitalSelect}
           locations={props.locations}
           handleLocation={props.handleLocation}
           handleLocationSelect={props.handleLocationSelect}
