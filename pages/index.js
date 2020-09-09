@@ -48,7 +48,7 @@ const useStyles = makeStyles((theme) => ({
 
 function App({ servicePlansRecords, plansRecords }) {
   const classes = useStyles();
-  const wideScreen = useMediaQuery("(min-width:568px)");
+  const wideScreen = useMediaQuery("(min-width:630px)");
   const superWideScreen = useMediaQuery("(min-width:725px)");
 
   const { trackEvent } = useTracking();
