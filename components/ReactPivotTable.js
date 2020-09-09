@@ -3,32 +3,6 @@ import LinearProgress from "@material-ui/core/LinearProgress";
 import React from "react";
 import PivotTable from "../components/react-pivottable/PivotTable";
 
-const tableOptions = {
-  clickCallback: function (e, value, filters, pivotData) {
-    var names = [];
-    pivotData.forEachMatchingRecord(filters, function (record) {
-      names.push(record.appId);
-      var popup = document.createElement("div");
-      popup.className = "popup";
-      popup.id = "test";
-
-      var cancel = document.createElement("button");
-      cancel.className = "cancel";
-      cancel.innerHTML = "close";
-      cancel.onclick = function (e) {
-        popup.parentNode.removeChild(popup);
-      };
-
-      var message = document.createElement("span");
-      message.innerHTML = "hi";
-
-      popup.appendChild(message);
-      popup.appendChild(cancel);
-      document.body.appendChild(popup);
-    });
-  },
-};
-
 export default class ReactPivotTable extends React.Component {
   constructor(props) {
     super(props);
@@ -53,7 +27,6 @@ export default class ReactPivotTable extends React.Component {
 
       return (
         <PivotTable
-          tableOptions={tableOptions}
           data={this.tableData}
           cols={
             this.props.language === "en"
