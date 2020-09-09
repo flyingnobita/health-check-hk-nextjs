@@ -18,7 +18,8 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 0,
   },
   informationSourceButton: {
-    fontSize: "12px",
+    padding: 0,
+    textTransform: "none",
   },
   copyrightLastUpdateContainer: {
     paddingLeft: "10px",
@@ -34,7 +35,7 @@ const useStyles = makeStyles((theme) => ({
     textAlign: "center",
     lineHeight: 1,
     color: theme.palette.primary.main,
-    fontSize: "9pt",
+    fontSize: "12px",
   },
 }));
 
@@ -50,17 +51,6 @@ export default function Footer({ language, handleInformationSource }) {
         <Grid item xs className={classes.gridDialogButton}>
           <PrivacyDialog />
         </Grid>
-        <Grid item className={classes.gridDialogButton}>
-          <Button
-            onClick={handleInformationSource}
-            // className={classes.gridDialogButton}
-            style={{ fontSize: "12px" }}
-          >
-            {language === "en"
-              ? "Information Source： Hospital Websites"
-              : "資料來源: 醫院網頁"}
-          </Button>
-        </Grid>
       </Grid>
       <Grid
         container
@@ -75,12 +65,31 @@ export default function Footer({ language, handleInformationSource }) {
           </Typography>
         </Grid>
         <Grid item>
-          <Typography component="span" className={classes.lastUpdated}>
-            {language === "en" ? "Last Updated: " : "最後更新: "}
-          </Typography>
-          <Typography component="span" className={classes.copyright}>
-            {LAST_UPDATED}
-          </Typography>
+          <Grid
+            container
+            direction="column"
+            justify="space-between"
+            alignItems="flex-end"
+            className={classes.copyrightLastUpdateContainer}
+          >
+            <Button
+              onClick={handleInformationSource}
+              className={classes.informationSourceButton}
+              style={{ fontSize: "12px" }}
+            >
+              {language === "en"
+                ? "Information Source: Hospital Websites"
+                : "資料來源: 醫院網頁"}
+            </Button>
+            <Typography component="span" className={classes.lastUpdated}>
+              {language === "en" ? "Last Updated: " : "最後更新: "}{" "}
+              {LAST_UPDATED}
+            </Typography>
+            <Typography
+              component="span"
+              className={classes.copyright}
+            ></Typography>
+          </Grid>
         </Grid>
       </Grid>
     </Paper>
