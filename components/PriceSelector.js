@@ -27,11 +27,6 @@ const useStyles = makeStyles((theme) => ({
   priceLabel: {
     color: theme.palette.text.secondary,
   },
-  slider: {
-    "&$markLabel": {
-      fontSize: "0.5rem",
-    },
-  },
 }));
 
 export default function PriceSelector({ prices, handlePrice, language }) {
@@ -69,7 +64,6 @@ export default function PriceSelector({ prices, handlePrice, language }) {
         valueLabelDisplay="auto"
         valueLabelFormat={(value) => <div>${value / 1000}k</div>}
         aria-labelledby="price-selector"
-        className={classes.slider}
       />
     </div>
   );
