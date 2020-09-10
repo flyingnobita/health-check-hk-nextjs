@@ -55,6 +55,7 @@ const muiTheme = createMuiTheme(
       // plan types, gender, location, hospital
       MuiToggleButton: {
         root: {
+          lineHeight: 1.3,
           color: globalTheme.palette.primary.main,
           "&$selected": {
             backgroundColor: globalTheme.palette.primary.main,
@@ -78,6 +79,11 @@ const muiTheme = createMuiTheme(
       MuiInputBase: {
         input: {
           color: globalTheme.palette.primary.dark,
+        },
+      },
+      MuiSlider: {
+        markLabel: {
+          fontSize: "0.75rem",
         },
       },
     },

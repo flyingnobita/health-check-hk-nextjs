@@ -1,7 +1,8 @@
 import { Grid } from "@material-ui/core";
 import LinearProgress from "@material-ui/core/LinearProgress";
 import Link from "@material-ui/core/Link";
-import React from "react";
+import { useRouter } from "next/router";
+import React, { useEffect } from "react";
 import Emoji from "./Emoji";
 import HospitalInfosCards from "./HospitalInfosCards";
 
@@ -36,11 +37,16 @@ export const onlineBookingLink = function (language, row) {
 };
 
 export default function HospitalInfos({ hospitalInfo, language }) {
+  const router = useRouter();
+
+  useEffect(() => {
+    router.push("/?hospitalInfo", undefined, { shallow: true });
+  }, []);
+
   if (hospitalInfo.length > 0) {
     return (
       <React.Fragment>
         <HospitalInfosCards language={language} hospitalInfo={hospitalInfo} />
-        {/* <HospitalInfosTable language={language} hospitalInfo={hospitalInfo} /> */}
       </React.Fragment>
     );
   } else {

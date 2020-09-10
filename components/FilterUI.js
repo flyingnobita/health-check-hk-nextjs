@@ -13,6 +13,7 @@ import HospitalToggleButtonGroup from "./HospitalToggleButtonGroup";
 import LocationSelect from "./LocationSelect";
 import LocationToggleButtonGroup from "./LocationToggleButtonGroup";
 import PriceSelector from "./PriceSelector";
+import PriceToggleButtonGroup from "./PriceToggleButtonGroup";
 import SearchBar from "./SearchBar";
 
 const useStyles = makeStyles(() => ({
@@ -21,6 +22,30 @@ const useStyles = makeStyles(() => ({
   },
   buttonGroup: {
     margin: 10,
+  },
+  priceButtonGroup: {
+    marginTop: 10,
+    marginRight: 7,
+    marginBottom: 0,
+    marginLeft: 10,
+  },
+  priceButtonGroupWideScreen: {
+    marginTop: 10,
+    marginRight: 7,
+    marginBottom: 10,
+    marginLeft: 10,
+  },
+  priceSelector: {
+    marginTop: 10,
+    marginRight: 10,
+    marginBottom: 0,
+    marginLeft: 10,
+  },
+  priceSelectorWideScreen: {
+    marginTop: 10,
+    marginRight: 10,
+    marginBottom: 10,
+    marginLeft: 10,
   },
 }));
 
@@ -31,6 +56,7 @@ export default function FilterUI({
   hospitals,
   handleHospital,
   handleHospitalSelect,
+  handleDeleteHospitalSelect,
   locations,
   handleLocation,
   handleLocationSelect,
@@ -41,7 +67,9 @@ export default function FilterUI({
   handlePlanType,
   handlePlanTypeSelect,
   prices,
+  priceToggleValues,
   handlePrice,
+  handlePriceToggle,
   searchTerm,
   handleSearch,
   hospitalInfo,
@@ -156,12 +184,25 @@ export default function FilterUI({
                 superWideScreen={superWideScreen}
               />
 
-              <Grid item className={classes.buttonGroup}>
-                <PriceSelector
-                  prices={prices}
-                  handlePrice={handlePrice}
-                  language={language}
-                />
+              <Grid item>
+                <Grid container>
+                  <Grid item className={classes.priceButtonGroupWideScreen}>
+                    <PriceToggleButtonGroup
+                      priceToggleValues={priceToggleValues}
+                      handlePriceToggle={handlePriceToggle}
+                      language={language}
+                      superWideScreen={superWideScreen}
+                    />
+                  </Grid>
+                  <Grid item className={classes.priceSelectorWideScreen}>
+                    <PriceSelector
+                      prices={prices}
+                      handlePrice={handlePrice}
+                      language={language}
+                      className={classes.priceSelector}
+                    />
+                  </Grid>
+                </Grid>
               </Grid>
 
               <SearchBar
@@ -241,17 +282,31 @@ export default function FilterUI({
               locations={locations}
               hospitals={hospitals}
               handleHospitalSelect={handleHospitalSelect}
+              handleDeleteHospitalSelect={handleDeleteHospitalSelect}
               planTypes={planTypes}
               genders={genders}
               processedPlansRecords={processedPlansRecords}
             />
 
-            <Grid item className={classes.buttonGroup} xs={12} align="center">
-              <PriceSelector
-                prices={prices}
-                handlePrice={handlePrice}
-                language={language}
-              />
+            <Grid item>
+              <Grid container justify="center">
+                <Grid item className={classes.priceButtonGroup}>
+                  <PriceToggleButtonGroup
+                    priceToggleValues={priceToggleValues}
+                    handlePriceToggle={handlePriceToggle}
+                    language={language}
+                    superWideScreen={superWideScreen}
+                  />
+                </Grid>
+                <Grid item className={classes.priceSelector}>
+                  <PriceSelector
+                    prices={prices}
+                    handlePrice={handlePrice}
+                    language={language}
+                    className={classes.priceSelector}
+                  />
+                </Grid>
+              </Grid>
             </Grid>
 
             <SearchBar

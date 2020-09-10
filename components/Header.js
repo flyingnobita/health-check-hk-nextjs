@@ -8,9 +8,7 @@ import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import CloseIcon from "@material-ui/icons/Close";
 import HomeIcon from "@material-ui/icons/Home";
-import InfoIcon from "@material-ui/icons/Info";
 import ScreenRotationIcon from "@material-ui/icons/ScreenRotation";
-import TranslateIcon from "@material-ui/icons/Translate";
 import Alert from "@material-ui/lab/Alert";
 import React from "react";
 import { HEAD_TITLE_CN, HEAD_TITLE_EN } from "../components/settings";
@@ -28,8 +26,11 @@ const useStyles = makeStyles((theme) => ({
     marginRight: "10px",
   },
   alert: {
-    backgroundColor: "white",
+    backgroundColor: "black",
     color: theme.palette.primary.main,
+  },
+  hospitalIcon: {
+    height: "1em",
   },
 }));
 
@@ -106,7 +107,11 @@ export default function Header(props) {
             onClick={props.handleHospitalInfoClick}
           >
             {props.page === "table" ? (
-              <InfoIcon className={classes.icon} />
+              <img
+                src="/cross.svg"
+                alt="Hospital Icon"
+                className={classes.hospitalIcon}
+              />
             ) : (
               <HomeIcon className={classes.icon} />
             )}
@@ -126,7 +131,10 @@ export default function Header(props) {
               onClick={props.handleLanguageClick}
               className={classes.icon}
             >
-              <TranslateIcon fontSize="small" />
+              {/* <TranslateIcon fontSize="small" /> */}
+              <Typography variant="body1">
+                {props.language === "en" ? "中" : "EN"}
+              </Typography>
             </IconButton>
           )}
         </Toolbar>

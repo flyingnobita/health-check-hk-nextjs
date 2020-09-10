@@ -1,13 +1,13 @@
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Snackbar from "@material-ui/core/Snackbar";
-import { makeStyles } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import MuiAlert from "@material-ui/lab/Alert";
 import { ThemeProvider } from "@material-ui/styles";
 import Airtable from "airtable";
 import dynamic from "next/dynamic";
+import { useRouter } from "next/router";
 import PropTypes from "prop-types";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import track, { useTracking } from "react-tracking";
 import FeedbackForm from "../components/FeedbackForm";
 import Footer from "../components/Footer";
@@ -21,7 +21,9 @@ import {
 } from "../components/indexHelper";
 import {
   GENDER_SPECIFIC_PLAN_TYPES,
+  INITIAL_PRICE_RANGE,
   MAX_AIRTABLE_RECORDS,
+  MAX_PRICE_RANGE,
 } from "../components/settings";
 import useDebounce from "../components/useDebounce";
 import muiTheme from "../styles/muiTheme";
@@ -32,30 +34,24 @@ function Alert(props) {
   return <MuiAlert elevation={3} {...props} />;
 }
 
-const useStyles = makeStyles((theme) => ({
-  filterGrid: {
-    background: theme.palette.grey[50],
-    paddingTop: "10px",
-  },
-  pivotTableGrid: {
-    marginLeft: "auto",
-    marginRight: "auto",
-    paddingTop: "20px",
-    paddingBottom: "10px",
-    overflow: "auto",
-  },
-}));
-
 function App({ servicePlansRecords, plansRecords }) {
-  const classes = useStyles();
-  const wideScreen = useMediaQuery("(min-width:568px)");
+  const router = useRouter();
+
+  useEffect(() => {
+    // detect back and forward button which changes url but not the state
+    if (Object.keys(router.query).length === 0) {
+      trackEvent({ event: "Page-set", page: "table" });
+      setPage("table");
+    } else if ("hospitalInfo" in router.query) {
+      trackEvent({ event: "Page-set", page: "hospitalInfo" });
+      setPage("hospitalInfo");
+    }
+  }, [router.query]);
+
+  const wideScreen = useMediaQuery("(min-width:630px)");
   const superWideScreen = useMediaQuery("(min-width:725px)");
 
   const { trackEvent } = useTracking();
-
-  const initialPriceRange = [0, 30000];
-  const maxPriceRange = [0, 30000];
-  // const priceRangeDiff = initialPriceRange[1] - initialPriceRange[0];
 
   const processedServicePlansRecords = processRawAirtableRecords(
     servicePlansRecords
@@ -71,6 +67,14 @@ function App({ servicePlansRecords, plansRecords }) {
       trackEvent({ event: "Page-set", page: "table" });
       setPage("table");
     }
+  };
+
+  const handleInformationSource = () => {
+    trackEvent({
+      event: "Page-set",
+      page: "hospitalInfo (information source)",
+    });
+    setPage("hospitalInfo");
   };
 
   const [language, setLanguage] = useState("ch");
@@ -110,9 +114,9 @@ function App({ servicePlansRecords, plansRecords }) {
 
       // Set default price range
       if (newPlanTypes !== "General") {
-        setPrice(maxPriceRange);
+        setPrice(MAX_PRICE_RANGE);
       } else {
-        setPrice(initialPriceRange);
+        setPrice(INITIAL_PRICE_RANGE);
       }
 
       // Set default locations and hospitals
@@ -151,9 +155,9 @@ function App({ servicePlansRecords, plansRecords }) {
 
     // Set default price range
     if (event.target.value !== "General") {
-      setPrice(maxPriceRange);
+      setPrice(MAX_PRICE_RANGE);
     } else {
-      setPrice(initialPriceRange);
+      setPrice(INITIAL_PRICE_RANGE);
     }
 
     // Set default locations and hospitals
@@ -252,32 +256,44 @@ function App({ servicePlansRecords, plansRecords }) {
   const [hospitals, setHospitals] = useState(() => ["Adventist - Stubbs"]);
   const handleHospital = (event, newHospitals) => {
     if (newHospitals) {
-      if (newHospitals.length <= 2 || planTypes !== "General") {
-        setHospitals(newHospitals);
-      } else {
-        setTooManyHospitalWarningOpen(true);
-      }
+      setHospitals(newHospitals);
     }
   };
   const handleHospitalSelect = (event) => {
-    if (event.target.value.length <= 2 || planTypes !== "General") {
-      setHospitals(event.target.value);
-    } else {
-      setTooManyHospitalWarningOpen(true);
+    setHospitals(event.target.value);
+  };
+  const handleDeleteHospitalSelect = (value) => {
+    if (value) {
+      let newHospitals = hospitals.slice();
+      const index = hospitals.indexOf(value);
+      if (index > -1) {
+        newHospitals.splice(index, 1);
+        setHospitals(newHospitals);
+      }
     }
   };
 
   // Price
-  const [prices, setPrice] = useState(initialPriceRange);
+  const [prices, setPrice] = useState(INITIAL_PRICE_RANGE);
   const debouncedPriceFilter = useDebounce(prices, 800);
   const handlePrice = (event, newPrices) => {
     if (newPrices && newPrices.length) {
-      // if (prices[0] !== newPrices[0]) {
-      //   newPrices[1] = newPrices[0] + priceRangeDiff;
-      // } else {
-      //   newPrices[0] = newPrices[1] - priceRangeDiff;
-      // }
       setPrice(newPrices);
+    }
+  };
+  const [priceToggleValues, setPriceToggleValues] = useState("Mid");
+  const handlePriceToggle = (event, newPricesToggleValues) => {
+    if (newPricesToggleValues) {
+      if (newPricesToggleValues === "Low") {
+        setPrice([0, 4999]);
+      }
+      if (newPricesToggleValues === "Mid") {
+        setPrice([5000, 10000]);
+      }
+      if (newPricesToggleValues === "High") {
+        setPrice([10000, 30000]);
+      }
+      setPriceToggleValues(newPricesToggleValues);
     }
   };
 
@@ -371,7 +387,6 @@ function App({ servicePlansRecords, plansRecords }) {
   if (page === "table") {
     mainPanel = (
       <GetReactPivotTable
-        filterGrid={classes.filterGrid}
         wideScreen={wideScreen}
         superWideScreen={superWideScreen}
         language={language}
@@ -387,12 +402,14 @@ function App({ servicePlansRecords, plansRecords }) {
         hospitals={hospitals}
         handleHospital={handleHospital}
         handleHospitalSelect={handleHospitalSelect}
+        handleDeleteHospitalSelect={handleDeleteHospitalSelect}
         prices={prices}
+        priceToggleValues={priceToggleValues}
         handlePrice={handlePrice}
+        handlePriceToggle={handlePriceToggle}
         searchTerm={searchTerm}
         handleSearch={handleSearch}
         hospitalInfo={hospitalInfo}
-        pivotTableGrid={classes.pivotTableGrid}
         filteredDataArray={filteredDataArray}
         processedPlansRecords={processedPlansRecords}
       ></GetReactPivotTable>
@@ -418,7 +435,10 @@ function App({ servicePlansRecords, plansRecords }) {
         />
         {mainPanel}
         <FeedbackForm hospitalInfo={hospitalInfo} language={language} />
-        <Footer />
+        <Footer
+          language={language}
+          handleInformationSource={handleInformationSource}
+        />
         <Snackbar
           open={tooManyHospitalWarningOpen}
           autoHideDuration={2000}

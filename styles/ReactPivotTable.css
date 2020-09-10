@@ -1,3 +1,7 @@
+:root {
+  --table-bg-color-dark: #f7f7f7;
+}
+
 table.pvtTable {
   font-size: 12pt;
   font-family: "Noto Sans HK", "Roboto", "Helvetica", "Arial", sans-serif;
@@ -35,7 +39,7 @@ table.pvtTable thead tr:nth-child(4) th.pvtColLabel::before {
 table.pvtTable thead tr:nth-of-type(-n + 4) th,
 table.pvtTable thead tr:nth-of-type(5) th:nth-of-type(odd),
 table.pvtTable thead tr:nth-of-type(6) th:nth-of-type(-n + 3) {
-  background-color: #e9e9e9;
+  background-color: var(--table-bg-color-dark);
   font-size: 12pt;
   font-weight: bold;
   text-align: center;
@@ -57,7 +61,7 @@ table.pvtTable tbody tr:nth-child(1) th {
 
 /* format row headings */
 table.pvtTable tbody tr th {
-  background-color: #e9e9e9;
+  background-color: var(--table-bg-color-dark);
   font-size: 12pt;
   font-weight: normal;
   text-align: center;
@@ -74,7 +78,7 @@ table.pvtTable tbody tr td {
 
 /* every second col in body */
 table.pvtTable tbody tr td:nth-of-type(even) {
-  background-color: #e9e9e9;
+  background-color: var(--table-bg-color-dark);
 }
 
 table.pvtTable tbody tr:hover th[colspan="2"],
