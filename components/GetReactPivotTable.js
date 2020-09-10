@@ -1,6 +1,7 @@
 import { Grid } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import React from "react";
+import { useRouter } from "next/router";
+import React, { useEffect } from "react";
 import FilterUI from "./FilterUI";
 import ReactPivotTable from "./ReactPivotTable";
 
@@ -20,6 +21,11 @@ const useStyles = makeStyles((theme) => ({
 
 export const GetReactPivotTable = (props) => {
   const classes = useStyles();
+  const router = useRouter();
+
+  useEffect(() => {
+    router.push("/", undefined, { shallow: true });
+  }, []);
 
   return (
     <React.Fragment>

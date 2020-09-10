@@ -5,8 +5,9 @@ import MuiAlert from "@material-ui/lab/Alert";
 import { ThemeProvider } from "@material-ui/styles";
 import Airtable from "airtable";
 import dynamic from "next/dynamic";
+import { useRouter } from "next/router";
 import PropTypes from "prop-types";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import track, { useTracking } from "react-tracking";
 import FeedbackForm from "../components/FeedbackForm";
 import Footer from "../components/Footer";
@@ -34,6 +35,19 @@ function Alert(props) {
 }
 
 function App({ servicePlansRecords, plansRecords }) {
+  const router = useRouter();
+
+  useEffect(() => {
+    // detect back and forward button which changes url but not the state
+    if (Object.keys(router.query).length === 0) {
+      trackEvent({ event: "Page-set", page: "table" });
+      setPage("table");
+    } else if ("hospitalInfo" in router.query) {
+      trackEvent({ event: "Page-set", page: "hospitalInfo" });
+      setPage("hospitalInfo");
+    }
+  }, [router.query]);
+
   const wideScreen = useMediaQuery("(min-width:630px)");
   const superWideScreen = useMediaQuery("(min-width:725px)");
 
@@ -54,6 +68,7 @@ function App({ servicePlansRecords, plansRecords }) {
       setPage("table");
     }
   };
+
   const handleInformationSource = () => {
     trackEvent({
       event: "Page-set",
