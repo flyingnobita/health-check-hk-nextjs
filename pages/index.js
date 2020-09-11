@@ -39,11 +39,11 @@ function Alert(props) {
 }
 
 function App({ servicePlansRecords, plansRecords }) {
-  
   const minLandscape = useMediaQuery("(min-width:568px)");
+  const minFooterText = useMediaQuery("(min-width:440px)");
   const wideScreen = useMediaQuery("(min-width:630px)");
   const superWideScreen = useMediaQuery("(min-width:725px)");
-  
+
   const router = useRouter();
 
   useEffect(() => {
@@ -540,6 +540,7 @@ function App({ servicePlansRecords, plansRecords }) {
         <Footer
           language={language}
           handleInformationSource={handleInformationSource}
+          minFooterText={minFooterText}
         />
         <Snackbar
           open={tooManyHospitalWarningOpen}

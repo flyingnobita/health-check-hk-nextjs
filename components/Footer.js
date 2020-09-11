@@ -16,6 +16,7 @@ const useStyles = makeStyles((theme) => ({
   },
   gridDialogButton: {
     flexGrow: 0,
+    paddingTop: "4px",
   },
   informationSourceButton: {
     padding: 0,
@@ -25,7 +26,16 @@ const useStyles = makeStyles((theme) => ({
     paddingLeft: "10px",
     paddingRight: "10px",
   },
-  copyright: {
+  copyrightLastUpdateContainerNarrow: {
+    paddingTop: "10px",
+    paddingLeft: "10px",
+    paddingRight: "10px",
+  },
+  copyrightContainer: {
+    paddingTop: "20px",
+    paddingBottom: "10px",
+  },
+  copyrightText: {
     textAlign: "center",
     lineHeight: 1,
     color: theme.palette.primary.main,
@@ -36,11 +46,104 @@ const useStyles = makeStyles((theme) => ({
     lineHeight: 1,
     color: theme.palette.primary.main,
     fontSize: "12px",
+    paddingBottom: "px",
   },
 }));
 
-export default function Footer({ language, handleInformationSource }) {
+const Copyright = (props) => (
+  <Typography component="div" className={props.copyright}>
+    © {HEAD_TITLE_EN}
+  </Typography>
+);
+
+const InformationSourceButton = (props) => (
+  <Button
+    onClick={props.handleInformationSource}
+    className={props.informationSourceButton}
+    style={{
+      fontSize: "12px",
+    }}
+  >
+    {props.language === "en"
+      ? "Information Source: Hospital Websites"
+      : "資料來源: 醫院網頁"}
+  </Button>
+);
+
+const LastUpdated = (props) => (
+  <Typography component="span" className={props.lastUpdated}>
+    {props.language === "en" ? "Last Updated: " : "最後更新: "} {LAST_UPDATED}
+  </Typography>
+);
+
+export default function Footer({
+  language,
+  handleInformationSource,
+  minFooterText,
+}) {
   const classes = useStyles();
+
+  let footerText;
+  if (minFooterText) {
+    footerText = (
+      <Grid
+        container
+        direction="row"
+        justify="space-between"
+        alignItems="center"
+        className={classes.copyrightLastUpdateContainer}
+      >
+        <Grid item>
+          <Copyright copyright={classes.copyrightText}></Copyright>
+        </Grid>
+        <Grid item>
+          <Grid
+            container
+            direction="column"
+            justify="space-between"
+            alignItems="flex-end"
+            className={classes.copyrightLastUpdateContainer}
+          >
+            <InformationSourceButton
+              language={language}
+              handleInformationSource={handleInformationSource}
+              informationSourceButton={classes.informationSourceButton}
+            ></InformationSourceButton>
+            <LastUpdated
+              language={language}
+              lastUpdated={classes.lastUpdated}
+            ></LastUpdated>
+          </Grid>
+        </Grid>
+      </Grid>
+    );
+  } else {
+    footerText = (
+      <Grid
+        container
+        direction="column"
+        alignItems="center"
+        className={classes.copyrightLastUpdateContainerNarrow}
+      >
+        <Grid item>
+          <InformationSourceButton
+            language={language}
+            handleInformationSource={handleInformationSource}
+            informationSourceButton={classes.informationSourceButton}
+          ></InformationSourceButton>
+        </Grid>
+        <Grid item>
+          <LastUpdated
+            language={language}
+            lastUpdated={classes.lastUpdated}
+          ></LastUpdated>
+        </Grid>
+        <Grid item className={classes.copyrightContainer}>
+          <Copyright copyright={classes.copyrightText}></Copyright>
+        </Grid>
+      </Grid>
+    );
+  }
 
   return (
     <Paper className={classes.paper} square>
@@ -52,46 +155,7 @@ export default function Footer({ language, handleInformationSource }) {
           <PrivacyDialog />
         </Grid>
       </Grid>
-      <Grid
-        container
-        direction="row"
-        justify="space-between"
-        alignItems="center"
-        className={classes.copyrightLastUpdateContainer}
-      >
-        <Grid item>
-          <Typography component="div" className={classes.copyright}>
-            © {HEAD_TITLE_EN}
-          </Typography>
-        </Grid>
-        <Grid item>
-          <Grid
-            container
-            direction="column"
-            justify="space-between"
-            alignItems="flex-end"
-            className={classes.copyrightLastUpdateContainer}
-          >
-            <Button
-              onClick={handleInformationSource}
-              className={classes.informationSourceButton}
-              style={{ fontSize: "12px" }}
-            >
-              {language === "en"
-                ? "Information Source: Hospital Websites"
-                : "資料來源: 醫院網頁"}
-            </Button>
-            <Typography component="span" className={classes.lastUpdated}>
-              {language === "en" ? "Last Updated: " : "最後更新: "}{" "}
-              {LAST_UPDATED}
-            </Typography>
-            <Typography
-              component="span"
-              className={classes.copyright}
-            ></Typography>
-          </Grid>
-        </Grid>
-      </Grid>
+      {footerText}
     </Paper>
   );
 }
