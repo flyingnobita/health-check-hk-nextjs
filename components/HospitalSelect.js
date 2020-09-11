@@ -41,6 +41,7 @@ export default function HospitalSelect({
   handleDeleteHospitalSelect,
   planTypes,
   genders,
+  prices,
   processedPlansRecords,
 }) {
   const classes = useStyles();
@@ -55,7 +56,8 @@ export default function HospitalSelect({
       processedPlansRecords,
       planTypes,
       genders,
-      locations
+      locations,
+      prices
     );
     let filteredHospitalsList = getHospitalList(filtered);
 
@@ -67,6 +69,7 @@ export default function HospitalSelect({
           multiple
           value={hospitals}
           onChange={handleHospitalSelect}
+          disabled={filteredHospitalsList.length < 1}
           input={<Input id="input-select-hospital" />}
           style={{ paddingTop: "10px" }}
           renderValue={(selected) => (

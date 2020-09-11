@@ -21,9 +21,13 @@ import {
 } from "../components/indexHelper";
 import {
   GENDER_SPECIFIC_PLAN_TYPES,
+  HIGH_PRICE_RANGE,
   INITIAL_PRICE_RANGE,
+  INITIAL_PRICE_TOGGLE,
+  LOW_PRICE_RANGE,
   MAX_AIRTABLE_RECORDS,
   MAX_PRICE_RANGE,
+  MID_PRICE_RANGE,
 } from "../components/settings";
 import useDebounce from "../components/useDebounce";
 import muiTheme from "../styles/muiTheme";
@@ -58,6 +62,7 @@ function App({ servicePlansRecords, plansRecords }) {
   );
   const processedPlansRecords = processRawAirtableRecords(plansRecords);
 
+  // Page
   const [page, setPage] = useState("table");
   const handlePage = () => {
     if (page === "table") {
@@ -69,14 +74,7 @@ function App({ servicePlansRecords, plansRecords }) {
     }
   };
 
-  const handleInformationSource = () => {
-    trackEvent({
-      event: "Page-set",
-      page: "hospitalInfo (information source)",
-    });
-    setPage("hospitalInfo");
-  };
-
+  // Language
   const [language, setLanguage] = useState("ch");
   const handleLanguage = (event) => {
     if (event.target.checked) {
@@ -115,8 +113,10 @@ function App({ servicePlansRecords, plansRecords }) {
       // Set default price range
       if (newPlanTypes !== "General") {
         setPrice(MAX_PRICE_RANGE);
+        setPriceToggleValues("");
       } else {
         setPrice(INITIAL_PRICE_RANGE);
+        setPriceToggleValues(INITIAL_PRICE_TOGGLE);
       }
 
       // Set default locations and hospitals
@@ -124,17 +124,26 @@ function App({ servicePlansRecords, plansRecords }) {
         processedPlansRecords,
         newPlanTypes,
         genders,
-        locations
+        locations,
+        prices
       );
+
       if (filteredHospitals.length === 0) {
         filteredHospitals = filterHospitals(
           processedPlansRecords,
           newPlanTypes,
           genders,
-          []
+          [],
+          MAX_PRICE_RANGE
         );
-        setHospitals([filteredHospitals[0]["Hospital"]]);
-        setLocation(filteredHospitals[0]["Location"]);
+
+        if (filteredHospitals.length === 0) {
+          setHospitals([]);
+          setLocation([]);
+        } else {
+          setHospitals([filteredHospitals[0]["Hospital"]]);
+          setLocation(filteredHospitals[0]["Location"]);
+        }
       } else {
         setHospitals([filteredHospitals[0]["Hospital"]]);
         setLocation(filteredHospitals[0]["Location"]);
@@ -156,8 +165,10 @@ function App({ servicePlansRecords, plansRecords }) {
     // Set default price range
     if (event.target.value !== "General") {
       setPrice(MAX_PRICE_RANGE);
+      setPriceToggleValues("");
     } else {
       setPrice(INITIAL_PRICE_RANGE);
+      setPriceToggleValues(INITIAL_PRICE_TOGGLE);
     }
 
     // Set default locations and hospitals
@@ -165,17 +176,24 @@ function App({ servicePlansRecords, plansRecords }) {
       processedPlansRecords,
       event.target.value,
       genders,
-      locations
+      locations,
+      prices
     );
     if (filteredHospitals.length === 0) {
       filteredHospitals = filterHospitals(
         processedPlansRecords,
         event.target.value,
         genders,
-        []
+        [],
+        MAX_PRICE_RANGE
       );
-      setHospitals([filteredHospitals[0]["Hospital"]]);
-      setLocation(filteredHospitals[0]["Location"]);
+      if (filteredHospitals.length === 0) {
+        setHospitals([]);
+        setLocation([]);
+      } else {
+        setHospitals([filteredHospitals[0]["Hospital"]]);
+        setLocation(filteredHospitals[0]["Location"]);
+      }
     } else {
       setHospitals([filteredHospitals[0]["Hospital"]]);
       setLocation(filteredHospitals[0]["Location"]);
@@ -193,7 +211,8 @@ function App({ servicePlansRecords, plansRecords }) {
         processedPlansRecords,
         planTypes,
         newGenders,
-        locations
+        locations,
+        prices
       );
       if (filteredHospitals.length === 0) setHospitals([]);
       else {
@@ -209,7 +228,8 @@ function App({ servicePlansRecords, plansRecords }) {
       processedPlansRecords,
       planTypes,
       event.target.value,
-      locations
+      locations,
+      prices
     );
     if (filteredHospitals.length === 0) setHospitals([]);
     else {
@@ -228,7 +248,8 @@ function App({ servicePlansRecords, plansRecords }) {
         processedPlansRecords,
         planTypes,
         genders,
-        newLocation
+        newLocation,
+        prices
       );
       if (filteredHospitals.length === 0) setHospitals([]);
       else {
@@ -244,7 +265,8 @@ function App({ servicePlansRecords, plansRecords }) {
       processedPlansRecords,
       planTypes,
       genders,
-      event.target.value
+      event.target.value,
+      prices
     );
     if (filteredHospitals.length === 0) setHospitals([]);
     else {
@@ -284,16 +306,48 @@ function App({ servicePlansRecords, plansRecords }) {
   const [priceToggleValues, setPriceToggleValues] = useState("Mid");
   const handlePriceToggle = (event, newPricesToggleValues) => {
     if (newPricesToggleValues) {
+      let newPriceRange = null;
       if (newPricesToggleValues === "Low") {
-        setPrice([0, 4999]);
+        newPriceRange = LOW_PRICE_RANGE;
       }
       if (newPricesToggleValues === "Mid") {
-        setPrice([5000, 10000]);
+        newPriceRange = MID_PRICE_RANGE;
       }
       if (newPricesToggleValues === "High") {
-        setPrice([10000, 30000]);
+        newPriceRange = HIGH_PRICE_RANGE;
       }
+      setPrice(newPriceRange);
       setPriceToggleValues(newPricesToggleValues);
+
+      // Set default hospitals
+      const filteredHospitals = filterHospitals(
+        processedPlansRecords,
+        planTypes,
+        genders,
+        locations,
+        newPriceRange
+      );
+      if (filteredHospitals.length === 0) {
+        setHospitals([]);
+        setLocation("");
+      } else {
+        let newHospitals = hospitals.slice();
+
+        // check each selected hospitals to see if they have been filtered out
+        hospitals.forEach((hospitalSelected) => {
+          const filtered = filteredHospitals.filter(function (record) {
+            return [hospitalSelected].includes(record["Hospital"]);
+          });
+
+          if (filtered.length === 0) {
+            const index = newHospitals.indexOf(hospitalSelected);
+            if (index > -1) {
+              newHospitals.splice(index, 1);
+            }
+          }
+        });
+        setHospitals(newHospitals);
+      }
     }
   };
 
@@ -418,6 +472,14 @@ function App({ servicePlansRecords, plansRecords }) {
     debouncedPriceFilter,
     debouncedSearchTerm
   );
+
+  const handleInformationSource = () => {
+    trackEvent({
+      event: "Page-set",
+      page: "hospitalInfo (information source)",
+    });
+    setPage("hospitalInfo");
+  };
 
   let mainPanel;
   if (page === "table") {

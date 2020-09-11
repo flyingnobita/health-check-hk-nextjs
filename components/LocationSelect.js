@@ -22,6 +22,7 @@ export default function LocationSelect({
   language,
   planTypes,
   genders,
+  prices,
   processedPlansRecords,
 }) {
   if (
@@ -34,7 +35,8 @@ export default function LocationSelect({
       processedPlansRecords,
       planTypes,
       genders,
-      []
+      [],
+      prices
     );
     const filteredLocationsList = getLocationList(filtered);
 

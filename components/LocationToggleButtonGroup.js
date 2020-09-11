@@ -3,12 +3,18 @@ import ToggleButtonGroup from "@material-ui/lab/ToggleButtonGroup";
 import React from "react";
 import { filterHospitals } from "./indexHelper";
 
-function toDisableLocation(processedPlansRecords, planTypes, locations) {
+function toDisableLocation(
+  processedPlansRecords,
+  planTypes,
+  locations,
+  prices
+) {
   let filtered = filterHospitals(
     processedPlansRecords,
     planTypes,
     [],
-    locations
+    locations,
+    prices
   );
 
   filtered = filtered.filter(function (record) {
@@ -27,6 +33,7 @@ export default function LocationToggleButtonGroup({
   handleLocation,
   language,
   planTypes,
+  prices,
   processedPlansRecords,
   superWideScreen,
 }) {
@@ -45,7 +52,8 @@ export default function LocationToggleButtonGroup({
         disabled={toDisableLocation(
           processedPlansRecords,
           planTypes,
-          "hkIsland"
+          "hkIsland",
+          prices
         )}
       >
         {language === "en" ? "HK ISLAND" : "港島"}
@@ -57,7 +65,8 @@ export default function LocationToggleButtonGroup({
         disabled={toDisableLocation(
           processedPlansRecords,
           planTypes,
-          "kowloon"
+          "kowloon",
+          prices
         )}
       >
         {language === "en" ? "KOWLOON" : "九龍"}
@@ -69,7 +78,8 @@ export default function LocationToggleButtonGroup({
         disabled={toDisableLocation(
           processedPlansRecords,
           planTypes,
-          "newTerritories"
+          "newTerritories",
+          prices
         )}
       >
         {language === "en" ? "NT" : "新界"}

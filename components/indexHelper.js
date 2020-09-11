@@ -35,22 +35,28 @@ export function filterHospitals(
   processedPlansRecords,
   planTypes,
   genders,
-  locations
+  locations,
+  prices
 ) {
   if (!processedPlansRecords) return null;
 
+  // change props to arrays
   let planTypesArray = [];
   if (!Array.isArray(planTypes)) planTypesArray.push(planTypes);
   else planTypesArray = planTypes;
+  planTypesArray = planTypesArray.filter(Boolean);
 
   let gendersArray = [];
   if (!Array.isArray(genders)) gendersArray.push(genders);
   else gendersArray = genders;
+  gendersArray = gendersArray.filter(Boolean);
 
   let locationsArray = [];
   if (!Array.isArray(locations)) locationsArray.push(locations);
   else locationsArray = locations;
+  locationsArray = locationsArray.filter(Boolean);
 
+  // Start filtering
   let filtered = processedPlansRecords.filter(function (record) {
     return planTypesArray.includes(record["Plan Type"]);
   });
@@ -72,6 +78,12 @@ export function filterHospitals(
     filtered = filtered.filter(function (record) {
       return locationsArray.includes(record["Location"]);
     });
+
+  if (prices) {
+    filtered = filtered.filter(function (record) {
+      return record["Price"] >= prices[0] && record["Price"] <= prices[1];
+    });
+  }
 
   filtered.sort((a, b) => {
     if (a["Hospital"] && b["Hospital"]) {

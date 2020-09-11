@@ -7,8 +7,12 @@ export const META_IMAGE = "/meta_image.jpg";
 
 export const MAX_AIRTABLE_RECORDS = 10000;
 
-export const INITIAL_PRICE_RANGE = [5000, 10000];
 export const MAX_PRICE_RANGE = [0, 30000];
+export const LOW_PRICE_RANGE = [0, 4999];
+export const MID_PRICE_RANGE = [5000, 10000];
+export const HIGH_PRICE_RANGE = [10000, 30000];
+export const INITIAL_PRICE_RANGE = MID_PRICE_RANGE;
+export const INITIAL_PRICE_TOGGLE = "Mid";
 export const GENDER_SPECIFIC_PLAN_TYPES = [
   "General",
   "Gender Specific",

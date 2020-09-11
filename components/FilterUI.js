@@ -167,6 +167,7 @@ export default function FilterUI({
                   handleLocation={handleLocation}
                   language={language}
                   planTypes={planTypes}
+                  prices={prices}
                   processedPlansRecords={processedPlansRecords}
                   superWideScreen={superWideScreen}
                 />
@@ -180,6 +181,7 @@ export default function FilterUI({
                 hospitalInfo={hospitalInfo}
                 planTypes={planTypes}
                 genders={genders}
+                prices={prices}
                 processedPlansRecords={processedPlansRecords}
                 superWideScreen={superWideScreen}
               />
@@ -273,6 +275,7 @@ export default function FilterUI({
                 language={language}
                 planTypes={planTypes}
                 genders={genders}
+                prices={prices}
                 processedPlansRecords={processedPlansRecords}
               />
             </Grid>
@@ -285,6 +288,7 @@ export default function FilterUI({
               handleDeleteHospitalSelect={handleDeleteHospitalSelect}
               planTypes={planTypes}
               genders={genders}
+              prices={prices}
               processedPlansRecords={processedPlansRecords}
             />
 

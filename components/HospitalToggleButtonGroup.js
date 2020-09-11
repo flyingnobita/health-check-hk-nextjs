@@ -11,13 +11,15 @@ function toDisableHospital(
   planTypes,
   genders,
   locations,
+  prices,
   hospital
 ) {
   let filtered = filterHospitals(
     processedPlansRecords,
     planTypes,
     genders,
-    locations
+    locations,
+    prices
   );
 
   filtered = filtered.filter(function (record) {
@@ -45,6 +47,7 @@ export default function HospitalToggleButtonGroup({
   hospitalInfo,
   planTypes,
   genders,
+  prices,
   processedPlansRecords,
   superWideScreen,
 }) {
@@ -84,6 +87,7 @@ export default function HospitalToggleButtonGroup({
                       planTypes,
                       genders,
                       locations,
+                      prices,
                       hospital.hospital
                     )}
                   >
@@ -122,6 +126,7 @@ export default function HospitalToggleButtonGroup({
                       planTypes,
                       genders,
                       locations,
+                      prices,
                       hospital.hospital
                     )}
                   >
@@ -160,6 +165,7 @@ export default function HospitalToggleButtonGroup({
                       planTypes,
                       genders,
                       locations,
+                      prices,
                       hospital.hospital
                     )}
                   >
