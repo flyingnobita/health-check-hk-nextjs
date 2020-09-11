@@ -22,17 +22,18 @@ function GetSearchBar({ language, searchTerm, handleSearch, wideScreen }) {
           id="input-with-icon-grid"
           label={language === "en" ? "Search filtered plans" : "搜索已篩選計劃"}
           placeholder={
+            language === "en" ? 'Use quotes to search whole word e.g. "CT"' : ""
+          }
+          helperText={
             language === "en" ? "Try a service name" : "試下輸入項目名稱"
           }
-          // helperText="Full width!"
-          InputLabelProps={
-            {
-              // shrink: true,
-            }
-          }
+          // InputLabelProps={{
+          //   shrink: true,
+          // }}
           value={searchTerm}
           onChange={handleSearch}
-          style={{ maxWidth: 250 }}
+          style={{ width: "280px" }}
+          fullWidth
           size={wideScreen ? "medium" : "small"}
         />
       </Grid>

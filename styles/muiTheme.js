@@ -79,6 +79,7 @@ const muiTheme = createMuiTheme(
       MuiInputBase: {
         input: {
           color: globalTheme.palette.primary.dark,
+          fontSize: "14px",
         },
       },
       MuiSlider: {

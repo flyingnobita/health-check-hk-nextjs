@@ -17,8 +17,8 @@ import PriceToggleButtonGroup from "./PriceToggleButtonGroup";
 import SearchBar from "./SearchBar";
 
 const useStyles = makeStyles(() => ({
-  mobileGridContainer: {
-    paddingBottom: "16px",
+  gridContainer: {
+    paddingBottom: "10px",
   },
   buttonGroup: {
     margin: 10,
@@ -79,7 +79,7 @@ export default function FilterUI({
 
   if (wideScreen) {
     return (
-      <Grid container>
+      <Grid container className={classes.gridContainer}>
         <Grid item xs={1} />
         <Grid item xs={10}>
           <Box border={0} borderRadius={10}>
@@ -221,7 +221,7 @@ export default function FilterUI({
     );
   } else {
     return (
-      <Grid container className={classes.mobileGridContainer}>
+      <Grid container className={classes.gridContainer}>
         <Grid item xs={1} />
         <Grid item xs={10}>
           <Grid container justify="space-around" alignItems="center">
