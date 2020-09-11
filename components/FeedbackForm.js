@@ -3,7 +3,7 @@ import {
   FormControlLabel,
   Grid,
   LinearProgress,
-  Radio
+  Radio,
 } from "@material-ui/core";
 import Dialog from "@material-ui/core/Dialog";
 import MuiDialogContent from "@material-ui/core/DialogContent";
@@ -27,6 +27,7 @@ const styles = (theme) => ({
   root: {
     margin: 0,
     padding: theme.spacing(2),
+    paddingRight: "50px",
   },
   closeButton: {
     position: "absolute",
