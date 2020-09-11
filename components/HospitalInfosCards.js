@@ -110,6 +110,7 @@ export default function HospitalInfosCards({ language, hospitalInfo }) {
                         href={row.addressLink}
                         underline="none"
                         id={row.hospital}
+                        component="p"
                         className={`${classes.cardAddress} ${classes.cardAddressText}`}
                       >
                         {language === "en"
