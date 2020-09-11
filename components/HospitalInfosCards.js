@@ -50,6 +50,8 @@ const useStyles = makeStyles((theme) => ({
   },
   cardActions: {
     paddingTop: 0,
+    paddingLeft: 16,
+    paddingRight: 16,
     paddingBottom: 12,
   },
 }));
@@ -60,8 +62,8 @@ export default function HospitalInfosCards({ language, hospitalInfo }) {
   return (
     // page wide container
     <Grid container className={classes.cardsContainer}>
-      <Grid item xs={1} className={classes.hospitalInfoGrid} />
-      <Grid item xs={10} className={classes.hospitalInfoGrid}>
+      <Grid item xs={1} />
+      <Grid item xs={10}>
         {/* container for all cards */}
         <Grid container spacing={3} justify="center">
           {hospitalInfo.map((row) => (
@@ -72,7 +74,7 @@ export default function HospitalInfosCards({ language, hospitalInfo }) {
                     {language === "en" ? row.hospital : row.hospitalCN}
                   </Typography>
                   {/* container for icon & content */}
-                  <Grid container>
+                  <Grid container alignItems="center">
                     <Grid item xs={1} align="center">
                       <Typography
                         variant="body2"
@@ -83,13 +85,12 @@ export default function HospitalInfosCards({ language, hospitalInfo }) {
                       </Typography>
                     </Grid>
                     <Grid item xs={11}>
-                      <Typography
-                        variant="body2"
-                        component="p"
+                      <Link
+                        href={"tel:" + row.telephone}
                         className={`${classes.cardTelephone} ${classes.cardTelephoneNumber}`}
                       >
                         {row.telephone}
-                      </Typography>
+                      </Link>
                     </Grid>
                   </Grid>
                   {/* container for icon & content */}
@@ -104,33 +105,21 @@ export default function HospitalInfosCards({ language, hospitalInfo }) {
                       </Typography>
                     </Grid>
                     <Grid item xs={11}>
-                      <Typography
-                        variant="body2"
-                        component="p"
+                      <Link
+                        target="_blank"
+                        href={row.addressLink}
+                        underline="none"
+                        id={row.hospital}
                         className={`${classes.cardAddress} ${classes.cardAddressText}`}
                       >
-                        {language === "en" ? (
-                          <Link
-                            target="_blank"
-                            href={row.addressLink}
-                            underline="none"
-                            id={row.hospital}
-                            className="Address"
-                          >
-                            {row.address ? row.address : ""}
-                          </Link>
-                        ) : (
-                          <Link
-                            target="_blank"
-                            href={row.addressLink}
-                            underline="none"
-                            id={row.hospital}
-                            className="Address"
-                          >
-                            {row.addressCN ? row.addressCN : ""}
-                          </Link>
-                        )}
-                      </Typography>
+                        {language === "en"
+                          ? row.address
+                            ? row.address
+                            : ""
+                          : row.addressCN
+                          ? row.addressCN
+                          : ""}
+                      </Link>
                     </Grid>
                   </Grid>
                   {/* container for icon & content */}
@@ -163,34 +152,28 @@ export default function HospitalInfosCards({ language, hospitalInfo }) {
                 </CardContent>
 
                 <CardActions className={classes.cardActions}>
-                  <Grid container justify="space-around">
-                    <Grid item>
-                      {language === "en" ? "📅 Booking: " : "📅 網上預約: "}
-                      {onlineBookingLink(language, row)}
-                    </Grid>
+                  <Grid container justify="space-between">
+                    {row.booking ? (
+                      <React.Fragment>
+                        <Grid item>
+                          {language === "en" ? "📅 Booking: " : "📅 網上預約: "}
+                          {onlineBookingLink(language, row)}
+                        </Grid>
+                      </React.Fragment>
+                    ) : (
+                      <Grid item />
+                    )}
                     <Grid item>
                       {language === "en" ? "🌐 Website: " : "🌐 網頁: "}
-                      {language === "en" ? (
-                        <Link
-                          target="_blank"
-                          href={row.website}
-                          underline="none"
-                          id={row.hospital}
-                          className="Website"
-                        >
-                          <Emoji symbol="🔗" label="link" />
-                        </Link>
-                      ) : (
-                        <Link
-                          target="_blank"
-                          href={row.websiteCN}
-                          underline="none"
-                          id={row.hospital}
-                          className="Website"
-                        >
-                          <Emoji symbol="🔗" label="link" />
-                        </Link>
-                      )}
+                      <Link
+                        target="_blank"
+                        href={language === "en" ? row.website : row.websiteCN}
+                        underline="none"
+                        id={row.hospital}
+                        className="Website"
+                      >
+                        <Emoji symbol="🔗" label="link" />
+                      </Link>
                     </Grid>
                   </Grid>
                 </CardActions>
@@ -199,7 +182,7 @@ export default function HospitalInfosCards({ language, hospitalInfo }) {
           ))}
         </Grid>
       </Grid>
-      <Grid item xs={1} className={classes.hospitalInfoGrid} />
+      <Grid item xs={1} />
     </Grid>
   );
 }

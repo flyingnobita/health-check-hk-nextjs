@@ -8,31 +8,17 @@ import HospitalInfosCards from "./HospitalInfosCards";
 
 export const onlineBookingLink = function (language, row) {
   if (row.booking) {
-    if (language === "en") {
-      return (
-        <Link
-          target="_blank"
-          href={row.booking}
-          underline="none"
-          id={row.hospital}
-          className="OnlineBooking"
-        >
-          <Emoji symbol="🔗" label="link" />
-        </Link>
-      );
-    } else {
-      return (
-        <Link
-          target="_blank"
-          href={row.bookingCN}
-          underline="none"
-          id={row.hospital}
-          className="OnlineBooking"
-        >
-          <Emoji symbol="🔗" label="link" />
-        </Link>
-      );
-    }
+    return (
+      <Link
+        target="_blank"
+        href={language === "en" ? row.booking : row.bookingCN}
+        underline="none"
+        id={row.hospital}
+        className="OnlineBooking"
+      >
+        <Emoji symbol="🔗" label="link" />
+      </Link>
+    );
   } else return null;
 };
 
