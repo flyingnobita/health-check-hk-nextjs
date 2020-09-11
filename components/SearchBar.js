@@ -10,7 +10,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function GetSearchBar({ language, searchTerm, handleSearch }) {
+function GetSearchBar({ language, searchTerm, handleSearch, wideScreen }) {
   const classes = useStyles();
   return (
     <React.Fragment>
@@ -20,10 +20,20 @@ function GetSearchBar({ language, searchTerm, handleSearch }) {
       <Grid item>
         <TextField
           id="input-with-icon-grid"
-          label={language === "en" ? "Search service" : "項目搜索"}
+          label={language === "en" ? "Search filtered plans" : "搜索已篩選計劃"}
+          placeholder={
+            language === "en" ? "Try a service name" : "試下輸入項目名稱"
+          }
+          // helperText="Full width!"
+          InputLabelProps={
+            {
+              // shrink: true,
+            }
+          }
           value={searchTerm}
           onChange={handleSearch}
           style={{ maxWidth: 250 }}
+          size={wideScreen ? "medium" : "small"}
         />
       </Grid>
     </React.Fragment>
@@ -44,6 +54,7 @@ export default function SearchBar({
             language={language}
             searchTerm={searchTerm}
             handleSearch={handleSearch}
+            wideScreen={wideScreen}
           />
         </Grid>
       </Grid>
@@ -56,6 +67,7 @@ export default function SearchBar({
             language={language}
             searchTerm={searchTerm}
             handleSearch={handleSearch}
+            wideScreen={wideScreen}
           />
         </Grid>
       </Grid>
