@@ -375,8 +375,10 @@ function App({ servicePlansRecords, plansRecords }) {
 
           // check if surrounded by quotations for exact match search
           if (
-            currentSearchString[0] == '"' &&
-            currentSearchString[currentSearchString.length - 1] == '"'
+            ['"', "'"].includes(currentSearchString[0]) &&
+            ['"', "'"].includes(
+              currentSearchString[currentSearchString.length - 1]
+            )
           ) {
             // strip quotations for exact match search
             const currentSearchStringExact = currentSearchString.substring(
