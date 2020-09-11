@@ -39,6 +39,11 @@ function Alert(props) {
 }
 
 function App({ servicePlansRecords, plansRecords }) {
+  
+  const minLandscape = useMediaQuery("(min-width:568px)");
+  const wideScreen = useMediaQuery("(min-width:630px)");
+  const superWideScreen = useMediaQuery("(min-width:725px)");
+  
   const router = useRouter();
 
   useEffect(() => {
@@ -51,9 +56,6 @@ function App({ servicePlansRecords, plansRecords }) {
       setPage("hospitalInfo");
     }
   }, [router.query]);
-
-  const wideScreen = useMediaQuery("(min-width:630px)");
-  const superWideScreen = useMediaQuery("(min-width:725px)");
 
   const { trackEvent } = useTracking();
 
@@ -529,7 +531,7 @@ function App({ servicePlansRecords, plansRecords }) {
           language={language}
           handleLanguage={handleLanguage}
           handleLanguageClick={handleLanguageClick}
-          wideScreen={wideScreen}
+          minLandscape={minLandscape}
           page={page}
           handleHospitalInfoClick={handlePage}
         />

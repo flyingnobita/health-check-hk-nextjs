@@ -61,7 +61,7 @@ export default function Header(props) {
   const [open, setOpen] = React.useState(true);
 
   let screenRotationAlert = null;
-  if (!props.wideScreen) {
+  if (!props.minLandscape) {
     screenRotationAlert = (
       <React.Fragment>
         <Collapse in={open}>
@@ -121,7 +121,7 @@ export default function Header(props) {
             {props.language === "en" ? HEAD_TITLE_EN : HEAD_TITLE_CN}
           </Typography>
           <ShareButton language={props.language} />
-          {props.wideScreen ? (
+          {props.minLandscape ? (
             <GetLanguageSwitch
               language={props.language}
               handleLanguage={props.handleLanguage}
