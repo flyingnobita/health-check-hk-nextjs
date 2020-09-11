@@ -25,9 +25,10 @@ const useStyles = makeStyles((theme) => ({
   screenRotationIcon: {
     marginRight: "10px",
   },
-  alert: {
+  rotationAlert: {
     backgroundColor: "black",
     color: theme.palette.primary.main,
+    borderRadius: "0px",
   },
   hospitalIcon: {
     height: "1em",
@@ -67,7 +68,7 @@ export default function Header(props) {
           <Alert
             icon={false}
             severity="info"
-            className={classes.alert}
+            className={classes.rotationAlert}
             action={
               <IconButton
                 aria-label="close"
