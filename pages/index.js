@@ -306,10 +306,46 @@ function App({ servicePlansRecords, plansRecords }) {
   };
 
   const filterByValue = function (array, searchString, keys) {
+    const searchStringArray = searchString.trim().split(" ").filter(Boolean);
+
     return array.filter(function (record) {
-      return keys.some((key) =>
-        String(record[key]).toLowerCase().includes(searchString.toLowerCase())
-      );
+      return keys.some((key) => {
+        // loop through each word of user input
+        for (let i = 0; i < searchStringArray.length; i++) {
+          const currentSearchString = searchStringArray[i].toLowerCase();
+          const recordKeyArray = record[key]
+            .toLowerCase()
+            .trim()
+            .split(" ")
+            .filter(Boolean);
+
+          // check if surrounded by quotations for exact match search
+          if (
+            currentSearchString[0] == '"' &&
+            currentSearchString[currentSearchString.length - 1] == '"'
+          ) {
+            // strip quotations for exact match search
+            const currentSearchStringExact = currentSearchString.substring(
+              1,
+              currentSearchString.length - 1
+            );
+
+            // loop through each word of the record
+            for (let j = 0; j < recordKeyArray.length; j++) {
+              if (recordKeyArray[j] === currentSearchStringExact) {
+                return true;
+              }
+            }
+          } else {
+            for (let k = 0; k < recordKeyArray.length; k++) {
+              if (recordKeyArray[k].includes(currentSearchString)) {
+                return true;
+              }
+            }
+          }
+        }
+        return false;
+      });
     });
   };
 
