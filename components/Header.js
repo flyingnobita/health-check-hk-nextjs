@@ -1,5 +1,6 @@
 import { Grid } from "@material-ui/core";
 import AppBar from "@material-ui/core/AppBar";
+import Button from "@material-ui/core/Button";
 import Collapse from "@material-ui/core/Collapse";
 import IconButton from "@material-ui/core/IconButton";
 import { makeStyles } from "@material-ui/core/styles";
@@ -8,6 +9,7 @@ import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import CloseIcon from "@material-ui/icons/Close";
 import HomeIcon from "@material-ui/icons/Home";
+import LocalHospitalIcon from "@material-ui/icons/LocalHospital";
 import ScreenRotationIcon from "@material-ui/icons/ScreenRotation";
 import Alert from "@material-ui/lab/Alert";
 import React from "react";
@@ -22,6 +24,10 @@ const useStyles = makeStyles((theme) => ({
   icon: {
     color: "white",
   },
+  languageIcon: {
+    color: "white",
+    paddingLeft: "0px",
+  },
   screenRotationIcon: {
     marginRight: "10px",
   },
@@ -32,6 +38,17 @@ const useStyles = makeStyles((theme) => ({
   },
   hospitalIcon: {
     height: "1em",
+  },
+  pageButton: {
+    paddingLeft: "0px",
+  },
+  hospitalTextButtonLabel: {
+    color: "white",
+    // flexDirection: "column",
+  },
+  hospitalTextButtonLabelText: {
+    marginLeft: "4px",
+    // fontSize: "0.9em",
   },
 }));
 
@@ -99,24 +116,48 @@ export default function Header(props) {
     );
   }
 
+  let PageButton;
+  if (props.minLandscape) {
+    PageButton = (
+      <Button
+        aria-label={props.page === "table" ? "hospital-info-page" : "home-page"}
+        onClick={props.handleHospitalInfoClick}
+        classes={{ label: classes.hospitalTextButtonLabel }}
+        className={classes.pageButton}
+      >
+        {props.page === "table" ? (
+          <LocalHospitalIcon className={classes.icon} />
+        ) : (
+          <HomeIcon className={classes.icon} />
+        )}
+        <Typography
+          variant="body1"
+          className={classes.hospitalTextButtonLabelText}
+        >
+          {props.page === "table" ? "INFO" : "HOME"}
+        </Typography>
+      </Button>
+    );
+  } else {
+    PageButton = (
+      <IconButton
+        aria-label="hospital-info"
+        onClick={props.handleHospitalInfoClick}
+      >
+        {props.page === "table" ? (
+          <LocalHospitalIcon className={classes.icon} />
+        ) : (
+          <HomeIcon className={classes.icon} />
+        )}
+      </IconButton>
+    );
+  }
+
   return (
     <React.Fragment>
       <AppBar elevation={0} position="static">
         <Toolbar>
-          <IconButton
-            aria-label="hospital-info"
-            onClick={props.handleHospitalInfoClick}
-          >
-            {props.page === "table" ? (
-              <img
-                src="/cross.svg"
-                alt="Hospital Icon"
-                className={classes.hospitalIcon}
-              />
-            ) : (
-              <HomeIcon className={classes.icon} />
-            )}
-          </IconButton>
+          {PageButton}
           <Typography variant="h6" className={classes.appBarTitle}>
             {props.language === "en" ? HEAD_TITLE_EN : HEAD_TITLE_CN}
           </Typography>
@@ -130,7 +171,7 @@ export default function Header(props) {
             <IconButton
               aria-label="change_language"
               onClick={props.handleLanguageClick}
-              className={classes.icon}
+              className={classes.languageIcon}
             >
               {/* <TranslateIcon fontSize="small" /> */}
               <Typography variant="body1">
