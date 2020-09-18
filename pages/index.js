@@ -20,10 +20,16 @@ import {
   processRawAirtableRecords,
 } from "../components/indexHelper";
 import {
+  DEFAULT_GENDER,
+  DEFAULT_HOSPITAL,
+  DEFAULT_LANGUAGE,
+  DEFAULT_LOCATION,
+  DEFAULT_PAGE,
+  DEFAULT_PLAN_TYPE,
+  DEFAULT_PRICE_RANGE,
+  DEFAULT_PRICE_TOGGLE,
   GENDER_SPECIFIC_PLAN_TYPES,
   HIGH_PRICE_RANGE,
-  INITIAL_PRICE_RANGE,
-  INITIAL_PRICE_TOGGLE,
   LOW_PRICE_RANGE,
   MAX_AIRTABLE_RECORDS,
   MAX_PRICE_RANGE,
@@ -65,7 +71,7 @@ function App({ servicePlansRecords, plansRecords }) {
   const processedPlansRecords = processRawAirtableRecords(plansRecords);
 
   // Page
-  const [page, setPage] = useState("table");
+  const [page, setPage] = useState(DEFAULT_PAGE);
   const handlePage = () => {
     if (page === "table") {
       trackEvent({ event: "Page-set", page: "hospitalInfo" });
@@ -77,7 +83,7 @@ function App({ servicePlansRecords, plansRecords }) {
   };
 
   // Language
-  const [language, setLanguage] = useState("ch");
+  const [language, setLanguage] = useState(DEFAULT_LANGUAGE);
   const handleLanguage = (event) => {
     if (event.target.checked) {
       trackEvent({ event: "Language-set", lang: "en" });
@@ -98,7 +104,7 @@ function App({ servicePlansRecords, plansRecords }) {
   };
 
   // Plan Types
-  const [planTypes, setPlanTypes] = useState("General");
+  const [planTypes, setPlanTypes] = useState(DEFAULT_PLAN_TYPE);
   const handlePlanType = (event, newPlanTypes) => {
     if (newPlanTypes && newPlanTypes.length) {
       setPlanTypes(newPlanTypes);
@@ -117,8 +123,8 @@ function App({ servicePlansRecords, plansRecords }) {
         setPrice(MAX_PRICE_RANGE);
         setPriceToggleValues("");
       } else {
-        setPrice(INITIAL_PRICE_RANGE);
-        setPriceToggleValues(INITIAL_PRICE_TOGGLE);
+        setPrice(DEFAULT_PRICE_RANGE);
+        setPriceToggleValues(DEFAULT_PRICE_TOGGLE);
       }
 
       // Set default locations and hospitals
@@ -169,8 +175,8 @@ function App({ servicePlansRecords, plansRecords }) {
       setPrice(MAX_PRICE_RANGE);
       setPriceToggleValues("");
     } else {
-      setPrice(INITIAL_PRICE_RANGE);
-      setPriceToggleValues(INITIAL_PRICE_TOGGLE);
+      setPrice(DEFAULT_PRICE_RANGE);
+      setPriceToggleValues(DEFAULT_PRICE_TOGGLE);
     }
 
     // Set default locations and hospitals
@@ -203,7 +209,7 @@ function App({ servicePlansRecords, plansRecords }) {
   };
 
   // Gender
-  const [genders, setGenders] = useState("Male");
+  const [genders, setGenders] = useState(DEFAULT_GENDER);
   const handleGender = (event, newGenders) => {
     if (newGenders && newGenders.length) {
       setGenders(newGenders);
@@ -240,7 +246,7 @@ function App({ servicePlansRecords, plansRecords }) {
   };
 
   // Location
-  const [locations, setLocation] = useState("hkIsland");
+  const [locations, setLocation] = useState(DEFAULT_LOCATION);
   const handleLocation = (event, newLocation) => {
     if (newLocation) {
       setLocation(newLocation);
@@ -277,7 +283,7 @@ function App({ servicePlansRecords, plansRecords }) {
   };
 
   // Hospital
-  const [hospitals, setHospitals] = useState(() => ["Adventist - Stubbs"]);
+  const [hospitals, setHospitals] = useState(() => [DEFAULT_HOSPITAL]);
   const handleHospital = (event, newHospitals) => {
     if (newHospitals) {
       setHospitals(newHospitals);
@@ -298,14 +304,16 @@ function App({ servicePlansRecords, plansRecords }) {
   };
 
   // Price
-  const [prices, setPrice] = useState(INITIAL_PRICE_RANGE);
+  const [prices, setPrice] = useState(DEFAULT_PRICE_RANGE);
   const debouncedPriceFilter = useDebounce(prices, 800);
   const handlePrice = (event, newPrices) => {
     if (newPrices && newPrices.length) {
       setPrice(newPrices);
     }
   };
-  const [priceToggleValues, setPriceToggleValues] = useState("Mid");
+  const [priceToggleValues, setPriceToggleValues] = useState(
+    DEFAULT_PRICE_TOGGLE
+  );
   const handlePriceToggle = (event, newPricesToggleValues) => {
     if (newPricesToggleValues) {
       let newPriceRange = null;

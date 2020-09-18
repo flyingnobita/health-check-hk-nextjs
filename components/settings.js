@@ -11,8 +11,16 @@ export const MAX_PRICE_RANGE = [0, 30000];
 export const LOW_PRICE_RANGE = [0, 4999];
 export const MID_PRICE_RANGE = [5000, 10000];
 export const HIGH_PRICE_RANGE = [10000, 30000];
-export const INITIAL_PRICE_RANGE = MID_PRICE_RANGE;
-export const INITIAL_PRICE_TOGGLE = "Mid";
+
+export const DEFAULT_PAGE = "table";
+export const DEFAULT_LANGUAGE = "ch";
+export const DEFAULT_PLAN_TYPE = "COVID-19";
+export const DEFAULT_GENDER = "Both";
+export const DEFAULT_LOCATION = "hkIsland";
+export const DEFAULT_HOSPITAL = "Adventist - Stubbs";
+export const DEFAULT_PRICE_RANGE = MAX_PRICE_RANGE;
+export const DEFAULT_PRICE_TOGGLE = "";
+
 export const GENDER_SPECIFIC_PLAN_TYPES = [
   "General",
   "Gender Specific",
@@ -21,7 +29,7 @@ export const GENDER_SPECIFIC_PLAN_TYPES = [
   "Pre-marital",
 ];
 
-export const LAST_UPDATED = "2020-09-10";
+export const LAST_UPDATED = "2020-09-18";
 
 export const SHARE_MESSAGE_EN =
   "Don't know which body check plan is right for you? Compare plans from all hospitals here!";
