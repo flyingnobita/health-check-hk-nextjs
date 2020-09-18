@@ -17,6 +17,7 @@ import Snackbar from "@material-ui/core/Snackbar";
 import { makeStyles, withStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import CloseIcon from "@material-ui/icons/Close";
+import CreateIcon from "@material-ui/icons/Create";
 import MuiAlert from "@material-ui/lab/Alert";
 import { Field, Form, Formik } from "formik";
 import { RadioGroup, Select, TextField } from "formik-material-ui";
@@ -63,7 +64,7 @@ const useStyles = makeStyles({
   },
   grid: {
     paddingTop: "10px",
-    paddingBottom: "10px",
+    paddingBottom: "16px",
   },
 });
 
@@ -211,9 +212,9 @@ function FeedbackForm({ hospitalInfo, language }) {
     <Grid container>
       <Grid item xs={1} className={classes.grid} />
       <Grid item xs={10} align="center" className={classes.grid}>
-        <Button onClick={handleDialogOpen}>
+        <Button onClick={handleDialogOpen} startIcon={<CreateIcon />}>
           {language === "en"
-            ? "Spot an error? Have comments? Let us know!"
+            ? "Spot an error? Comments? Let us know!"
             : "有錯處? 有意見? 請話我知!"}
         </Button>
         <Dialog

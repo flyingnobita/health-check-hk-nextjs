@@ -45,10 +45,10 @@ function Alert(props) {
 }
 
 function App({ servicePlansRecords, plansRecords }) {
-  const minLandscape = useMediaQuery("(min-width:568px)");
-  const minFooterText = useMediaQuery("(min-width:440px)");
-  const wideScreen = useMediaQuery("(min-width:630px)");
-  const superWideScreen = useMediaQuery("(min-width:725px)");
+  const minFooterText = useMediaQuery("(min-width:440px)"); // rearrange footer components
+  const minLandscape = useMediaQuery("(min-width:568px)"); // Rotation Alert, Language Switch
+  const wideScreen = useMediaQuery("(min-width:667px)"); // switch from selects to small toggles
+  const superWideScreen = useMediaQuery("(min-width:795px)"); // switch from small toggles to medium toggles
 
   const router = useRouter();
 
@@ -522,6 +522,7 @@ function App({ servicePlansRecords, plansRecords }) {
         hospitalInfo={hospitalInfo}
         filteredDataArray={filteredDataArray}
         processedPlansRecords={processedPlansRecords}
+        handleHospitalInfoClick={handlePage}
       ></GetReactPivotTable>
     );
   } else {

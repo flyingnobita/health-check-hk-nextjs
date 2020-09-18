@@ -1,5 +1,8 @@
 import { Grid } from "@material-ui/core";
+import Button from "@material-ui/core/Button";
 import { makeStyles } from "@material-ui/core/styles";
+import Typography from "@material-ui/core/Typography";
+import LocalHospitalIcon from "@material-ui/icons/LocalHospital";
 import { useRouter } from "next/router";
 import React, { useEffect } from "react";
 import FilterUI from "./FilterUI";
@@ -16,6 +19,9 @@ const useStyles = makeStyles((theme) => ({
     paddingTop: "20px",
     paddingBottom: "10px",
     overflow: "auto",
+  },
+  pageButton: {
+    marginBottom: "10px",
   },
 }));
 
@@ -58,7 +64,17 @@ export const GetReactPivotTable = (props) => {
         />
       </Grid>
       <Grid item xs={1} />
-      <Grid item xs={10} className={classes.pivotTableGrid}>
+      <Grid item xs={10} className={classes.pivotTableGrid} align="center">
+        <Button
+          aria-label={"hospital-info-page"}
+          onClick={props.handleHospitalInfoClick}
+          className={classes.pageButton}
+          startIcon={<LocalHospitalIcon />}
+        >
+          <Typography variant="body1">
+            {props.language === "en" ? "BOOKING INFO" : "預約資料"}
+          </Typography>
+        </Button>
         <ReactPivotTable
           csv={props.filteredDataArray}
           language={props.language}

@@ -8,8 +8,6 @@ import Switch from "@material-ui/core/Switch";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import CloseIcon from "@material-ui/icons/Close";
-import HomeIcon from "@material-ui/icons/Home";
-import LocalHospitalIcon from "@material-ui/icons/LocalHospital";
 import ScreenRotationIcon from "@material-ui/icons/ScreenRotation";
 import Alert from "@material-ui/lab/Alert";
 import React from "react";
@@ -17,16 +15,8 @@ import { HEAD_TITLE_CN, HEAD_TITLE_EN } from "../components/settings";
 import ShareButton from "./ShareButton";
 
 const useStyles = makeStyles((theme) => ({
-  appBarTitle: {
-    flexGrow: 1,
-    textAlign: "center",
-  },
-  icon: {
-    color: "white",
-  },
   languageIcon: {
     color: "white",
-    paddingLeft: "0px",
   },
   screenRotationIcon: {
     marginRight: "10px",
@@ -36,25 +26,11 @@ const useStyles = makeStyles((theme) => ({
     color: theme.palette.primary.main,
     borderRadius: "0px",
   },
-  hospitalIcon: {
-    height: "1em",
-  },
-  pageButton: {
-    paddingLeft: "0px",
-  },
-  hospitalTextButtonLabel: {
-    color: "white",
-    // flexDirection: "column",
-  },
-  hospitalTextButtonLabelText: {
-    marginLeft: "4px",
-    // fontSize: "0.9em",
-  },
 }));
 
 function GetLanguageSwitch(props) {
   return (
-    <Typography component="div">
+    <Typography component="div" style={{ padding: "12px" }}>
       <Grid component="label" container alignItems="center" spacing={0}>
         <Grid item>中</Grid>
         <Grid item>
@@ -116,69 +92,53 @@ export default function Header(props) {
     );
   }
 
-  let PageButton;
-  if (props.minLandscape) {
-    PageButton = (
-      <Button
-        aria-label={props.page === "table" ? "hospital-info-page" : "home-page"}
-        onClick={props.handleHospitalInfoClick}
-        classes={{ label: classes.hospitalTextButtonLabel }}
-        className={classes.pageButton}
-      >
-        {props.page === "table" ? (
-          <LocalHospitalIcon className={classes.icon} />
-        ) : (
-          <HomeIcon className={classes.icon} />
-        )}
-        <Typography
-          variant="body1"
-          className={classes.hospitalTextButtonLabelText}
-        >
-          {props.page === "table" ? "INFO" : "HOME"}
-        </Typography>
-      </Button>
-    );
-  } else {
-    PageButton = (
-      <IconButton
-        aria-label="hospital-info"
-        onClick={props.handleHospitalInfoClick}
-      >
-        {props.page === "table" ? (
-          <LocalHospitalIcon className={classes.icon} />
-        ) : (
-          <HomeIcon className={classes.icon} />
-        )}
-      </IconButton>
-    );
-  }
-
   return (
     <React.Fragment>
       <AppBar elevation={0} position="static">
         <Toolbar>
-          {PageButton}
-          <Typography variant="h6" className={classes.appBarTitle}>
-            {props.language === "en" ? HEAD_TITLE_EN : HEAD_TITLE_CN}
-          </Typography>
-          <ShareButton language={props.language} />
-          {props.minLandscape ? (
-            <GetLanguageSwitch
-              language={props.language}
-              handleLanguage={props.handleLanguage}
-            />
-          ) : (
-            <IconButton
-              aria-label="change_language"
-              onClick={props.handleLanguageClick}
-              className={classes.languageIcon}
-            >
-              {/* <TranslateIcon fontSize="small" /> */}
-              <Typography variant="body1">
-                {props.language === "en" ? "中" : "EN"}
-              </Typography>
-            </IconButton>
-          )}
+          <Grid
+            container
+            direction="row"
+            justify="space-between"
+            alignItems="center"
+          >
+            <Grid item>
+              {props.minLandscape ? (
+                <GetLanguageSwitch
+                  language={props.language}
+                  handleLanguage={props.handleLanguage}
+                />
+              ) : (
+                <IconButton
+                  aria-label="change_language"
+                  onClick={props.handleLanguageClick}
+                  className={classes.languageIcon}
+                >
+                  <Typography variant="body1">
+                    {props.language === "en" ? "中" : "EN"}
+                  </Typography>
+                </IconButton>
+              )}
+            </Grid>
+            <Grid item style={{ flexGrow: 1 }} align="center">
+              <Button variant="text" onClick={props.handleHospitalInfoClick}>
+                <Typography variant="h6" style={{ color: "white" }}>
+                  {props.language === "en" ? HEAD_TITLE_EN : HEAD_TITLE_CN}
+                </Typography>
+              </Button>
+            </Grid>
+            <Grid item>
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "row",
+                  alignItems: "center",
+                }}
+              >
+                <ShareButton language={props.language} />
+              </div>
+            </Grid>
+          </Grid>
         </Toolbar>
       </AppBar>
       {screenRotationAlert}
