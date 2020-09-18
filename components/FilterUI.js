@@ -93,6 +93,13 @@ export default function FilterUI({
                   size={superWideScreen ? "medium" : "small"}
                 >
                   <ToggleButton
+                    value="COVID-19"
+                    aria-label="COVID-19"
+                    className="filter-selection"
+                  >
+                    {language === "en" ? "COVID-19" : "2019冠狀病毒"}
+                  </ToggleButton>
+                  <ToggleButton
                     value="General"
                     aria-label="general"
                     className="filter-selection"
@@ -122,7 +129,7 @@ export default function FilterUI({
                   </ToggleButton>
                   <ToggleButton
                     value="Domestic Helper"
-                    aria-label="child"
+                    aria-label="domestic helper"
                     className="filter-selection"
                   >
                     {language === "en" ? "DOMESTIC HELPER" : "家庭傭工"}
@@ -232,6 +239,9 @@ export default function FilterUI({
                 value={planTypes}
                 onChange={handlePlanTypeSelect}
               >
+                <MenuItem value={"COVID-19"}>
+                  {language === "en" ? "COVID-19" : "2019冠狀病毒"}
+                </MenuItem>
                 <MenuItem value={"General"}>
                   {language === "en" ? "GENERAL" : "一般"}
                 </MenuItem>
