@@ -33,6 +33,11 @@ function getHospitalList(filtered) {
   return filteredHospitalsList;
 }
 
+function getHospitalCnName(filtered, value) {
+  const name = filtered.find((hospital) => hospital["Hospital"] === value);
+  return name ? name["Hospital CN"] : "";
+}
+
 export default function HospitalSelect({
   language,
   locations,
@@ -86,9 +91,7 @@ export default function HospitalSelect({
                   label={
                     language === "en"
                       ? value
-                      : filtered.find(
-                          (hospital) => hospital["Hospital"] === value
-                        )["Hospital CN"]
+                      : getHospitalCnName(filtered, value)
                   }
                 />
               ))}
@@ -100,10 +103,7 @@ export default function HospitalSelect({
               <MenuItem key={hospital} value={hospital}>
                 {language === "en"
                   ? hospital
-                  : filtered.find(
-                      (filteredHospital) =>
-                        filteredHospital["Hospital"] === hospital
-                    )["Hospital CN"]}
+                  : getHospitalCnName(filtered, value)}
               </MenuItem>
             );
           })}
