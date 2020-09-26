@@ -79,19 +79,19 @@ export default function HospitalSelect({
           style={{ paddingTop: "10px" }}
           renderValue={(selected) => (
             <div className={classes.chipDiv}>
-              {selected.map((value) => (
+              {selected.map((hospital) => (
                 <Chip
                   variant="outlined"
-                  key={value}
+                  key={hospital}
                   color="primary"
-                  onDelete={() => handleDeleteHospitalSelect(value)}
+                  onDelete={() => handleDeleteHospitalSelect(hospital)}
                   onMouseDown={(event) => {
                     event.stopPropagation();
                   }}
                   label={
                     language === "en"
-                      ? value
-                      : getHospitalCnName(filtered, value)
+                      ? hospital
+                      : getHospitalCnName(filtered, hospital)
                   }
                 />
               ))}
@@ -103,7 +103,7 @@ export default function HospitalSelect({
               <MenuItem key={hospital} value={hospital}>
                 {language === "en"
                   ? hospital
-                  : getHospitalCnName(filtered, value)}
+                  : getHospitalCnName(filtered, hospital)}
               </MenuItem>
             );
           })}
