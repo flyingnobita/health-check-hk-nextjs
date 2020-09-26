@@ -1,7 +1,7 @@
 import Airtable from "airtable";
 import track from "react-tracking";
 import { MAX_AIRTABLE_RECORDS } from "../components/settings";
-import App from "./table";
+import App from "./app";
 
 const TrackedApp = track(
   // app-level tracking data
