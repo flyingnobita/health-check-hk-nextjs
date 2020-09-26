@@ -7,6 +7,7 @@ import { useRouter } from "next/router";
 import React, { useEffect } from "react";
 import FilterUI from "./FilterUI";
 import ReactPivotTable from "./ReactPivotTable";
+import Link from "next/link";
 
 const useStyles = makeStyles((theme) => ({
   filterGrid: {
@@ -29,9 +30,12 @@ export const GetReactPivotTable = (props) => {
   const classes = useStyles();
   const router = useRouter();
 
-  useEffect(() => {
-    router.push("/", undefined, { shallow: true });
-  }, []);
+  // useEffect(() => {
+  //   router.push("/", undefined, { shallow: true });
+  // }, []);
+
+  console.log("GetReactPivotTable");
+  console.log(props.hospitalInfo);
 
   return (
     <React.Fragment>
@@ -65,16 +69,28 @@ export const GetReactPivotTable = (props) => {
       </Grid>
       <Grid item xs={1} />
       <Grid item xs={10} className={classes.pivotTableGrid} align="center">
-        <Button
-          aria-label={"hospital-info-page"}
-          onClick={props.handleHospitalInfoClick}
-          className={classes.pageButton}
-          startIcon={<LocalHospitalIcon />}
+        <Link
+          href={{
+            pathname: "/hospitalInfoPage",
+            query: {
+              hospitalInfo: JSON.stringify(props.hospitalInfo),
+              language: props.language,
+            },
+          }}
+          as="/hospitalInfoPage"
+          passHref
         >
-          <Typography variant="body1">
-            {props.language === "en" ? "BOOKING INFO" : "預約資料"}
-          </Typography>
-        </Button>
+          <Button
+            aria-label={"hospital-info-page"}
+            onClick={props.handleHospitalInfoClick}
+            className={classes.pageButton}
+            startIcon={<LocalHospitalIcon />}
+          >
+            <Typography variant="body1">
+              {props.language === "en" ? "BOOKING INFO" : "預約資料"}
+            </Typography>
+          </Button>
+        </Link>
         <ReactPivotTable
           csv={props.filteredDataArray}
           language={props.language}

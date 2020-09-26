@@ -5,7 +5,7 @@ export const HEAD_DESCRIPTION_CN = "全港驗身計劃比較";
 export const APP_URL = "https://HKBodyCheck.info";
 export const META_IMAGE = "/meta_image.jpg";
 
-export const MAX_AIRTABLE_RECORDS = 10000;
+export const MAX_AIRTABLE_RECORDS = 100;
 
 export const MAX_PRICE_RANGE = [0, 30000];
 export const LOW_PRICE_RANGE = [0, 4999];

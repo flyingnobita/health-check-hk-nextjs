@@ -28,6 +28,7 @@ import {
   EMAIL_BODY_EN,
   EMAIL_BODY_CH,
 } from "./settings";
+import track from "react-tracking";
 
 const SHARE_ICON_SIZE = 32;
 const SHARE_ICON_BORDER_RADIUS = 10;
@@ -38,9 +39,10 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-export default function ShareButton({ language }) {
+function ShareButton({ language }) {
   const classes = useStyles();
-  const { trackEvent } = useTracking();
+  const tracking = useTracking();
+  // const { trackEvent } = useTracking();
 
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
@@ -74,7 +76,7 @@ export default function ShareButton({ language }) {
           <WhatsappShareButton
             url={APP_URL}
             beforeOnClick={() => {
-              trackEvent({ event: "Share", channel: "WhatsApp" });
+              tracking.trackEvent({ event: "Share", channel: "WhatsApp" });
             }}
             title={language === "en" ? SHARE_MESSAGE_EN : SHARE_MESSAGE_CH}
           >
@@ -88,7 +90,7 @@ export default function ShareButton({ language }) {
           <FacebookShareButton
             url={APP_URL}
             beforeOnClick={() => {
-              trackEvent({ event: "Share", channel: "Facebook" });
+              tracking.trackEvent({ event: "Share", channel: "Facebook" });
             }}
             quote={language === "en" ? SHARE_MESSAGE_EN : SHARE_MESSAGE_CH}
             hashtag={FACEBOOK_HASHTAG}
@@ -103,7 +105,7 @@ export default function ShareButton({ language }) {
           <TelegramShareButton
             url={APP_URL}
             beforeOnClick={() => {
-              trackEvent({ event: "Share", channel: "Telegram" });
+              tracking.trackEvent({ event: "Share", channel: "Telegram" });
             }}
             title={language === "en" ? SHARE_MESSAGE_EN : SHARE_MESSAGE_CH}
           >
@@ -117,7 +119,7 @@ export default function ShareButton({ language }) {
           <TwitterShareButton
             url={APP_URL}
             beforeOnClick={() => {
-              trackEvent({ event: "Share", channel: "Twitter" });
+              tracking.trackEvent({ event: "Share", channel: "Twitter" });
             }}
             title={language === "en" ? SHARE_MESSAGE_EN : SHARE_MESSAGE_CH}
             hashtags={TWITTER_HASHTAGS}
@@ -132,7 +134,7 @@ export default function ShareButton({ language }) {
           <EmailShareButton
             url={APP_URL}
             beforeOnClick={() => {
-              trackEvent({ event: "Share", channel: "Email" });
+              tracking.trackEvent({ event: "Share", channel: "Email" });
             }}
             subject={language === "en" ? EMAIL_SUBJECT_EN : EMAIL_SUBJECT_CH}
             body={language === "en" ? EMAIL_BODY_EN : EMAIL_BODY_CH}
@@ -147,3 +149,5 @@ export default function ShareButton({ language }) {
     </div>
   );
 }
+
+export default track({})(ShareButton);

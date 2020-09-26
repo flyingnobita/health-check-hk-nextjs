@@ -3,10 +3,9 @@ import Snackbar from "@material-ui/core/Snackbar";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import MuiAlert from "@material-ui/lab/Alert";
 import { ThemeProvider } from "@material-ui/styles";
-import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
 import PropTypes from "prop-types";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useTracking } from "react-tracking";
 import FeedbackForm from "../components/FeedbackForm";
 import Footer from "../components/Footer";
@@ -36,8 +35,6 @@ import {
 import useDebounce from "../components/useDebounce";
 import muiTheme from "../styles/muiTheme";
 
-const HospitalInfos = dynamic(() => import("../components/HospitalInfos"));
-
 function Alert(props) {
   return <MuiAlert elevation={3} {...props} />;
 }
@@ -50,16 +47,16 @@ function App({ servicePlansRecords, plansRecords }) {
 
   const router = useRouter();
 
-  useEffect(() => {
-    // detect back and forward button which changes url but not the state
-    if (Object.keys(router.query).length === 0) {
-      // trackEvent({ event: "Page-set", page: "table" });
-      setPage("table");
-    } else if ("hospitalInfo" in router.query) {
-      // trackEvent({ event: "Page-set", page: "hospitalInfo" });
-      setPage("hospitalInfo");
-    }
-  }, [router.query]);
+  // useEffect(() => {
+  //   // detect back and forward button which changes url but not the state
+  //   if (Object.keys(router.query).length === 0) {
+  //     // trackEvent({ event: "Page-set", page: "table" });
+  //     setPage("table");
+  //   } else if ("hospitalInfo" in router.query) {
+  //     // trackEvent({ event: "Page-set", page: "hospitalInfo" });
+  //     setPage("hospitalInfo");
+  //   }
+  // }, [router.query]);
 
   const { trackEvent } = useTracking();
 
@@ -491,44 +488,6 @@ function App({ servicePlansRecords, plansRecords }) {
     setPage("hospitalInfo");
   };
 
-  let mainPanel;
-  if (page === "table") {
-    mainPanel = (
-      <GetReactPivotTable
-        wideScreen={wideScreen}
-        superWideScreen={superWideScreen}
-        language={language}
-        planTypes={planTypes}
-        handlePlanType={handlePlanType}
-        handlePlanTypeSelect={handlePlanTypeSelect}
-        genders={genders}
-        handleGender={handleGender}
-        handleGenderSelect={handleGenderSelect}
-        locations={locations}
-        handleLocation={handleLocation}
-        handleLocationSelect={handleLocationSelect}
-        hospitals={hospitals}
-        handleHospital={handleHospital}
-        handleHospitalSelect={handleHospitalSelect}
-        handleDeleteHospitalSelect={handleDeleteHospitalSelect}
-        prices={prices}
-        priceToggleValues={priceToggleValues}
-        handlePrice={handlePrice}
-        handlePriceToggle={handlePriceToggle}
-        searchTerm={searchTerm}
-        handleSearch={handleSearch}
-        hospitalInfo={hospitalInfo}
-        filteredDataArray={filteredDataArray}
-        processedPlansRecords={processedPlansRecords}
-        handleHospitalInfoClick={handlePage}
-      ></GetReactPivotTable>
-    );
-  } else {
-    mainPanel = (
-      <HospitalInfos hospitalInfo={hospitalInfo} language={language} />
-    );
-  }
-
   return (
     <React.StrictMode>
       <GetHead />
@@ -542,7 +501,34 @@ function App({ servicePlansRecords, plansRecords }) {
           page={page}
           handleHospitalInfoClick={handlePage}
         />
-        {mainPanel}
+        <GetReactPivotTable
+          wideScreen={wideScreen}
+          superWideScreen={superWideScreen}
+          language={language}
+          planTypes={planTypes}
+          handlePlanType={handlePlanType}
+          handlePlanTypeSelect={handlePlanTypeSelect}
+          genders={genders}
+          handleGender={handleGender}
+          handleGenderSelect={handleGenderSelect}
+          locations={locations}
+          handleLocation={handleLocation}
+          handleLocationSelect={handleLocationSelect}
+          hospitals={hospitals}
+          handleHospital={handleHospital}
+          handleHospitalSelect={handleHospitalSelect}
+          handleDeleteHospitalSelect={handleDeleteHospitalSelect}
+          prices={prices}
+          priceToggleValues={priceToggleValues}
+          handlePrice={handlePrice}
+          handlePriceToggle={handlePriceToggle}
+          searchTerm={searchTerm}
+          handleSearch={handleSearch}
+          hospitalInfo={hospitalInfo}
+          filteredDataArray={filteredDataArray}
+          processedPlansRecords={processedPlansRecords}
+          handleHospitalInfoClick={handlePage}
+        />
         <FeedbackForm hospitalInfo={hospitalInfo} language={language} />
         <Footer
           language={language}

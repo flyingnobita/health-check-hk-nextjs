@@ -25,9 +25,9 @@ export const onlineBookingLink = function (language, row) {
 export default function HospitalInfos({ hospitalInfo, language }) {
   const router = useRouter();
 
-  useEffect(() => {
-    router.push("/?hospitalInfo", undefined, { shallow: true });
-  }, []);
+  // useEffect(() => {
+  //   router.push("/?hospitalInfo", undefined, { shallow: true });
+  // }, []);
 
   if (hospitalInfo.length > 0) {
     return (
