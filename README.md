@@ -1,19 +1,17 @@
-# Note
+# Hong Kong Body Check Plans Comparison
 
-Cannot separate out App to App.js because tracking.trackEvent would lose context in App.js or GetStaticProps wouldn't get called, as both are needed in props of App().
+<https://hkbodycheck.info>
 
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+This app compares the body check plans from all the private hospitals in Hong Kong.
 
-## Getting Started
+## Infrastructure
 
-First, run the development server:
+This app is built on Next.js and hosted on Vercel. Data is entered and stored in Airtable.
 
-```bash
-npm run dev
-# or
-yarn dev
-```
+As it takes time to retrieve the large amounts of data from Airtable's API, Next.js's server-side rendering allows the app to be pre-rendered so users would not have to wait for the app to load everytime, as is the case with React.js.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Airtable also allow the entry of data to be separated from the app and be done by someone who isn't technically savvy.
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+## Contact
+
+[![Twitter](https://img.shields.io/twitter/url/https/twitter.com/cloudposse.svg?style=social&label=%20%40FlyingNobita)](https://twitter.com/FlyingNobita)
