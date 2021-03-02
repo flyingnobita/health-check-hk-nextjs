@@ -45,3 +45,7 @@ export const EMAIL_BODY_EN =
   "Don't know which body check plans is right for you? Compare plans from all hospitals here! ${APP_URL}";
 export const EMAIL_BODY_CH =
   "唔知邊個驗身計劃至啱？嚟呢到比較晒全香港嘅計劃，一頁睇晒！${APP_URL}";
+
+export const AIRTABLE_API_ENDPOINT = "https://api.airtable.com";
+export const AIRTABLE_BASE_NAME_SERVICE_PLANS = "Service - Plans";
+export const AIRTABLE_BASE_NAME_PLANS = "Plans";

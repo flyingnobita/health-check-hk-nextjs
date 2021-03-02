@@ -34,6 +34,9 @@ import {
   MAX_AIRTABLE_RECORDS,
   MAX_PRICE_RANGE,
   MID_PRICE_RANGE,
+  AIRTABLE_API_ENDPOINT,
+  AIRTABLE_BASE_NAME_SERVICE_PLANS,
+  AIRTABLE_BASE_NAME_PLANS,
 } from "../components/settings";
 import useDebounce from "../components/useDebounce";
 import muiTheme from "../styles/muiTheme";
@@ -581,12 +584,12 @@ const TrackedApp = track(
 
 export async function getStaticProps() {
   Airtable.configure({
-    endpointUrl: "https://api.airtable.com",
-    apiKey: "keyWDj3X2WP9zxW7h",
+    endpointUrl: AIRTABLE_API_ENDPOINT,
+    apiKey: process.env.AIRTABLE_READ_ONLY_API_KEY,
   });
-  var base = Airtable.base("appAV9kqsY6WcWOXt");
-  let servicePlansTable = base("Service - Plans");
-  let plansTable = base("Plans");
+  var base = Airtable.base(process.env.AIRTABLE_BASE_ID_BODY_CHECK);
+  let servicePlansTable = base(AIRTABLE_BASE_NAME_SERVICE_PLANS);
+  let plansTable = base(AIRTABLE_BASE_NAME_PLANS);
 
   function retrieveAllRecords(base) {
     return (resolve) => {
