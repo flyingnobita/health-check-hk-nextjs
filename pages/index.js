@@ -44,6 +44,7 @@ function Alert(props) {
   return <MuiAlert elevation={3} {...props} />;
 }
 
+// Cannot separate out App to App.js because tracking.trackEvent would lose context in App.js or GetStaticProps wouldn't get called, as both are needed in props of App().
 function App({ servicePlansRecords, plansRecords }) {
   const minFooterText = useMediaQuery("(min-width:440px)"); // rearrange footer components
   const minLandscape = useMediaQuery("(min-width:568px)"); // Rotation Alert, Language Switch
