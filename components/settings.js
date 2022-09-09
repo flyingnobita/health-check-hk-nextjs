@@ -13,7 +13,7 @@ export const MID_PRICE_RANGE = [5000, 10000];
 export const HIGH_PRICE_RANGE = [10000, 30000];
 
 export const DEFAULT_PAGE = "table";
-export const DEFAULT_LANGUAGE = "ch";
+export const DEFAULT_LANGUAGE = "en";
 export const DEFAULT_PLAN_TYPE = "COVID-19";
 export const DEFAULT_GENDER = "Both";
 export const DEFAULT_LOCATION = "hkIsland";
